@@ -6,7 +6,7 @@
 /*   By: tgmelin <tgmelin@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 16:52:26 by tgmelin           #+#    #+#             */
-/*   Updated: 2024/09/16 19:09:43 by tgmelin          ###   ########.fr       */
+/*   Updated: 2024/09/16 20:51:35 by tgmelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ typedef struct s_glob_state
 }	t_global_state;
 
 // Utils					___________________________________________________
-void	ft_error(t_ft_err_data *_alloc_data, const char *_msg, int _exit_status);
+void	ft_error(t_ft_err_data *_alloc_data,
+			const char *_msg, int _exit_status);
 
 // Setup & Teardown			___________________________________________________
 void	teardown(void *_alloc_data);

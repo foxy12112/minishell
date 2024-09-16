@@ -6,7 +6,7 @@
 #    By: tgmelin <tgmelin@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/16 18:43:31 by tgmelin           #+#    #+#              #
-#    Updated: 2024/09/16 20:06:59 by tgmelin          ###   ########.fr        #
+#    Updated: 2024/09/16 20:54:13 by tgmelin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ CC = cc
 #			Files				#
 #################################
 
-SRC 		= src/main.c src/setup.c src/teardown.c src/Utils/ft_error.c
+SRC 		= src/main.c src/setup.c src/teardown.c src/Utils/ft_error.c 
 OBJ 		= $(SRC:.c=.o)
 BUILD_DIR	= build
 LIBFT_DIR	= include/libft
@@ -67,7 +67,7 @@ mkdirs:
 
 deps: mkdirs
 	git submodule update --init --recursive
-	make -C $(LIBFT_DIR) --silent
+	make -C $(LIBFT_DIR)
 
 depsclean:
 	make -C $(LIBFT_DIR) clean
@@ -77,16 +77,16 @@ depsfclean:
 
 $(NAME): release
 
-release: $(OBJ) deps
+release: deps $(OBJ)
 	$(CC) -o $(BUILD_DIR)/Release/$(NAME) $(OBJ) $(RELEASE_FLAGS) $(LIBS)
 
-dev: $(OBJ) deps
+dev: deps $(OBJ)
 	$(CC) -o $(BUILD_DIR)/Dev/$(NAME) $(OBJ) $(DEV_FLAGS) $(LIBS)
 
-debug: $(OBJ) deps
+debug: deps $(OBJ)
 	$(CC) -o $(BUILD_DIR)/Debug/$(NAME) $(OBJ) $(DEBUG_FLAGS) $(LIBS)
 
-eval: $(OBJ) deps
+eval: deps $(OBJ)
 	$(CC) -o $(BUILD_DIR)/Eval/$(NAME) $(OBJ) $(EVAL_FLAGS) $(LIBS)
 
 clean: depsclean
