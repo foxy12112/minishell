@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/03 01:18:48 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/03 16:47:21 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,27 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
+// > - RDR_COMMAND_TO_INPUT, < - RDR_INPUT_TO_COMMAND, << -
+typedef enum s_operation_type
+{
+	RDR_INPUT,
+	RDR_OUTPUT,
+	RDR_HEREDOC,
+	RDR_APPEND,
+	PIPE,
+	NO_RDR,
+}						t_operation_type;
+
+typedef struct s_shell_data
+{
+	t_operation_type	operation_type;
+}						t_shell_data;
 
 typedef struct s_nodes
 {
+}						t_nodes;
 
-}			t_nodes;
-
-int main(void);
-int utils(void);
+int						main(void);
+int						utils(void);
 
 #endif
