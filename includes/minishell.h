@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/09/16 15:21:18 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/03 01:18:48 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include "libs.h"
+# include "../main-libs/main-libs.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -27,8 +27,7 @@ typedef struct s_nodes
 
 }			t_nodes;
 
-
-
-
+int main(void);
+int utils(void);
 
 #endif

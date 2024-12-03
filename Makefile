@@ -3,12 +3,13 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ldick <ldick@student.42.fr>                +#+  +:+       +#+         #
+#    By: macbook <macbook@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/09/16 14:41:35 by ldick            ###   ########.fr        #
+#    Updated: 2024/12/03 02:27:43 by macbook          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 NAME = minishell
 
@@ -29,7 +30,7 @@ BOLD_BLUE	:= \033[0;34m
 #################################
 
 COMPILER	=	cc
-LIB_FLAGS	=	-ls -Lmain-libs
+LIB_FLAGS	=	main-libs/lib.a
 CFLAGS		=	-Wall -Wextra -Werror -g
 INCLUDES	=	-I includes -I main-libs
 SUBMODULE	=	main-libs/Makefile
@@ -38,14 +39,14 @@ SUBMODULE	=	main-libs/Makefile
 #################################
 #				Files			#
 #################################
-_UTILS		=	init.c parse.c free.c children.c
+_UTILS		=	utils.c
 UTILS		=	$(addprefix utils/, $(_UTILS))
 
 _SRCS		=	main.c $(UTILS)
 SRCS		=	$(addprefix srcs/, $(_SRCS))
 
 OBJS		=	$(SRCS:srcs/%.c=bin/%.o)
-LIBRARY		=	main-libs/libs.a
+LIBRARY		=	main-libs/lib.a
 
 #################################
 #				Rules			#
@@ -58,7 +59,7 @@ bin:
 				@mkdir -p bin/utils
 
 bin/%.o:		srcs/%.c | bin
-				@echo "$(GREEN) Compiling $(Compiler) $(CLR_RMV) -c -o $(YELLOW) $@ $(CYAN) $^ $(GREEN) $(CFLAGS) $(GREEN) $(INCLUDES)"
+				@echo "$(GREEN) Compiling $(COMPILER) $(CLR_RMV) -c -o $(YELLOW) $@ $(CYAN) $^ $(GREEN) $(CFLAGS) $(GREEN) $(INCLUDES)"
 				@$(COMPILER) -c -o $@ $^ $(CFLAGS) $(INCLUDES)
 
 $(LIBRARY):		$(SUBMODULE)
@@ -74,7 +75,7 @@ clean:
 				@cd main-libs && make fclean
 				@rm -rf bin
 
-fclean:			clean
+fclean:			clean 
 				@rm -f $(NAME)
 
 re:				fclean all
