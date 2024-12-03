@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/03 16:47:21 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/03 22:14:36 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ typedef struct s_nodes
 {
 }						t_nodes;
 
-int						main(void);
+int						main(int argc, char **argv);
 int						utils(void);
+
+// builtins
+int						ft_echo(char **args, int fd);
 
 #endif

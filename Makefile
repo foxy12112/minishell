@@ -6,7 +6,7 @@
 #    By: macbook <macbook@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/03 02:27:43 by macbook          ###   ########.fr        #
+#    Updated: 2024/12/03 22:15:42 by macbook          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ SUBMODULE	=	main-libs/Makefile
 #################################
 #				Files			#
 #################################
-_UTILS		=	utils.c
+_UTILS		=	utils.c builtins.c
 UTILS		=	$(addprefix utils/, $(_UTILS))
 
 _SRCS		=	main.c $(UTILS)
