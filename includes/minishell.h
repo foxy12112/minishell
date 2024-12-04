@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/04 04:28:40 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/04 16:35:40 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include "../main-libs/main-libs.h"
+# include "../main-libs/libs.h"
 # include <fcntl.h>
 # include <limits.h>
 # include <stdio.h>
@@ -48,5 +48,5 @@ int						utils(void);
 // builtins
 int						ft_echo(char **args, int fd);
 int						fd_cd(char *path);
-
+int						ft_pwd(void);
 #endif

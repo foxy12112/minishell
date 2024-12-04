@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:13:40 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/04 05:27:57 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/04 17:06:52 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,26 @@ int	fd_cd(char *path)
 	}
 	// printf("%s\n", path);
 	// printf("%s\n", getenv("PATH"));
+	return (0);
+}
+
+int	ft_pwd(void)
+{
+	char cwd[PATH_MAX];
+
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	{
+		printf("%s\n", cwd);
+	}
+	else
+	{
+		perror("Pwd error");
+	}
 
 	return (0);
+}
+
+int ft_export()
+{
+	
 }

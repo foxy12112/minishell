@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/04 05:19:10 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/04 16:37:33 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	main(int argc, char **argv)
 	(void)argv;
 	(void)argc;
 	fd_cd("../");
-	ft_echo(ft_split("HELO WORLD", '\n'), 1);
+	ft_echo(ft_split("HELO WORLD THIS IS ME", ' '), 1);
+	ft_pwd();
 	return (0);
 }

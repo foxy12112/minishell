@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: macbook <macbook@student.42.fr>            +#+  +:+       +#+         #
+#    By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/03 22:15:42 by macbook          ###   ########.fr        #
+#    Updated: 2024/12/04 16:32:47 by auplisas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ BOLD_BLUE	:= \033[0;34m
 #################################
 
 COMPILER	=	cc
-LIB_FLAGS	=	main-libs/lib.a
+LIB_FLAGS	=	main-libs/libs.a
 CFLAGS		=	-Wall -Wextra -Werror -g
 INCLUDES	=	-I includes -I main-libs
 SUBMODULE	=	main-libs/Makefile
@@ -46,7 +46,7 @@ _SRCS		=	main.c $(UTILS)
 SRCS		=	$(addprefix srcs/, $(_SRCS))
 
 OBJS		=	$(SRCS:srcs/%.c=bin/%.o)
-LIBRARY		=	main-libs/lib.a
+LIBRARY		=	main-libs/libs.a
 
 #################################
 #				Rules			#
