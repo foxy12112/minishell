@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/03 22:13:57 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/04 05:19:10 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ int	execute_arguments(char **args_ar)
 int	main(int argc, char **argv)
 {
 	// char **newstr;
-
 	// newstr = ft_split("Helo, my friend", ' ');
 	// execute_arguments(newstr);
-    (void)argc;
-	ft_echo(argv, 1);
-
+	(void)argv;
+	(void)argc;
+	fd_cd("../");
+	ft_echo(ft_split("HELO WORLD", '\n'), 1);
 	return (0);
 }

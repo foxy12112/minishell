@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/03 22:14:36 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/04 04:28:40 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../main-libs/main-libs.h"
 # include <fcntl.h>
+# include <limits.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/types.h>
@@ -46,5 +47,6 @@ int						utils(void);
 
 // builtins
 int						ft_echo(char **args, int fd);
+int						fd_cd(char *path);
 
 #endif
