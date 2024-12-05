@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/04 16:37:33 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/05 05:18:46 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,78 @@ int	execute_arguments(char **args_ar)
 	return (0);
 }
 
-int	main(int argc, char **argv)
+void swap_nodes(t_env_list *a, t_env_list *b) {
+    char *temp_key = a->key;
+    char *temp_value = a->value;
+
+    a->key = b->key;
+    a->value = b->value;
+
+    b->key = temp_key;
+    b->value = temp_value;
+}
+
+// Bubble sort to sort the list by keys alphabetically
+void sort_env_list(t_env_list *head) {
+    int swapped;
+    t_env_list *ptr1;
+    t_env_list *ptr2 = NULL;
+
+    if (head == NULL)
+        return;
+
+    do {
+        swapped = 0;
+        ptr1 = head;
+
+        // Traverse the list and compare adjacent nodes
+        while (ptr1->next != ptr2) {
+            if (strcmp(ptr1->key, ptr1->next->key) > 0) {
+                swap_nodes(ptr1, ptr1->next); // Swap keys and values
+                swapped = 1;
+            }
+            ptr1 = ptr1->next;
+        }
+        ptr2 = ptr1;  // Set the last sorted node to prevent checking it again
+    } while (swapped);  // Continue until no more swaps are needed
+}
+
+int	initialize_shell(t_shell_data *shell)
 {
-	// char **newstr;
-	// newstr = ft_split("Helo, my friend", ' ');
-	// execute_arguments(newstr);
-	(void)argv;
-	(void)argc;
-	fd_cd("../");
-	ft_echo(ft_split("HELO WORLD THIS IS ME", ' '), 1);
-	ft_pwd();
+	shell->env = initialize_env();
+	shell->operation_type = NO_RDR;
 	return (0);
 }
+
+
+void	leaks(void)
+{
+	system("leaks minishella");
+}
+
+int	main(int argc, char **argv)
+{
+	t_shell_data	*shell;
+
+	atexit(leaks);
+	(void)argv;
+	(void)argc;
+	shell = (t_shell_data *)malloc(sizeof(t_shell_data));
+	if (!shell)
+		return (1);
+	initialize_shell(shell);
+	print_env_list(shell->variables);
+	free_env_list(shell->variables);
+	free(shell);
+	return (0);
+}
+
+// char **newstr;
+// execute_arguments(newstr);
+
+// fd_cd("../");
+// ft_echo(ft_split("HELO WORLD THIS IS ME", ' '), 1);
+// ft_pwd();
+
+// newstr = ft_split("VAR1=TES1 VAR2=TES2 VAR3=TES3", ' ');
+// ft_export(shell, newstr);

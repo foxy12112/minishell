@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/04 16:35:40 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/05 05:13:23 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,19 @@ typedef enum s_operation_type
 	NO_RDR,
 }						t_operation_type;
 
+typedef struct s_env_list
+{
+	char				*key;
+	char				*value;
+	struct s_env_list	*next;
+	struct s_env_list	*prev;
+}						t_env_list;
+
 typedef struct s_shell_data
 {
 	t_operation_type	operation_type;
+	t_env_list			*env;
+	t_env_list			*variables;
 }						t_shell_data;
 
 typedef struct s_nodes
@@ -49,4 +59,9 @@ int						utils(void);
 int						ft_echo(char **args, int fd);
 int						fd_cd(char *path);
 int						ft_pwd(void);
+// int						ft_export(t_shell_data *shell, char **variables);
+// env.c
+t_env_list				*initialize_env(void);
+void					print_env_list(t_env_list *variables);
+void					free_env_list(t_env_list *head);
 #endif

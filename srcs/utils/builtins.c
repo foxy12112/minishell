@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:13:40 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/04 17:06:52 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/04 22:03:03 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	fd_cd(char *path)
 
 int	ft_pwd(void)
 {
-	char cwd[PATH_MAX];
+	char	cwd[PATH_MAX];
 
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
@@ -63,11 +63,26 @@ int	ft_pwd(void)
 	{
 		perror("Pwd error");
 	}
-
 	return (0);
 }
 
-int ft_export()
-{
-	
-}
+// int	ft_export(t_shell_data *shell, char **variables)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	while (variables[i])
+// 	{
+// 		printf("%s\n", variables[i]);
+// 		i++;
+// 	}
+// 	if (i < 1)
+// 	{
+// 		// just display all variables
+// 	}
+// 	else
+// 	{
+		
+// 	}
+// 	return (0);
+// }

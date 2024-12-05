@@ -6,12 +6,12 @@
 #    By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/04 16:32:47 by auplisas         ###   ########.fr        #
+#    Updated: 2024/12/05 05:10:37 by auplisas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-NAME = minishell
+NAME = minishella
 
 #################################
 #				Colors			#
@@ -31,7 +31,8 @@ BOLD_BLUE	:= \033[0;34m
 
 COMPILER	=	cc
 LIB_FLAGS	=	main-libs/libs.a
-CFLAGS		=	-Wall -Wextra -Werror -g
+# CFLAGS		=	-Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS		=	-Wall -Wextra -Werror
 INCLUDES	=	-I includes -I main-libs
 SUBMODULE	=	main-libs/Makefile
 
@@ -39,7 +40,7 @@ SUBMODULE	=	main-libs/Makefile
 #################################
 #				Files			#
 #################################
-_UTILS		=	utils.c builtins.c
+_UTILS		=	utils.c builtins.c env.c
 UTILS		=	$(addprefix utils/, $(_UTILS))
 
 _SRCS		=	main.c $(UTILS)
