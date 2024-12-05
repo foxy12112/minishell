@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/05 16:47:06 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/05 19:14:09 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,19 +101,20 @@ void	leaks(void)
 
 int	main(int argc, char **argv)
 {
-	t_shell_data	*shell;
+	// t_shell_data	*shell;
 
 	// atexit(leaks);
-	(void)argv;
-	(void)argc;
-	shell = (t_shell_data *)malloc(sizeof(t_shell_data));
-	if (!shell)
-		return (1);
-	initialize_shell(shell);
-	ft_export(shell, ft_split("HI=MTE YELLO=YUUU", ' '));
-	free_env_list(shell->env);
-	free_env_list(shell->variables);
-	free(shell);
+	// (void)argv;
+	// (void)argc;
+	// shell = (t_shell_data *)malloc(sizeof(t_shell_data));
+	// if (!shell)
+		// return (1);
+	// initialize_shell(shell);
+	display();
+	// ft_export(shell, ft_split("HI=MTE YELLO=YUUU", ' '));
+	// free_env_list(shell->env);
+	// free_env_list(shell->variables);
+	// free(shell);
 	return (0);
 }
 

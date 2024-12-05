@@ -6,7 +6,7 @@
 #    By: ldick <ldick@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/05 17:47:20 by ldick            ###   ########.fr        #
+#    Updated: 2024/12/05 19:15:35 by ldick            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,14 +34,15 @@ COMPILER	=	cc
 INCLUDES	=	-I includes -I main-libs
 SUBMODULE	=	main-libs/Makefile
 LIB_FLAGS	=	-ls -Lmain-libs
-CFLAGS		=	-Wall -Werror -Wextra -g #-fsanitize=address
+CFLAGS		=	#-Wall -Werror -Wextra -g #-fsanitize=address
+EXTRA_FLAGS	=	-lreadline
 ERROR_FILE	=	error.log
 
 #################################################################################################
 #											Sources												#
 #################################################################################################
 
-_UTILS		=	utils.c builtins.c env.c free.c
+_UTILS		=	utils.c builtins.c env.c free.c parsing.c
 UTILS		=	$(addprefix utils/, $(_UTILS))
 
 _SRCS		=	main.c $(UTILS)
@@ -62,8 +63,8 @@ bin:
 				@mkdir -p bin/utils
 
 bin/%.o:		srcs/%.c | bin
-				@echo "$(GREEN) Compiling $(Compiler) $(CLR_RMV) -c -o $(YELLOW) $@ $(CYAN) $^ $(GREEN) $(CFLAGS) $(GREEN) $(INCLUDES) $(NC)"
-				@$(COMPILER) -c -o $@ $^ $(CFLAGS) $(INCLUDES) 2> $(ERROR_FILE) || (cat $(ERROR_FILE) && echo "$(RED)Compilation failed :0\nfailed file: \t\t$(YELLOW)$<$(NC)\n\n" && exit 1)
+				@echo "$(GREEN) Compiling $(Compiler) $(CLR_RMV) -c -o $(YELLOW) $@ $(CYAN) $^ $(GREEN) $(EXTRA_FLAGS) $(CFLAGS) $(GREEN) $(INCLUDES) $(NC)"
+				@$(COMPILER) -c -o $@ $^ $(EXTRA_FLAGS) $(CFLAGS) $(INCLUDES) 2> $(ERROR_FILE) || (cat $(ERROR_FILE) && echo "$(RED)Compilation failed :0\nfailed file: \t\t$(YELLOW)$<$(NC)\n\n" && exit 1)
 
 $(LIBRARY):		$(SUBMODULE)
 				@make -C main-libs --silent
@@ -72,7 +73,7 @@ $(SUBMODULE):
 				@git submodule update --init --recursive
 
 $(NAME):		$(LIBRARY) $(OBJS)
-				@$(COMPILER) $(CFLAGS) -o $(NAME) $(OBJS) $(LIB_FLAGS)
+				@$(COMPILER) $(EXTRA_FLAGS) $(CFLAGS) -o $(NAME) $(OBJS) $(LIB_FLAGS)
 				@echo "\t\t\t\t$(RED) compilation success :3"
 
 clean:

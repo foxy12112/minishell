@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/05 16:48:24 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/05 19:15:11 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 
 // > - RDR_COMMAND_TO_INPUT, < - RDR_INPUT_TO_COMMAND, << -
 typedef enum s_operation_type
@@ -69,4 +71,9 @@ void					print_variables_list(t_env_list *variables);
 // free.c
 void					free_env_list(t_env_list *head);
 void					free_key_value(char **key_value);
+
+// parsing
+
+void					display(void);
+
 #endif
