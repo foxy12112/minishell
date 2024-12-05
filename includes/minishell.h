@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/05 06:13:01 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/05 22:28:40 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../main-libs/libs.h"
 # include <fcntl.h>
 # include <limits.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/types.h>
@@ -56,16 +57,20 @@ int						main(int argc, char **argv);
 int						utils(void);
 
 // builtins
-int						ft_echo(char **args, int fd);
+int						ft_echo(char **args, int fd, bool n_option);
 int						fd_cd(char *path);
 int						ft_pwd(void);
 int						ft_export(t_shell_data *shell, char **variables);
+int						ft_unset(t_shell_data *shell, char *variables);
 // env.c
 t_env_list				*initialize_env(void);
 void					add_to_variables_list(t_env_list **head,
 							char **key_value);
 void					print_env_list(t_env_list *variables);
 void					print_variables_list(t_env_list *variables);
+// variables.c
+void					sort_env_list(t_env_list *head);
+char					*retrieve_variable(t_shell_data *shell, char *key);
 // free.c
 void					free_env_list(t_env_list *head);
 void					free_key_value(char **key_value);
