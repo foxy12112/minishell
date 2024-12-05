@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/10 10:52:57 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/10 10:54:22 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,9 @@ void					test_echo(void);
 void					test_env(t_shell_data *shell);
 void					test_pwd(void);
 void					test_unset(t_shell_data *shell);
+
+// parsing
+
+void					display(void);
+
 #endif
