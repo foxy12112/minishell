@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/05 05:18:46 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/05 05:52:57 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void swap_nodes(t_env_list *a, t_env_list *b) {
     b->value = temp_value;
 }
 
-// Bubble sort to sort the list by keys alphabetically
 void sort_env_list(t_env_list *head) {
     int swapped;
     t_env_list *ptr1;
@@ -69,25 +68,27 @@ void sort_env_list(t_env_list *head) {
     if (head == NULL)
         return;
 
-    do {
+    swapped = 1;
+    while (swapped) {
         swapped = 0;
         ptr1 = head;
 
-        // Traverse the list and compare adjacent nodes
         while (ptr1->next != ptr2) {
-            if (strcmp(ptr1->key, ptr1->next->key) > 0) {
-                swap_nodes(ptr1, ptr1->next); // Swap keys and values
+            if (ft_strcmp(ptr1->key, ptr1->next->key) > 0) {
+                swap_nodes(ptr1, ptr1->next);
                 swapped = 1;
             }
             ptr1 = ptr1->next;
         }
-        ptr2 = ptr1;  // Set the last sorted node to prevent checking it again
-    } while (swapped);  // Continue until no more swaps are needed
+        ptr2 = ptr1;
+    }
 }
 
 int	initialize_shell(t_shell_data *shell)
 {
 	shell->env = initialize_env();
+	shell->variables = initialize_env();
+	sort_env_list(shell->variables);
 	shell->operation_type = NO_RDR;
 	return (0);
 }
@@ -102,14 +103,15 @@ int	main(int argc, char **argv)
 {
 	t_shell_data	*shell;
 
-	atexit(leaks);
+	// atexit(leaks);
 	(void)argv;
 	(void)argc;
 	shell = (t_shell_data *)malloc(sizeof(t_shell_data));
 	if (!shell)
 		return (1);
 	initialize_shell(shell);
-	print_env_list(shell->variables);
+	ft_export(shell, ft_split("HI=MTE YELLO=YUUU", ' '));
+	free_env_list(shell->env);
 	free_env_list(shell->variables);
 	free(shell);
 	return (0);

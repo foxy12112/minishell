@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:13:40 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/04 22:03:03 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/05 06:14:20 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,23 +66,36 @@ int	ft_pwd(void)
 	return (0);
 }
 
-// int	ft_export(t_shell_data *shell, char **variables)
-// {
-// 	int i;
+int	add_variables(t_shell_data *shell, char **variables)
+{
+	int	i;
 
-// 	i = 0;
-// 	while (variables[i])
-// 	{
-// 		printf("%s\n", variables[i]);
-// 		i++;
-// 	}
-// 	if (i < 1)
-// 	{
-// 		// just display all variables
-// 	}
-// 	else
-// 	{
-		
-// 	}
-// 	return (0);
-// }
+	i = 0;
+	while (variables[i])
+	{
+		add_to_variables_list(&shell->env, ft_split(variables[i], '='));
+		add_to_variables_list(&shell->variables, ft_split(variables[i], '='));
+		i++;
+	}
+	return (0);
+}
+
+int	ft_export(t_shell_data *shell, char **variables)
+{
+	int i;
+
+	i = 0;
+	while (variables[i])
+	{
+		i++;
+	}
+	if (i < 1)
+	{
+		print_variables_list(shell->variables);
+	}
+	else
+	{
+		add_variables(shell, variables);
+	}
+	return (0);
+}
