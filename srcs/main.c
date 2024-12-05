@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/05 19:14:09 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/10 10:49:24 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,41 +49,6 @@ int	execute_arguments(char **args_ar)
 	return (0);
 }
 
-void swap_nodes(t_env_list *a, t_env_list *b) {
-    char *temp_key = a->key;
-    char *temp_value = a->value;
-
-    a->key = b->key;
-    a->value = b->value;
-
-    b->key = temp_key;
-    b->value = temp_value;
-}
-
-void sort_env_list(t_env_list *head) {
-    int swapped;
-    t_env_list *ptr1;
-    t_env_list *ptr2 = NULL;
-
-    if (head == NULL)
-        return;
-
-    swapped = 1;
-    while (swapped) {
-        swapped = 0;
-        ptr1 = head;
-
-        while (ptr1->next != ptr2) {
-            if (ft_strcmp(ptr1->key, ptr1->next->key) > 0) {
-                swap_nodes(ptr1, ptr1->next);
-                swapped = 1;
-            }
-            ptr1 = ptr1->next;
-        }
-        ptr2 = ptr1;
-    }
-}
-
 int	initialize_shell(t_shell_data *shell)
 {
 	shell->env = initialize_env();
@@ -92,7 +57,6 @@ int	initialize_shell(t_shell_data *shell)
 	shell->operation_type = NO_RDR;
 	return (0);
 }
-
 
 void	leaks(void)
 {
@@ -104,17 +68,22 @@ int	main(int argc, char **argv)
 	// t_shell_data	*shell;
 
 	// atexit(leaks);
-	// (void)argv;
-	// (void)argc;
-	// shell = (t_shell_data *)malloc(sizeof(t_shell_data));
-	// if (!shell)
-		// return (1);
-	// initialize_shell(shell);
-	display();
-	// ft_export(shell, ft_split("HI=MTE YELLO=YUUU", ' '));
-	// free_env_list(shell->env);
-	// free_env_list(shell->variables);
-	// free(shell);
+	(void)argv;
+	(void)argc;
+	shell = (t_shell_data *)malloc(sizeof(t_shell_data));
+	if (!shell)
+		return (1);
+	initialize_shell(shell);
+	ft_export(shell, ft_split("HI=MTE YELLO=YUUU", ' '));
+	// printf("%s\n", retrieve_variable(shell, "HI"));
+	// print_variables_list(shell->variables);
+	// printf("\n\n\n\n");
+	ft_unset(shell, "HI");
+	ft_unset(shell, "HOME");
+	// print_variables_list(shell->variables);
+	free_env_list(shell->env);
+	free_env_list(shell->variables);
+	free(shell);
 	return (0);
 }
 
@@ -124,6 +93,6 @@ int	main(int argc, char **argv)
 // fd_cd("../");
 // ft_echo(ft_split("HELO WORLD THIS IS ME", ' '), 1);
 // ft_pwd();
-
+// ft_echo(ft_split("HELO WORLD THIS IS ME", ' '), 1, false);
 // newstr = ft_split("VAR1=TES1 VAR2=TES2 VAR3=TES3", ' ');
 // ft_export(shell, newstr);
