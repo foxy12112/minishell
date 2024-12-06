@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/10 10:49:24 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/10 10:50:14 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,6 @@ int	execute_arguments(char **args_ar)
 	return (0);
 }
 
-int	initialize_shell(t_shell_data *shell)
-{
-	shell->env = initialize_env();
-	shell->variables = initialize_env();
-	sort_env_list(shell->variables);
-	shell->operation_type = NO_RDR;
-	return (0);
-}
-
 void	leaks(void)
 {
 	system("leaks minishella");
@@ -74,25 +65,18 @@ int	main(int argc, char **argv)
 	if (!shell)
 		return (1);
 	initialize_shell(shell);
-	ft_export(shell, ft_split("HI=MTE YELLO=YUUU", ' '));
-	// printf("%s\n", retrieve_variable(shell, "HI"));
-	// print_variables_list(shell->variables);
-	// printf("\n\n\n\n");
-	ft_unset(shell, "HI");
-	ft_unset(shell, "HOME");
-	// print_variables_list(shell->variables);
+	test_unset(shell);
 	free_env_list(shell->env);
 	free_env_list(shell->variables);
 	free(shell);
 	return (0);
 }
 
-// char **newstr;
-// execute_arguments(newstr);
+//BUILTIN TESTS
 
-// fd_cd("../");
-// ft_echo(ft_split("HELO WORLD THIS IS ME", ' '), 1);
-// ft_pwd();
-// ft_echo(ft_split("HELO WORLD THIS IS ME", ' '), 1, false);
-// newstr = ft_split("VAR1=TES1 VAR2=TES2 VAR3=TES3", ' ');
-// ft_export(shell, newstr);
+// test_cd(shell);
+// test_export(shell);
+// test_echo();
+// test_env(shell);
+// test_pwd();
+// test_unset(shell);

@@ -6,7 +6,7 @@
 #    By: ldick <ldick@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/10 10:49:10 by ldick            ###   ########.fr        #
+#    Updated: 2024/12/10 10:49:56 by ldick            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,10 @@ ERROR_FILE	=	error.log
 _UTILS		=	utils.c builtins.c env.c free.c parsing.c signal.c
 UTILS		=	$(addprefix utils/, $(_UTILS))
 
-_SRCS		=	main.c $(UTILS)
+_BUILTINS		=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
+BUILTINS		=	$(addprefix builtins/, $(_BUILTINS))
+
+_SRCS		=	main.c tests.c $(BUILTINS) $(UTILS) 
 SRCS		=	$(addprefix srcs/, $(_SRCS))
 
 OBJS		=	$(SRCS:srcs/%.c=bin/%.o)
@@ -60,7 +63,9 @@ all:			$(NAME)
 bin:
 				@echo "\t\t\t$(BLUE) Making bin directory"
 				@echo "\t\t\t$(BOLD_BLUE) mkdir -p bin/utils"
+				@echo "\t\t\t$(BOLD_BLUE) mkdir -p bin/builtins"
 				@mkdir -p bin/utils
+				@mkdir -p bin/builtins
 
 bin/%.o:		srcs/%.c | bin
 				@echo "$(GREEN) Compiling $(Compiler) $(CLR_RMV) -c -o $(YELLOW) $@ $(CYAN) $^ $(GREEN) $(EXTRA_FLAGS) $(CFLAGS) $(GREEN) $(INCLUDES) $(NC)"
