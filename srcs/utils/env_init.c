@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 02:20:43 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/10 10:50:29 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/10 10:51:33 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,12 @@ t_env_list	*initialize_env(void)
 	char		**env;
 	char		**key_value;
 	int			i;
-	int			j;
 
 	env = environ;
 	i = 0;
 	variables = NULL;
 	while (env[i])
 	{
-		j = 0;
 		key_value = ft_split(env[i], '=');
 		add_to_variables_list(&variables, key_value);
 		free_key_value(key_value);
