@@ -6,11 +6,13 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 03:18:43 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/06 03:50:03 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/06 03:57:10 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+//BUILTIN TESTS
 
 void	test_cd(t_shell_data *shell)
 {
@@ -56,3 +58,5 @@ void	test_unset(t_shell_data *shell)
 	printf("\nPrinting New ENV List:\n\n");
 	print_env_list(shell->env);
 }
+
+//REDIRECT TESTS

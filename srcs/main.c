@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/06 03:50:47 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/06 03:56:51 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,3 +80,5 @@ int	main(int argc, char **argv)
 // test_env(shell);
 // test_pwd();
 // test_unset(shell);
+
+//REDIRECT TESTS
