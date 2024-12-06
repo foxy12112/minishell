@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 02:20:43 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/05 22:37:11 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/06 03:07:57 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,23 +54,6 @@ void	add_to_variables_list(t_env_list **head, char **key_value)
 			temp = temp->next;
 		temp->next = new_node;
 		new_node->prev = temp;
-	}
-}
-
-void	print_env_list(t_env_list *variables)
-{
-	t_env_list	*current;
-
-	if (!variables)
-	{
-		printf("List is empty.\n");
-		return ;
-	}
-	current = variables->next;
-	while (current != NULL)
-	{
-		printf("%s=%s\n", current->key, current->value);
-		current = current->next;
 	}
 }
 

@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   intialize.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/03 00:56:03 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/03 01:18:07 by macbook          ###   ########.fr       */
+/*   Created: 2024/12/06 03:17:18 by auplisas          #+#    #+#             */
+/*   Updated: 2024/12/06 03:18:08 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int utils(void)
+int	initialize_shell(t_shell_data *shell)
 {
-    return (0);
+	shell->env = initialize_env();
+	shell->variables = initialize_env();
+	shell->operation_type = NO_RDR;
+	return (0);
 }

@@ -1,53 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/05 05:08:24 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/06 02:10:59 by auplisas         ###   ########.fr       */
+/*   Created: 2024/12/06 02:19:05 by auplisas          #+#    #+#             */
+/*   Updated: 2024/12/06 02:39:58 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_key_value(char **key_value)
+int	ft_echo(char **args, int fd, bool n_option)
 {
 	int	i;
 
-	i = 0;
-	while (key_value[i])
+	i = 1;
+	while (args[i])
 	{
-		free(key_value[i]);
+		ft_putstr_fd(args[i], fd);
+		if (args[i + 1])
+		{
+			ft_putchar_fd(' ', fd);
+		}
+		else if (!n_option)
+		{
+			ft_putchar_fd('\n', fd);
+		}
 		i++;
 	}
-	free(key_value);
-}
-
-void	free_env_list(t_env_list *head)
-{
-	t_env_list	*temp;
-
-	while (head != NULL)
-	{
-		temp = head->next;
-		free(head->key);
-		free(head->value);
-		free(head);
-		head = temp;
-	}
-}
-
-void	free_char_string(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-}
+	return (0);
+} 

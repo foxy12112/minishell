@@ -6,25 +6,13 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 17:17:23 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/05 20:48:17 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/06 03:40:18 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	swap_nodes(t_env_list *a, t_env_list *b)
-{
-	char	*temp_key;
-	char	*temp_value;
-
-	temp_key = a->key;
-	temp_value = a->value;
-	a->key = b->key;
-	a->value = b->value;
-	b->key = temp_key;
-	b->value = temp_value;
-}
-
+//Function to Get variable 
 char *retrieve_variable(t_shell_data *shell, char *key) {
     t_env_list *variables;
 
@@ -38,30 +26,20 @@ char *retrieve_variable(t_shell_data *shell, char *key) {
     return NULL;
 }
 
-void	sort_env_list(t_env_list *head)
+int	add_variables(t_shell_data *shell, char **variables)
 {
-	int swapped;
-	t_env_list *ptr1;
-	t_env_list *ptr2 = NULL;
+	int		i;
+	char	**key_value;
 
-	if (head == NULL)
-		return ;
-
-	swapped = 1;
-	while (swapped)
+	i = 0;
+	(void)shell;
+	while (variables[i])
 	{
-		swapped = 0;
-		ptr1 = head;
-
-		while (ptr1->next != ptr2)
-		{
-			if (ft_strcmp(ptr1->key, ptr1->next->key) > 0)
-			{
-				swap_nodes(ptr1, ptr1->next);
-				swapped = 1;
-			}
-			ptr1 = ptr1->next;
-		}
-		ptr2 = ptr1;
+		key_value = ft_split(variables[i], '=');
+		add_to_variables_list(&shell->env, key_value);
+		add_to_variables_list(&shell->variables, key_value);
+		free_char_string(key_value);
+		i++;
 	}
+	return (0);
 }

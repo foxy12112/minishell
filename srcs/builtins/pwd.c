@@ -1,53 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/05 05:08:24 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/06 02:10:59 by auplisas         ###   ########.fr       */
+/*   Created: 2024/12/06 02:19:20 by auplisas          #+#    #+#             */
+/*   Updated: 2024/12/06 02:40:05 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_key_value(char **key_value)
+int	ft_pwd(void)
 {
-	int	i;
+	char	cwd[PATH_MAX];
 
-	i = 0;
-	while (key_value[i])
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
-		free(key_value[i]);
-		i++;
+		printf("%s\n", cwd);
 	}
-	free(key_value);
-}
-
-void	free_env_list(t_env_list *head)
-{
-	t_env_list	*temp;
-
-	while (head != NULL)
+	else
 	{
-		temp = head->next;
-		free(head->key);
-		free(head->value);
-		free(head);
-		head = temp;
+		perror("Pwd error");
 	}
-}
-
-void	free_char_string(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
+	return (0);
 }

@@ -1,53 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/05 05:08:24 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/06 02:10:59 by auplisas         ###   ########.fr       */
+/*   Created: 2024/12/06 02:19:09 by auplisas          #+#    #+#             */
+/*   Updated: 2024/12/06 02:39:56 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_key_value(char **key_value)
+void	print_env_list(t_env_list *variables)
 {
-	int	i;
+	t_env_list	*current;
 
-	i = 0;
-	while (key_value[i])
+	if (!variables)
 	{
-		free(key_value[i]);
-		i++;
+		printf("List is empty.\n");
+		return ;
 	}
-	free(key_value);
-}
-
-void	free_env_list(t_env_list *head)
-{
-	t_env_list	*temp;
-
-	while (head != NULL)
+	current = variables->next;
+	while (current != NULL)
 	{
-		temp = head->next;
-		free(head->key);
-		free(head->value);
-		free(head);
-		head = temp;
+		printf("%s=%s\n", current->key, current->value);
+		current = current->next;
 	}
 }
 
-void	free_char_string(char **str)
+int	ft_env(t_shell_data *shell)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
+	print_env_list(shell->env);
+	return (0);
 }

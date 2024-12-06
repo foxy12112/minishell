@@ -6,7 +6,7 @@
 #    By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/05 17:18:11 by auplisas         ###   ########.fr        #
+#    Updated: 2024/12/06 03:41:53 by auplisas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,10 +40,13 @@ SUBMODULE	=	main-libs/Makefile
 #################################
 #				Files			#
 #################################
-_UTILS		=	utils.c builtins.c env.c free.c variables.c
+_UTILS		=	env_init.c free.c intialize.c variables.c
 UTILS		=	$(addprefix utils/, $(_UTILS))
 
-_SRCS		=	main.c $(UTILS)
+_BUILTINS		=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
+BUILTINS		=	$(addprefix builtins/, $(_BUILTINS))
+
+_SRCS		=	main.c tests.c $(BUILTINS) $(UTILS) 
 SRCS		=	$(addprefix srcs/, $(_SRCS))
 
 OBJS		=	$(SRCS:srcs/%.c=bin/%.o)
@@ -57,7 +60,9 @@ all:			$(NAME)
 bin:
 				@echo "\t\t\t$(BLUE) Making bin directory"
 				@echo "\t\t\t$(BOLD_BLUE) mkdir -p bin/utils"
+				@echo "\t\t\t$(BOLD_BLUE) mkdir -p bin/builtins"
 				@mkdir -p bin/utils
+				@mkdir -p bin/builtins
 
 bin/%.o:		srcs/%.c | bin
 				@echo "$(GREEN) Compiling $(COMPILER) $(CLR_RMV) -c -o $(YELLOW) $@ $(CYAN) $^ $(GREEN) $(CFLAGS) $(GREEN) $(INCLUDES)"
