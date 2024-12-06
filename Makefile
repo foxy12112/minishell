@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+         #
+#    By: macbook <macbook@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/06 03:41:53 by auplisas         ###   ########.fr        #
+#    Updated: 2024/12/06 06:12:02 by macbook          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ SUBMODULE	=	main-libs/Makefile
 #################################
 #				Files			#
 #################################
-_UTILS		=	env_init.c free.c intialize.c variables.c
+_UTILS		=	env_init.c free.c intialize.c variables.c exec.c
 UTILS		=	$(addprefix utils/, $(_UTILS))
 
 _BUILTINS		=	cd.c echo.c env.c exit.c export.c pwd.c unset.c

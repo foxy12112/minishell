@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/06 03:48:15 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/06 06:09:08 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void					print_env_list(t_env_list *variables);
 void					print_variables_list(t_env_list *variables);
 int						add_variables(t_shell_data *shell, char **variables);
 int						initialize_shell(t_shell_data *shell);
+// exec.c
+void					cell_launch(char **args);
 // variables.c
 void					sort_env_list(t_env_list *head);
 char					*retrieve_variable(t_shell_data *shell, char *key);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 02:20:43 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/06 03:07:57 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/06 05:26:48 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,12 @@ t_env_list	*initialize_env(void)
 	char		**env;
 	char		**key_value;
 	int			i;
-	int			j;
 
 	env = environ;
 	i = 0;
 	variables = NULL;
 	while (env[i])
 	{
-		j = 0;
 		key_value = ft_split(env[i], '=');
 		add_to_variables_list(&variables, key_value);
 		free_key_value(key_value);
