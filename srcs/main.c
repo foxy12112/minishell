@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/06 06:21:21 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/06 06:32:01 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	main(int argc, char **argv)
 	if (!shell)
 		return (1);
 	initialize_shell(shell);
-	cell_launch(ft_split("mkdir test", ' '));
+	cell_launch(ft_split("cat input.txt", ' '));
 	free_env_list(shell->env);
 	free_env_list(shell->variables);
 	free(shell);
@@ -81,4 +81,6 @@ int	main(int argc, char **argv)
 // test_pwd();
 // test_unset(shell);
 
+//Exec function tests
+//cell_launch(ft_split("mkdir test", ' '));
 //REDIRECT TESTS
