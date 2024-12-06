@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/10 10:50:14 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/10 10:50:44 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,3 +80,5 @@ int	main(int argc, char **argv)
 // test_env(shell);
 // test_pwd();
 // test_unset(shell);
+
+//REDIRECT TESTS
