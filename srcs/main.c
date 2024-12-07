@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/07 06:54:35 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/07 07:59:47 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,23 +68,23 @@ int	redirect_output(const char *filename)
 	return (fd);
 }
 
-int	redirect_input(const char *filename)
+void	redirect_input(const char *filename)
 {
 	int	fd;
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
-		perror("open");
-		return (-1);
+		perror("Failed to open input file");
+		exit(EXIT_FAILURE);
 	}
 	if (dup2(fd, STDIN_FILENO) < 0)
 	{
-		perror("dup2");
+		perror("dup2 failed");
 		close(fd);
-		return (-1);
+		exit(EXIT_FAILURE);
 	}
-	return (fd);
+	close(fd);
 }
 
 int	main(int argc, char **argv)
@@ -98,13 +98,17 @@ int	main(int argc, char **argv)
 	if (!shell)
 		return (1);
 	initialize_shell(shell);
-	shell->fd = redirect_output("file.txt");
-	if (shell->fd < 0)
-	{
-		return (1);
-	}
-	ft_echo(ft_split("GD MUST END", ' '), shell->fd, false);
-	close(shell->fd);
+	// redirect_input("hi.txt");
+	// shell->fd = redirect_output("file.txt");
+	// if (shell->fd < 0)
+	// {
+	// 	return (1);
+	// }
+	// close(shell->fd);
+	// char *args[] = {"cat", NULL};
+
+    // cell_launch(args);
+	cell_launch(ft_split("cat test", ' '));
 	free_env_list(shell->env);
 	free_env_list(shell->variables);
 	free(shell);
@@ -123,6 +127,6 @@ int	main(int argc, char **argv)
 // test_unset(shell);
 
 // EXEC FUNCTION TESTS
-// cell_launch(ft_split("mkdir test", ' '));
+// cell_launch(ft_split("cat test", ' '));
 
 // REDIRECT TESTS
