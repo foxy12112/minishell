@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/06 06:09:08 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/07 05:38:21 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_shell_data
 	t_operation_type	operation_type;
 	t_env_list			*env;
 	t_env_list			*variables;
+	int					fd;
 }						t_shell_data;
 
 typedef struct s_nodes
@@ -84,9 +85,10 @@ void					free_key_value(char **key_value);
 void					free_char_string(char **str);
 
 // test.c
+char					*test_get_variable(t_shell_data *shell, char *key);
 void					test_cd(t_shell_data *shell);
 void					test_export(t_shell_data *shell);
-void					test_echo(void);
+void					test_echo(char **string);
 void					test_env(t_shell_data *shell);
 void					test_pwd(void);
 void					test_unset(t_shell_data *shell);

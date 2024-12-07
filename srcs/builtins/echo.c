@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:05 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/06 02:39:58 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/07 05:47:21 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_echo(char **args, int fd, bool n_option)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	while (args[i])
 	{
 		ft_putstr_fd(args[i], fd);
@@ -28,7 +28,9 @@ int	ft_echo(char **args, int fd, bool n_option)
 		{
 			ft_putchar_fd('\n', fd);
 		}
+		free(args[i]);
 		i++;
 	}
+	free(args);
 	return (0);
 } 

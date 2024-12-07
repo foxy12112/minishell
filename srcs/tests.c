@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   tests.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 03:18:43 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/06 03:57:10 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/06 19:21:17 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+//VARIABLES
+
+char *test_get_variable(t_shell_data *shell, char *key)
+{
+	return (retrieve_variable(shell, key));
+}
 
 //BUILTIN TESTS
 
@@ -34,9 +41,9 @@ void	test_export(t_shell_data *shell)
 	print_variables_list(shell->variables);
 }
 
-void	test_echo(void)
+void	test_echo(char **string)
 {
-	ft_echo(ft_split("HELO WORLD THIS IS ME", ' '), 1, false);
+	ft_echo(string, 1, false);
 }
 
 void	test_env(t_shell_data *shell)

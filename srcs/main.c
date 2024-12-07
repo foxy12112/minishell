@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/06 06:32:01 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/07 06:54:35 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,39 @@ void	leaks(void)
 	system("leaks minishella");
 }
 
+// Symbol > , redirects output of echo f.e into file
+int	redirect_output(const char *filename)
+{
+	int	fd;
+
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd < 0)
+	{
+		perror("open");
+		return (-1);
+	}
+	return (fd);
+}
+
+int	redirect_input(const char *filename)
+{
+	int	fd;
+
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+	{
+		perror("open");
+		return (-1);
+	}
+	if (dup2(fd, STDIN_FILENO) < 0)
+	{
+		perror("dup2");
+		close(fd);
+		return (-1);
+	}
+	return (fd);
+}
+
 int	main(int argc, char **argv)
 {
 	t_shell_data	*shell;
@@ -65,15 +98,23 @@ int	main(int argc, char **argv)
 	if (!shell)
 		return (1);
 	initialize_shell(shell);
-	cell_launch(ft_split("cat input.txt", ' '));
+	shell->fd = redirect_output("file.txt");
+	if (shell->fd < 0)
+	{
+		return (1);
+	}
+	ft_echo(ft_split("GD MUST END", ' '), shell->fd, false);
+	close(shell->fd);
 	free_env_list(shell->env);
 	free_env_list(shell->variables);
 	free(shell);
 	return (0);
 }
 
-//BUILTIN TESTS
+// VARIABLE TEST
+// printf("%s\n", test_get_variable(shell, "USER"));
 
+// BUILTIN TESTS
 // test_cd(shell);
 // test_export(shell);
 // test_echo();
@@ -81,6 +122,7 @@ int	main(int argc, char **argv)
 // test_pwd();
 // test_unset(shell);
 
-//Exec function tests
-//cell_launch(ft_split("mkdir test", ' '));
-//REDIRECT TESTS
+// EXEC FUNCTION TESTS
+// cell_launch(ft_split("mkdir test", ' '));
+
+// REDIRECT TESTS
