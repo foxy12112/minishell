@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/07 07:59:47 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/07 18:49:15 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,7 @@ void	leaks(void)
 	system("leaks minishella");
 }
 
-// Symbol > , redirects output of echo f.e into file
-int	redirect_output(const char *filename)
-{
-	int	fd;
-
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd < 0)
-	{
-		perror("open");
-		return (-1);
-	}
-	return (fd);
-}
-
+// Symbol < , redirects input of txt file into cat or other function
 void	redirect_input(const char *filename)
 {
 	int	fd;
@@ -98,7 +85,12 @@ int	main(int argc, char **argv)
 	if (!shell)
 		return (1);
 	initialize_shell(shell);
-	// redirect_input("hi.txt");
+	redirect_input("hi.txt");
+	char *args[] = {"wc", NULL};
+
+    // Launch the "cat" command
+    cell_launch(args);
+
 	// shell->fd = redirect_output("file.txt");
 	// if (shell->fd < 0)
 	// {
@@ -108,7 +100,7 @@ int	main(int argc, char **argv)
 	// char *args[] = {"cat", NULL};
 
     // cell_launch(args);
-	cell_launch(ft_split("cat test", ' '));
+	// cell_launch(ft_split("cat", ' '));
 	free_env_list(shell->env);
 	free_env_list(shell->variables);
 	free(shell);
