@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/06 23:11:14 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/07 22:38:53 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	**ft_tokenize(char *input)
 {
 	char	**token_stack;
 
-	token_stack - ft_split(input, ' ');
+	token_stack = ft_split(input, ' ');
 	return (token_stack);
 }
 
@@ -91,6 +91,41 @@ static int	check_var(char *input)
 	return (0);
 }
 
+static int		is_valid_var(char *input)
+{
+	int		i;
+	int		j;
+	char	*check;
+	char	*tmp;
+
+	i = 0;
+	j = 0;
+	while(input[i])
+	{
+		printf("%d\n", i);
+		if (input[i] == '=' && input[i + 1])
+		{
+			i--;
+			if (ft_is_whitespace(input[i]))
+			{
+				while(input[i] && ft_is_whitespace(input[i]))
+					i--;
+				while(input[i] && !ft_is_whitespace(input[i]))
+					i--;
+				while(!ft_is_whitespace(input[i]) && input[i])
+				{
+					tmp[j] = input[i];
+					i++;
+					j++;
+				}
+				return (printf("%s: command not found\n", tmp), 1);
+			}
+		}
+		i++;
+	}
+	return (0);
+}
+
 void	display(void)
 {
 	char	*input;
@@ -105,11 +140,12 @@ void	display(void)
 		add_history(input);
 		if (!ft_strncmp(input, "exit", 5))
 			break ;
-		if (possible_var(input))
-		{
-			if (check_var(input))
-				printf("is variable\n");
-		}
+		// if (possible_var(input))
+		// {
+		// 	if (check_var(input))
+		// 		printf("is variable\n");
+		// }
+		is_valid_var(input);
 		// token_stack = ft_tokenize(input);
 		// print_two_d(token_stack);
 	}

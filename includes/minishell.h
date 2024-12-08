@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/05 19:15:11 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/07 17:19:04 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@ typedef struct s_env_list
 	struct s_env_list	*next;
 	struct s_env_list	*prev;
 }						t_env_list;
+
+typedef struct s_var_list
+{
+	char				*var_name;
+	char				*var_value;
+	struct s_var_list	*next;
+	struct s_var_list	*prev;
+}						t_var_list;
 
 typedef struct s_shell_data
 {
