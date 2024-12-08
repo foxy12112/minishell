@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/08 04:18:48 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/08 07:34:42 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,54 +54,48 @@ void	leaks(void)
 	system("leaks minishella");
 }
 
-// void	redirect_input_heredoc(const char *delimiter)
-// {
-// 	int		pipe_fd[2];
-// 	char	*line;
-// 	size_t	len;
-// 	ssize_t	nread;
+void	redirect_input_heredoc(const char *delimiter)
+{
+	int		pipe_fd[2];
+	char	*line;
+	size_t	len;
+	ssize_t	nread;
 
-// 	line = NULL;
-// 	len = 0;
-// 	// Create a pipe to pass the heredoc input
-// 	if (pipe(pipe_fd) == -1)
-// 	{
-// 		perror("pipe failed");
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	// Read the input for the heredoc until we encounter the delimiter
-// 	while (1)
-// 	{
-// 		printf("heredoc> ");
-// 		nread = getline(&line, &len, stdin);
-// 		if (nread == -1)
-// 		{
-// 			break ;
-// 		}
-// 		// If the line matches the delimiter, stop reading
-// 		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0)
-// 		{
-// 			break ;
-// 		}
-// 		// Write the line to the pipe
-// 		write(pipe_fd[1], line, nread);
-// 	}
-// 	// Close the write end of the pipe
-// 	close(pipe_fd[1]);
-// 	// Redirect the pipe to stdin
-// 	if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
-// 	{
-// 		perror("dup2 failed");
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	// Close the read end of the pipe
-// 	close(pipe_fd[0]);
-// 	free(line); // Free the line buffer
-// }
+	line = NULL;
+	len = 0;
+	if (pipe(pipe_fd) == -1)
+	{
+		perror("pipe failed");
+		exit(EXIT_FAILURE);
+	}
+	while (1)
+	{
+		printf("heredoc> ");
+		nread = getline(&line, &len, stdin);
+		if (nread == -1)
+		{
+			break ;
+		}
+		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0)
+		{
+			break ;
+		}
+		write(pipe_fd[1], "HI", 2);
+	}
+	close(pipe_fd[1]);
+	if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
+	{
+		perror("dup2 failed");
+		exit(EXIT_FAILURE);
+	}
+	close(pipe_fd[0]);
+	free(line);
+}
 
 int	main(int argc, char **argv)
 {
 	t_shell_data	*shell;
+	char			*args[] = {"cat", NULL};
 
 	// atexit(leaks);
 	(void)argv;
@@ -110,7 +104,8 @@ int	main(int argc, char **argv)
 	if (!shell)
 		return (1);
 	initialize_shell(shell);
-	// redirect_input_heredoc("EOF");
+	redirect_input_heredoc("EOF");
+	cell_launch(args);
 	free_env_list(shell->env);
 	free_env_list(shell->variables);
 	free(shell);
