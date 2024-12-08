@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/07 18:49:15 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/08 04:18:48 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,25 +54,50 @@ void	leaks(void)
 	system("leaks minishella");
 }
 
-// Symbol < , redirects input of txt file into cat or other function
-void	redirect_input(const char *filename)
-{
-	int	fd;
+// void	redirect_input_heredoc(const char *delimiter)
+// {
+// 	int		pipe_fd[2];
+// 	char	*line;
+// 	size_t	len;
+// 	ssize_t	nread;
 
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-	{
-		perror("Failed to open input file");
-		exit(EXIT_FAILURE);
-	}
-	if (dup2(fd, STDIN_FILENO) < 0)
-	{
-		perror("dup2 failed");
-		close(fd);
-		exit(EXIT_FAILURE);
-	}
-	close(fd);
-}
+// 	line = NULL;
+// 	len = 0;
+// 	// Create a pipe to pass the heredoc input
+// 	if (pipe(pipe_fd) == -1)
+// 	{
+// 		perror("pipe failed");
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	// Read the input for the heredoc until we encounter the delimiter
+// 	while (1)
+// 	{
+// 		printf("heredoc> ");
+// 		nread = getline(&line, &len, stdin);
+// 		if (nread == -1)
+// 		{
+// 			break ;
+// 		}
+// 		// If the line matches the delimiter, stop reading
+// 		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0)
+// 		{
+// 			break ;
+// 		}
+// 		// Write the line to the pipe
+// 		write(pipe_fd[1], line, nread);
+// 	}
+// 	// Close the write end of the pipe
+// 	close(pipe_fd[1]);
+// 	// Redirect the pipe to stdin
+// 	if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
+// 	{
+// 		perror("dup2 failed");
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	// Close the read end of the pipe
+// 	close(pipe_fd[0]);
+// 	free(line); // Free the line buffer
+// }
 
 int	main(int argc, char **argv)
 {
@@ -85,22 +110,7 @@ int	main(int argc, char **argv)
 	if (!shell)
 		return (1);
 	initialize_shell(shell);
-	redirect_input("hi.txt");
-	char *args[] = {"wc", NULL};
-
-    // Launch the "cat" command
-    cell_launch(args);
-
-	// shell->fd = redirect_output("file.txt");
-	// if (shell->fd < 0)
-	// {
-	// 	return (1);
-	// }
-	// close(shell->fd);
-	// char *args[] = {"cat", NULL};
-
-    // cell_launch(args);
-	// cell_launch(ft_split("cat", ' '));
+	// redirect_input_heredoc("EOF");
 	free_env_list(shell->env);
 	free_env_list(shell->variables);
 	free(shell);
@@ -122,3 +132,7 @@ int	main(int argc, char **argv)
 // cell_launch(ft_split("cat test", ' '));
 
 // REDIRECT TESTS
+// (>) 	test_redirect_output("file.txt");
+// (<) test_redirect_input("file.txt", "cat");
+// (>>) test_redirect_append_output("file.txt");
+// (<<)

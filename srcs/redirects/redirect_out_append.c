@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirect_in.c                                      :+:      :+:    :+:   */
+/*   redirect_out_append.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/06 04:07:19 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/08 04:12:42 by auplisas         ###   ########.fr       */
+/*   Created: 2024/12/07 23:52:17 by auplisas          #+#    #+#             */
+/*   Updated: 2024/12/08 04:17:46 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// Symbol (<)
-void	redirect_input(const char *filename)
+// Symbol (>>)
+int	redirect_output_append(const char *filename)
 {
-	int	fd;
+	int fd;
 
-	fd = open(filename, O_RDONLY);
+	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
 	{
-		perror("Failed to open input file");
-		exit(EXIT_FAILURE);
+		perror("Failed to open output file");
+		return (-1);
 	}
-	if (dup2(fd, STDIN_FILENO) < 0)
+
+	if (dup2(fd, STDOUT_FILENO) < 0)
 	{
 		perror("dup2 failed");
 		close(fd);
-		exit(EXIT_FAILURE);
+		return (-1);
 	}
+
 	close(fd);
+	return (0);
 }

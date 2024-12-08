@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/07 05:38:21 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/08 04:16:51 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ int						main(int argc, char **argv);
 int						utils(void);
 
 // builtins
-int						ft_echo(char **args, int fd, bool n_option);
 int						fd_cd(t_shell_data *shell, char *path);
+int						ft_echo(char **args, int fd, bool n_option);
+int						ft_env(t_shell_data *shell);
+int						ft_export(t_shell_data *shell, char **variables);
 void					change_pwd_env(t_env_list **head, const char *key,
 							const char *value);
 int						ft_pwd(void);
-int						ft_export(t_shell_data *shell, char **variables);
 int						ft_unset(t_shell_data *shell, char *variables);
-int						ft_env(t_shell_data *shell);
 // env.c
 t_env_list				*initialize_env(void);
 void					add_to_variables_list(t_env_list **head,
@@ -74,6 +74,10 @@ void					print_env_list(t_env_list *variables);
 void					print_variables_list(t_env_list *variables);
 int						add_variables(t_shell_data *shell, char **variables);
 int						initialize_shell(t_shell_data *shell);
+// redirects.c
+int						redirect_output(const char *filename);
+void					redirect_input(const char *filename);
+int						redirect_output_append(const char *filename);
 // exec.c
 void					cell_launch(char **args);
 // variables.c
@@ -83,13 +87,16 @@ char					*retrieve_variable(t_shell_data *shell, char *key);
 void					free_env_list(t_env_list *head);
 void					free_key_value(char **key_value);
 void					free_char_string(char **str);
-
 // test.c
 char					*test_get_variable(t_shell_data *shell, char *key);
 void					test_cd(t_shell_data *shell);
 void					test_export(t_shell_data *shell);
-void					test_echo(char **string);
+void					test_echo(char **string, int fd);
 void					test_env(t_shell_data *shell);
 void					test_pwd(void);
 void					test_unset(t_shell_data *shell);
+int						test_redirect_output(char *filename);
+void					test_redirect_input(char *filename, char *command);
+int						test_redirect_append_output(char *filename);
+
 #endif

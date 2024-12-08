@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   tests.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 03:18:43 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/06 19:21:17 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/08 04:18:16 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-//VARIABLES
+// VARIABLES
 
-char *test_get_variable(t_shell_data *shell, char *key)
+char	*test_get_variable(t_shell_data *shell, char *key)
 {
 	return (retrieve_variable(shell, key));
 }
 
-//BUILTIN TESTS
+// BUILTIN TESTS
 
 void	test_cd(t_shell_data *shell)
 {
@@ -41,9 +41,9 @@ void	test_export(t_shell_data *shell)
 	print_variables_list(shell->variables);
 }
 
-void	test_echo(char **string)
+void	test_echo(char **string, int fd)
 {
-	ft_echo(string, 1, false);
+	ft_echo(string, fd, false);
 }
 
 void	test_env(t_shell_data *shell)
@@ -66,4 +66,42 @@ void	test_unset(t_shell_data *shell)
 	print_env_list(shell->env);
 }
 
-//REDIRECT TESTS
+// REDIRECT TESTS
+
+//(>)
+int	test_redirect_output(char *filename)
+{
+	if (redirect_output(filename) < 0)
+	{
+		return (1);
+	}
+	test_echo(ft_split("HI THIS IS TEST", ' '), STDOUT_FILENO);
+	return (0);
+}
+
+//(<)
+void	test_redirect_input(char *filename, char *command)
+{
+	char	*args[] = {command, NULL};
+
+	redirect_input(filename);
+	cell_launch(args);
+}
+
+int	test_redirect_append_output(char *filename)
+{
+	if (redirect_output_append(filename) < 0)
+	{
+		return 1;
+	}
+	test_echo(ft_split("GELA", ' '), STDOUT_FILENO);
+
+	// shell->fd = redirect_output_append(filename);
+	// if (shell->fd < 0)
+	// {
+	// 	return (1);
+	// }
+	// test_echo(ft_split("GELA", ' '), STDOUT_FILENO);
+	// close(shell->fd);
+	return (0);
+}
