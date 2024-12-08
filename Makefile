@@ -6,7 +6,7 @@
 #    By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/07 23:55:46 by auplisas         ###   ########.fr        #
+#    Updated: 2024/12/08 09:45:03 by auplisas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ COMPILER	=	cc
 LIB_FLAGS	=	main-libs/libs.a
 # CFLAGS		=	-Wall -Wextra -Werror -fsanitize=address -g
 CFLAGS		=	-Wall -Wextra -Werror
+EXTRA_FLAGS	=	-lreadline
 INCLUDES	=	-I includes -I main-libs
 SUBMODULE	=	main-libs/Makefile
 
@@ -81,7 +82,7 @@ $(SUBMODULE):
 				git submodule update --init --recursive
 
 $(NAME):		$(LIBRARY) $(OBJS)
-				@$(COMPILER) $(CFLAGS) -o $(NAME) $(OBJS) $(LIB_FLAGS)
+				@$(COMPILER) $(EXTRA_FLAGS) $(CFLAGS) -o $(NAME) $(OBJS) $(LIB_FLAGS)
 
 clean:
 				@cd main-libs && make fclean

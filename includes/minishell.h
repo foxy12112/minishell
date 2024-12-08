@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/08 04:16:51 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/08 10:37:50 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-
 // > - RDR_COMMAND_TO_INPUT, < - RDR_INPUT_TO_COMMAND, << -
 typedef enum s_operation_type
 {
@@ -41,6 +40,14 @@ typedef struct s_env_list
 	struct s_env_list	*next;
 	struct s_env_list	*prev;
 }						t_env_list;
+
+typedef struct s_heredoc_list
+{
+	char				*word;
+	struct s_env_list	*next;
+	struct s_env_list	*prev;
+}						t_heredoc_list;
+
 
 typedef struct s_shell_data
 {

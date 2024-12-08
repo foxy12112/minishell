@@ -6,11 +6,12 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/08 07:34:42 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/08 10:39:16 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <readline/readline.h>
 
 void	select_operation_type(char **args_ar, t_shell_data *data_tree)
 {
@@ -54,13 +55,36 @@ void	leaks(void)
 	system("leaks minishella");
 }
 
+char	*parse_heredoc(char *str)
+{
+	char			**words;
+	t_heredoc_list	*words_list;
+	int				i;
+
+	i = 0;
+	words = ft_split(str, ' ');
+	words_list = (t_heredoc_list *)malloc(sizeof(t_heredoc_list));
+	if (!words_list)
+		return (NULL);
+	while (words[i])
+	{
+		if (words[i][0] == '$')
+		{
+			printf("%s\n", words[i]);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
 void	redirect_input_heredoc(const char *delimiter)
 {
 	int		pipe_fd[2];
 	char	*line;
 	size_t	len;
-	ssize_t	nread;
 
+	// char	*parsed_line;
+	// ssize_t	nread;
 	line = NULL;
 	len = 0;
 	if (pipe(pipe_fd) == -1)
@@ -70,17 +94,20 @@ void	redirect_input_heredoc(const char *delimiter)
 	}
 	while (1)
 	{
-		printf("heredoc> ");
-		nread = getline(&line, &len, stdin);
-		if (nread == -1)
+		line = readline("> ");
+		if (!line)
 		{
 			break ;
 		}
-		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0)
+		if (ft_strcmp(line, delimiter) == 0)
 		{
+			free(line);
 			break ;
 		}
-		write(pipe_fd[1], "HI", 2);
+		parse_heredoc(line);
+		ft_putstr_fd(line, pipe_fd[1]);
+		ft_putchar_fd('\n', pipe_fd[1]);
+		free(line);
 	}
 	close(pipe_fd[1]);
 	if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
@@ -89,7 +116,6 @@ void	redirect_input_heredoc(const char *delimiter)
 		exit(EXIT_FAILURE);
 	}
 	close(pipe_fd[0]);
-	free(line);
 }
 
 int	main(int argc, char **argv)
