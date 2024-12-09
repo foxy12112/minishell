@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/09 03:21:45 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/09 06:26:13 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,78 @@ int	execute_arguments(char **args_ar)
 // 	system("leaks minishella");
 // }
 
-int	main(int argc, char **argv)
-{
-	t_shell_data	*shell;
+// int	main(int argc, char **argv)
+// {
+// 	t_shell_data	*shell;
 
-	// atexit(leaks);
+// 	// atexit(leaks);
+// 	(void)argv;
+// 	(void)argc;
+// 	shell = (t_shell_data *)malloc(sizeof(t_shell_data));
+// 	if (!shell)
+// 		return (1);
+// 	initialize_shell(shell);
+// 	test_redirect_in_heredoc(shell);
+// 	free_env_list(shell->env);
+// 	free_env_list(shell->variables);
+// 	free(shell);
+// 	return (0);
+// }
+
+int main(int argc, char **argv) {
+    int pipefd[2];
+    pid_t pid1, pid2;
+
 	(void)argv;
 	(void)argc;
-	shell = (t_shell_data *)malloc(sizeof(t_shell_data));
-	if (!shell)
-		return (1);
-	initialize_shell(shell);
-	test_redirect_in_heredoc(shell);
-	free_env_list(shell->env);
-	free_env_list(shell->variables);
-	free(shell);
-	return (0);
+    // Create a pipe
+    if (pipe(pipefd) == -1) {
+        perror("pipe");
+        exit(1);
+    }
+
+    // Fork the first child for the first command
+    pid1 = fork();
+    if (pid1 == -1) {
+        perror("fork");
+        exit(1);
+    }
+
+    if (pid1 == 0) { // Child 1: Executes first command
+        close(pipefd[0]); // Close unused read end
+        dup2(pipefd[1], STDOUT_FILENO); // Redirect stdout to pipe write end
+        close(pipefd[1]);
+
+        execlp("ls", "ls", NULL); // Replace with "ls"
+        perror("execlp");
+        exit(1);
+    }
+
+    // Fork the second child for the second command
+    pid2 = fork();
+    if (pid2 == -1) {
+        perror("fork");
+        exit(1);
+    }
+
+    if (pid2 == 0) { // Child 2: Executes second command
+        close(pipefd[1]); // Close unused write end
+        dup2(pipefd[0], STDIN_FILENO); // Redirect stdin to pipe read end
+        close(pipefd[0]);
+
+        execlp("wc", "wc", "-l", NULL); // Replace with "wc -l"
+        perror("execlp");
+        exit(1);
+    }
+
+    // Parent process: Close unused pipe ends and wait for children
+    close(pipefd[0]);
+    close(pipefd[1]);
+
+    waitpid(pid1, NULL, 0);
+    waitpid(pid2, NULL, 0);
+
+    return 0;
 }
 
 // VARIABLE TEST
