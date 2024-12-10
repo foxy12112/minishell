@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/10 04:40:59 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/10 08:02:42 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,19 @@ int	execute_arguments(char **args_ar)
 	return (0);
 }
 
-// void	leaks(void)
-// {
-// 	system("leaks minishella");
-// }
+void	leaks(void)
+{
+	system("leaks minishella");
+}
 
 int	main(int argc, char **argv)
 {
-	// t_shell_data	*shell;
-	char			*cmd1[] = {"cat", "file.txt", NULL};
-	char			*cmd2[] = {"awk", "/pattern/", NULL};
-	char			*cmd3[] = {"sort", NULL};
+	char	*cmd1[] = {"echo", "xarfruit apple zebanana cherry", NULL};
+	char	*cmd2[] = {"tr", " ", "\n", NULL};
+	char	*cmd3[] = {"sort", NULL};
+	char	**commands[] = {cmd1, cmd2, cmd3};
 
-	char			**commands[] = {cmd1, cmd2, cmd3};
+	// t_shell_data	*shell;
 	// atexit(leaks);
 	(void)argv;
 	(void)argc;
