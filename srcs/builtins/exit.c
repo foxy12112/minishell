@@ -3,11 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/06 02:19:13 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/06 02:40:02 by auplisas         ###   ########.fr       */
+/*   Created: 2024/12/03 00:56:03 by macbook           #+#    #+#             */
+/*   Updated: 2024/12/10 10:36:59 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
+
+int utils(void)
+{
+    return (0);
+}

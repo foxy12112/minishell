@@ -3,19 +3,19 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: macbook <macbook@student.42.fr>            +#+  +:+       +#+         #
+#    By: ldick <ldick@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/06 06:12:02 by macbook          ###   ########.fr        #
+#    Updated: 2024/12/10 10:36:30 by ldick            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-NAME = minishella
+NAME = minishell
 
-#################################
-#				Colors			#
-#################################
+#################################################################################################
+#											Colors												#
+#################################################################################################
 
 CLR_RMV		:= \033[0m
 RED			:= \033[1;31m
@@ -24,22 +24,23 @@ YELLOW		:= \033[1;33m
 BLUE		:= \033[1;34m
 CYAN 		:= \033[1;36m
 BOLD_BLUE	:= \033[0;34m
+NC			:= \033[0m
 
-#################################
-#				Flags			#
-#################################
+#################################################################################################
+#											Flags												#
+#################################################################################################
 
 COMPILER	=	cc
-LIB_FLAGS	=	main-libs/libs.a
-# CFLAGS		=	-Wall -Wextra -Werror -fsanitize=address -g
-CFLAGS		=	-Wall -Wextra -Werror
 INCLUDES	=	-I includes -I main-libs
 SUBMODULE	=	main-libs/Makefile
+LIB_FLAGS	=	-ls -Lmain-libs
+CFLAGS		=	-Wall -Werror -Wextra -g #-fsanitize=address
+ERROR_FILE	=	error.log
 
+#################################################################################################
+#											Sources												#
+#################################################################################################
 
-#################################
-#				Files			#
-#################################
 _UTILS		=	env_init.c free.c intialize.c variables.c exec.c
 UTILS		=	$(addprefix utils/, $(_UTILS))
 
@@ -52,9 +53,10 @@ SRCS		=	$(addprefix srcs/, $(_SRCS))
 OBJS		=	$(SRCS:srcs/%.c=bin/%.o)
 LIBRARY		=	main-libs/libs.a
 
-#################################
-#				Rules			#
-#################################
+#################################################################################################
+#											Rules												#
+#################################################################################################
+
 all:			$(NAME)
 
 bin:
@@ -65,23 +67,26 @@ bin:
 				@mkdir -p bin/builtins
 
 bin/%.o:		srcs/%.c | bin
-				@echo "$(GREEN) Compiling $(COMPILER) $(CLR_RMV) -c -o $(YELLOW) $@ $(CYAN) $^ $(GREEN) $(CFLAGS) $(GREEN) $(INCLUDES)"
-				@$(COMPILER) -c -o $@ $^ $(CFLAGS) $(INCLUDES)
+				@echo "$(GREEN) Compiling $(Compiler) $(CLR_RMV) -c -o $(YELLOW) $@ $(CYAN) $^ $(GREEN) $(CFLAGS) $(GREEN) $(INCLUDES) $(NC)"
+				@$(COMPILER) -c -o $@ $^ $(CFLAGS) $(INCLUDES) 2> $(ERROR_FILE) || (cat $(ERROR_FILE) && echo "$(RED)Compilation failed :0\nfailed file: \t\t$(YELLOW)$<$(NC)\n\n" && exit 1)
 
 $(LIBRARY):		$(SUBMODULE)
 				@make -C main-libs --silent
 
 $(SUBMODULE):
-				git submodule update --init --recursive
+				@git submodule update --init --recursive
 
 $(NAME):		$(LIBRARY) $(OBJS)
 				@$(COMPILER) $(CFLAGS) -o $(NAME) $(OBJS) $(LIB_FLAGS)
+				@echo "\t\t\t\t$(RED) compilation success :3"
 
 clean:
-				@cd main-libs && make fclean
 				@rm -rf bin
+				@rm -f $(ERROR_FILE)
+				@rm -f output*.log
 
-fclean:			clean 
+fclean:			clean
+				@make fclean -C main-libs --silent
 				@rm -f $(NAME)
 
 re:				fclean all
