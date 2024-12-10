@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/10 10:55:37 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/10 10:55:41 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,6 @@ void					test_unset(t_shell_data *shell);
 // parsing
 
 void					display(void);
+int						setup_signals(void);
 
 #endif
