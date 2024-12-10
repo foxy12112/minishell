@@ -6,13 +6,21 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:13:40 by macbook           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/12/10 10:49:27 by ldick            ###   ########.fr       */
+=======
+/*   Updated: 2024/12/05 16:47:38 by ldick            ###   ########.fr       */
+>>>>>>> rebsing
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+<<<<<<< HEAD
 int	ft_echo(char **args, int fd, bool n_option)
+=======
+int	ft_echo(char **args, int fd)
+>>>>>>> rebsing
 {
 	int	i;
 
@@ -24,7 +32,11 @@ int	ft_echo(char **args, int fd, bool n_option)
 		{
 			ft_putchar_fd(' ', fd);
 		}
+<<<<<<< HEAD
 		else if (!n_option)
+=======
+		else
+>>>>>>> rebsing
 		{
 			ft_putchar_fd('\n', fd);
 		}
@@ -82,7 +94,7 @@ int	add_variables(t_shell_data *shell, char **variables)
 
 int	ft_export(t_shell_data *shell, char **variables)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (variables[i])
@@ -96,42 +108,6 @@ int	ft_export(t_shell_data *shell, char **variables)
 	else
 	{
 		add_variables(shell, variables);
-		sort_env_list(shell->variables);
 	}
 	return (0);
 }
-
-void	delete_node_by_key(t_env_list **head, const char *key)
-{
-	t_env_list	*current;
-
-	if (!head || !*head || !key)
-		return ;
-	current = *head;
-	while (current)
-	{
-		if (ft_strcmp(current->key, key) == 0)
-		{
-			if (current->prev)
-				current->prev->next = current->next;
-			if (current->next)
-				current->next->prev = current->prev;
-			if (current == *head)
-				*head = current->next;
-			free(current->key);
-			free(current->value);
-			free(current);
-			return ;
-		}
-		current = current->next;
-	}
-}
-
-int	ft_unset(t_shell_data *shell, char *key)
-{
-	delete_node_by_key(&shell->variables, key);
-	delete_node_by_key(&shell->env, key);
-	return (0);
-}
-
-int ft_env()

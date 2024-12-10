@@ -6,7 +6,7 @@
 #    By: ldick <ldick@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/10 10:51:20 by ldick            ###   ########.fr        #
+#    Updated: 2024/12/10 10:52:53 by ldick            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ COMPILER	=	cc
 INCLUDES	=	-I includes -I main-libs
 SUBMODULE	=	main-libs/Makefile
 LIB_FLAGS	=	-ls -Lmain-libs
-CFLAGS		=	#-Wall -Werror -Wextra -g #-fsanitize=address
+CFLAGS		=	-Wall -Werror -Wextra -g #-fsanitize=address
 EXTRA_FLAGS	=	-lreadline
 ERROR_FILE	=	error.log
 
@@ -42,7 +42,7 @@ ERROR_FILE	=	error.log
 #											Sources												#
 #################################################################################################
 
-_UTILS		=	utils.c builtins.c env.c free.c parsing.c signal.c
+_UTILS		=	utils.c builtins.c env_init.c free.c intialize.c variables.c exec.c parsing.c signal.c
 UTILS		=	$(addprefix utils/, $(_UTILS))
 
 _BUILTINS		=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
