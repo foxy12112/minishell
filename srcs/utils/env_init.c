@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 02:20:43 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/05 16:47:33 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/10 11:00:01 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,23 +57,6 @@ void	add_to_variables_list(t_env_list **head, char **key_value)
 	}
 }
 
-void	print_env_list(t_env_list *variables)
-{
-	t_env_list	*current;
-
-	if (!variables)
-	{
-		printf("List is empty.\n");
-		return ;
-	}
-	current = variables->next;
-	while (current != NULL)
-	{
-		printf("%s=%s\n", current->key, current->value);
-		current = current->next;
-	}
-}
-
 void	print_variables_list(t_env_list *variables)
 {
 	t_env_list	*current;
@@ -97,14 +80,12 @@ t_env_list	*initialize_env(void)
 	char		**env;
 	char		**key_value;
 	int			i;
-	int			j;
 
 	env = environ;
 	i = 0;
 	variables = NULL;
 	while (env[i])
 	{
-		j = 0;
 		key_value = ft_split(env[i], '=');
 		add_to_variables_list(&variables, key_value);
 		free_key_value(key_value);
