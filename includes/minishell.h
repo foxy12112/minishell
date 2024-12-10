@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/08 15:51:58 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/10 10:03:40 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ typedef struct s_env_list
 	struct s_env_list	*next;
 	struct s_env_list	*prev;
 }						t_env_list;
+
+typedef struct s_signal
+{
+	int					signal;
+}						t_signal;
 
 typedef struct s_var_list
 {
@@ -84,5 +89,6 @@ void					free_key_value(char **key_value);
 // parsing
 
 void					display(void);
+int						setup_signals(void);
 
 #endif

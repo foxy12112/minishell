@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/07 22:38:53 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/10 10:30:56 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,8 @@ void	display(void)
 		add_history(input);
 		if (!ft_strncmp(input, "exit", 5))
 			break ;
+		if (setup_signals() >= 2)
+			continue ;
 		// if (possible_var(input))
 		// {
 		// 	if (check_var(input))
@@ -148,5 +150,6 @@ void	display(void)
 		is_valid_var(input);
 		// token_stack = ft_tokenize(input);
 		// print_two_d(token_stack);
+		free(input);
 	}
 }

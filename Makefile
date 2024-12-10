@@ -6,7 +6,7 @@
 #    By: ldick <ldick@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/05 19:15:35 by ldick            ###   ########.fr        #
+#    Updated: 2024/12/09 13:17:40 by ldick            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ ERROR_FILE	=	error.log
 #											Sources												#
 #################################################################################################
 
-_UTILS		=	utils.c builtins.c env.c free.c parsing.c
+_UTILS		=	utils.c builtins.c env.c free.c parsing.c signal.c
 UTILS		=	$(addprefix utils/, $(_UTILS))
 
 _SRCS		=	main.c $(UTILS)
