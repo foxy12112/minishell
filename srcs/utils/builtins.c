@@ -6,13 +6,25 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:13:40 by macbook           #+#    #+#             */
+<<<<<<< HEAD
+<<<<<<< HEAD
+/*   Updated: 2024/12/10 10:49:27 by ldick            ###   ########.fr       */
+=======
 /*   Updated: 2024/12/05 16:47:38 by ldick            ###   ########.fr       */
+>>>>>>> rebsing
+=======
+/*   Updated: 2024/12/05 16:47:38 by ldick            ###   ########.fr       */
+>>>>>>> 6ab469a7dabddd1902f573d59be82f8034bd2907
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+<<<<<<< HEAD
+int	ft_echo(char **args, int fd, bool n_option)
+=======
 int	ft_echo(char **args, int fd)
+>>>>>>> rebsing
 {
 	int	i;
 
@@ -24,7 +36,11 @@ int	ft_echo(char **args, int fd)
 		{
 			ft_putchar_fd(' ', fd);
 		}
+<<<<<<< HEAD
+		else if (!n_option)
+=======
 		else
+>>>>>>> rebsing
 		{
 			ft_putchar_fd('\n', fd);
 		}

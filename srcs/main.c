@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/10 10:59:54 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/10 11:35:07 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,17 @@ int	main(int argc, char **argv)
 	shell = (t_shell_data *)malloc(sizeof(t_shell_data));
 	if (!shell)
 		return (1);
-	initialize_shell(shell);
-	cell_launch(ft_split("cat input.txt", ' '));
+	test_pipes();
 	free_env_list(shell->env);
 	free_env_list(shell->variables);
 	free(shell);
 	return (0);
 }
 
-//BUILTIN TESTS
+// VARIABLE TEST
+// printf("%s\n", test_get_variable(shell, "USER"));
 
+// BUILTIN TESTS
 // test_cd(shell);
 // test_export(shell);
 // test_echo();
@@ -81,6 +82,14 @@ int	main(int argc, char **argv)
 // test_pwd();
 // test_unset(shell);
 
-//Exec function tests
-//cell_launch(ft_split("mkdir test", ' '));
-//REDIRECT TESTS
+// EXEC FUNCTION TESTS
+// cell_launch(ft_split("cat test", ' '));
+// launch_program();
+
+// REDIRECT TESTS
+// (>) test_redirect_output("file.txt");
+// (<) test_redirect_input("file.txt", "cat");
+// (>>) test_redirect_append_output("file.txt");
+// (<<) test_redirect_in_heredoc(shell);
+
+// PIPE TESTS

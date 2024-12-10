@@ -1,36 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   redirect_out_append.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/06 02:19:05 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/09 03:07:56 by macbook          ###   ########.fr       */
+/*   Created: 2024/12/07 23:52:17 by auplisas          #+#    #+#             */
+/*   Updated: 2024/12/09 03:06:29 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_echo(char **args, int fd, bool n_option)
+// Symbol (>>)
+int	redirect_output_append(const char *filename)
 {
-	int	i;
+	int	fd;
 
-	i = 0;
-	while (args[i])
+	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (fd < 0)
 	{
-		ft_putstr_fd(args[i], fd);
-		if (args[i + 1])
-		{
-			ft_putchar_fd(' ', fd);
-		}
-		else if (!n_option)
-		{
-			ft_putchar_fd('\n', fd);
-		}
-		free(args[i]);
-		i++;
+		perror("Failed to open output file");
+		return (-1);
 	}
-	free(args);
+	if (dup2(fd, STDOUT_FILENO) < 0)
+	{
+		perror("dup2 failed");
+		close(fd);
+		return (-1);
+	}
+	close(fd);
 	return (0);
 }

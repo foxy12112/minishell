@@ -1,0 +1,115 @@
+// int	launch_piped_childin(char **cmd1, int pipe_fd[2])
+// {
+// 	pid_t	pid1;
+
+// 	pid1 = ft_fork();
+// 	if (pid1 == 0)
+// 	{
+// 		close(pipe_fd[0]);
+// 		dup2(pipe_fd[1], STDOUT_FILENO);
+// 		close(pipe_fd[1]);
+// 		cell_launch(cmd1);
+// 		exit(0);
+// 	}
+// 	return (pid1);
+// }
+
+// int	launch_piped_childout(char **cmd2, int pipe_fd[2])
+// {
+// 	pid_t	pid2;
+
+// 	pid2 = ft_fork();
+// 	if (pid2 == 0)
+// 	{
+// 		close(pipe_fd[1]);
+// 		dup2(pipe_fd[0], STDIN_FILENO);
+// 		close(pipe_fd[0]);
+// 		cell_launch(cmd2);
+// 		exit(0);
+// 	}
+// 	return (pid2);
+// }
+
+
+// void	pipe_commands(char **cmd1, char **cmd2)
+// {
+// 	int		pipe_fd[2];
+// 	pid_t	pid1;
+// 	pid_t	pid2;
+
+// 	if (pipe(pipe_fd) < 0)
+// 	{
+// 		perror("Pipe failed");
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	pid1 = launch_piped_childin(cmd1, pipe_fd);
+// 	pid2 = launch_piped_childout(cmd2, pipe_fd);
+// 	close(pipe_fd[0]);
+// 	close(pipe_fd[1]);
+// 	waitpid(pid1, NULL, 0);
+// 	waitpid(pid2, NULL, 0);
+// }
+
+
+// void pipe_multiple_commands(char ***commands, int cmd_count)
+// {
+//     int pipe_fd[2];
+//     pid_t pid;
+//     int i = 0;
+//     int input_fd = 0; // Start with STDIN for the first command
+
+//     while (i < cmd_count)
+//     {
+//         // Create a pipe for each pair of commands, except for the last one
+//         if (i < cmd_count - 1 && pipe(pipe_fd) < 0)
+//         {
+//             perror("Pipe failed");
+//             exit(EXIT_FAILURE);
+//         }
+
+//         pid = ft_fork();
+//         if (pid == 0)
+//         {
+//             // If not the first command, get input from the previous command's output
+//             if (i > 0)
+//             {
+//                 dup2(input_fd, STDIN_FILENO);  // Redirect input from previous output
+//                 close(input_fd);
+//             }
+
+//             // If not the last command, write output to the pipe
+//             if (i < cmd_count - 1)
+//             {
+//                 close(pipe_fd[0]);  // Close the read end of the pipe
+//                 dup2(pipe_fd[1], STDOUT_FILENO);  // Redirect stdout to pipe
+//                 close(pipe_fd[1]);
+//             }
+
+//             // Launch the current command
+//             cell_launch(commands[i]);
+//             exit(0); // Exit after execution
+//         }
+//         else
+//         {
+//             // Parent process: update the input_fd for the next command
+//             // If it's not the last command, we need to close the pipe's write end
+//             if (i < cmd_count - 1)
+//             {
+//                 close(pipe_fd[1]);  // Close the write end of the pipe
+//             }
+
+//             // Update input_fd for the next command (read end of the current pipe)
+//             input_fd = pipe_fd[0];
+//         }
+
+//         // Move to the next command
+//         i++;  
+//     }
+
+//     // Wait for all child processes
+//     while (i > 0)
+//     {
+//         wait(NULL);
+//         i--;
+//     }
+// }

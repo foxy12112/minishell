@@ -6,13 +6,20 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 03:18:43 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/06 03:57:10 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:14:34 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-//BUILTIN TESTS
+// VARIABLES
+
+char	*test_get_variable(t_shell_data *shell, char *key)
+{
+	return (retrieve_variable(shell, key));
+}
+
+// BUILTIN TESTS
 
 void	test_cd(t_shell_data *shell)
 {
@@ -34,9 +41,9 @@ void	test_export(t_shell_data *shell)
 	print_variables_list(shell->variables);
 }
 
-void	test_echo(void)
+void	test_echo(char **string, int fd)
 {
-	ft_echo(ft_split("HELO WORLD THIS IS ME", ' '), 1, false);
+	ft_echo(string, fd, false);
 }
 
 void	test_env(t_shell_data *shell)
@@ -59,4 +66,69 @@ void	test_unset(t_shell_data *shell)
 	print_env_list(shell->env);
 }
 
-//REDIRECT TESTS
+// REDIRECT TESTS
+
+//(>)
+int	test_redirect_output(char *filename)
+{
+	if (redirect_output(filename) < 0)
+	{
+		return (1);
+	}
+	test_echo(ft_split("HI THIS IS TEST", ' '), STDOUT_FILENO);
+	return (0);
+}
+
+//(<)
+void	test_redirect_input(char *filename, char *command)
+{
+	char	*args[] = {command, NULL};
+
+	redirect_input(filename);
+	cell_launch(args);
+}
+
+int	test_redirect_append_output(char *filename)
+{
+	if (redirect_output_append(filename) < 0)
+	{
+		return (1);
+	}
+	test_echo(ft_split("GELA", ' '), STDOUT_FILENO);
+	return (0);
+}
+
+void	test_redirect_in_heredoc(t_shell_data *shell)
+{
+	char	*args[] = {"cat", NULL};
+
+	redirect_input_heredoc(shell, "EOF");
+	redirect_output("test.txt");
+	cell_launch(args);
+}
+
+// EXECs
+
+void	test_exec(char **command)
+{
+	cell_launch(command);
+}
+
+void	launch_program(void)
+{
+	char	*args[] = {"/Users/auplisas/Desktop/minishell/testprogram", NULL};
+
+	cell_launch(args);
+}
+
+// PIPES
+
+void	test_pipes(void)
+{
+	char *cmd1[] = {"echo", "xarfruit apple zebanana cherry", NULL};
+	char *cmd2[] = {"tr", " ", "\n", NULL};
+	char *cmd3[] = {"sort", NULL};
+	char **commands[] = {cmd1, cmd2, cmd3};
+
+	pipe_multiple_commands(commands, 3);
+}

@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 05:08:24 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/10 11:00:05 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/10 11:35:15 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,22 @@ void	free_char_string(char **str)
 		i++;
 	}
 	free(str);
+}
+
+void	free_heredoc_list(t_heredoc_list **head)
+{
+	t_heredoc_list	*current;
+	t_heredoc_list	*temp;
+
+	if (!head || !*head)
+		return ;
+	current = *head;
+	while (current)
+	{
+		temp = current->next;
+		free(current->word);
+		free(current);
+		current = temp;
+	}
+	*head = NULL;
 }
