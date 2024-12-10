@@ -6,14 +6,14 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/10 10:13:00 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/10 11:32:12 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-# include "../main-libs/libs.h"
+# include "libs.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include <limits.h>
@@ -23,6 +23,9 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <signal.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 
 // > - RDR_COMMAND_TO_INPUT, < - RDR_INPUT_TO_COMMAND, << -
 typedef enum s_operation_type
@@ -49,6 +52,19 @@ typedef struct s_heredoc_list
 	struct s_heredoc_list	*next;
 	struct s_heredoc_list	*prev;
 }							t_heredoc_list;
+
+typedef struct s_signal
+{
+	int					signal;
+}						t_signal;
+
+typedef struct s_var_list
+{
+	char				*var_name;
+	char				*var_value;
+	struct s_var_list	*next;
+	struct s_var_list	*prev;
+}						t_var_list;
 
 typedef struct s_shell_data
 {

@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/10 10:15:32 by auplisas         ###   ########.fr       */
+/*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
+/*   Updated: 2024/12/10 11:32:27 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 void	select_operation_type(char **args_ar, t_shell_data *data_tree)
 {
@@ -56,7 +56,7 @@ void	leaks(void)
 
 int	main(int argc, char **argv)
 {
-	t_shell_data	*shell;
+	// t_shell_data	*shell;
 
 	// atexit(leaks);
 	(void)argv;
