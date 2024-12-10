@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/10 08:02:42 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:15:32 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,25 +56,18 @@ void	leaks(void)
 
 int	main(int argc, char **argv)
 {
-	char	*cmd1[] = {"echo", "xarfruit apple zebanana cherry", NULL};
-	char	*cmd2[] = {"tr", " ", "\n", NULL};
-	char	*cmd3[] = {"sort", NULL};
-	char	**commands[] = {cmd1, cmd2, cmd3};
+	t_shell_data	*shell;
 
-	// t_shell_data	*shell;
 	// atexit(leaks);
 	(void)argv;
 	(void)argc;
-	// shell = (t_shell_data *)malloc(sizeof(t_shell_data));
-	// if (!shell)
-	// 	return (1);
-	// initialize_shell(shell);
-	// pipe_commands(cmd1, cmd2);
-	pipe_multiple_commands(commands, 3);
-	// pipe_commands(cmd2, cmd3);
-	// free_env_list(shell->env);
-	// free_env_list(shell->variables);
-	// free(shell);
+	shell = (t_shell_data *)malloc(sizeof(t_shell_data));
+	if (!shell)
+		return (1);
+	test_pipes();
+	free_env_list(shell->env);
+	free_env_list(shell->variables);
+	free(shell);
 	return (0);
 }
 
@@ -91,9 +84,12 @@ int	main(int argc, char **argv)
 
 // EXEC FUNCTION TESTS
 // cell_launch(ft_split("cat test", ' '));
+// launch_program();
 
 // REDIRECT TESTS
 // (>) test_redirect_output("file.txt");
 // (<) test_redirect_input("file.txt", "cat");
 // (>>) test_redirect_append_output("file.txt");
 // (<<) test_redirect_in_heredoc(shell);
+
+// PIPE TESTS

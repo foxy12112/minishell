@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/10 04:04:33 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:13:00 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define PIPEX_H
 
 # include "../main-libs/libs.h"
-# include <stdio.h>
 # include <fcntl.h>
+# include <stdio.h>
 # include <limits.h>
 # include <readline/readline.h>
 # include <stdbool.h>
@@ -123,4 +123,6 @@ void						test_redirect_input(char *filename, char *command);
 int							test_redirect_append_output(char *filename);
 void						test_redirect_in_heredoc(t_shell_data *shell);
 void						test_exec(char **command);
+void						launch_program(void);
+void						test_pipes(void);
 #endif

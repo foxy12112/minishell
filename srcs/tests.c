@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 03:18:43 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/10 00:32:23 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:14:34 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,23 @@ void	test_redirect_in_heredoc(t_shell_data *shell)
 void	test_exec(char **command)
 {
 	cell_launch(command);
+}
+
+void	launch_program(void)
+{
+	char	*args[] = {"/Users/auplisas/Desktop/minishell/testprogram", NULL};
+
+	cell_launch(args);
+}
+
+// PIPES
+
+void	test_pipes(void)
+{
+	char *cmd1[] = {"echo", "xarfruit apple zebanana cherry", NULL};
+	char *cmd2[] = {"tr", " ", "\n", NULL};
+	char *cmd3[] = {"sort", NULL};
+	char **commands[] = {cmd1, cmd2, cmd3};
+
+	pipe_multiple_commands(commands, 3);
 }
