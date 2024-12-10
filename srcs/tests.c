@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tests.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 03:18:43 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/09 03:20:57 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/10 00:32:23 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	test_redirect_append_output(char *filename)
 {
 	if (redirect_output_append(filename) < 0)
 	{
-		return 1;
+		return (1);
 	}
 	test_echo(ft_split("GELA", ' '), STDOUT_FILENO);
 	return (0);
@@ -105,4 +105,11 @@ void	test_redirect_in_heredoc(t_shell_data *shell)
 	redirect_input_heredoc(shell, "EOF");
 	redirect_output("test.txt");
 	cell_launch(args);
+}
+
+// EXECs
+
+void	test_exec(char **command)
+{
+	cell_launch(command);
 }

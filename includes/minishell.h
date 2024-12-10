@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/09 03:20:48 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/10 04:04:33 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define PIPEX_H
 
 # include "../main-libs/libs.h"
+# include <stdio.h>
 # include <fcntl.h>
 # include <limits.h>
 # include <readline/readline.h>
 # include <stdbool.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -95,6 +95,7 @@ t_heredoc_list				*create_heredoc_node(char *word);
 t_heredoc_list				*handle_variable_node(t_shell_data *shell,
 								char *word);
 // exec.c
+pid_t						ft_fork(void);
 void						cell_launch(char **args);
 // variables.c
 void						sort_env_list(t_env_list *head);
@@ -104,6 +105,11 @@ void						free_env_list(t_env_list *head);
 void						free_key_value(char **key_value);
 void						free_char_string(char **str);
 void						free_heredoc_list(t_heredoc_list **head);
+// pipe.c
+// void						pipe_commands(char ***commands, int cmd_count);
+void						pipe_commands(char **cmd1, char **cmd2);
+void						pipe_multiple_commands(char ***commands,
+								int num_commands);
 // test.c
 char						*test_get_variable(t_shell_data *shell, char *key);
 void						test_cd(t_shell_data *shell);
@@ -116,4 +122,5 @@ int							test_redirect_output(char *filename);
 void						test_redirect_input(char *filename, char *command);
 int							test_redirect_append_output(char *filename);
 void						test_redirect_in_heredoc(t_shell_data *shell);
+void						test_exec(char **command);
 #endif
