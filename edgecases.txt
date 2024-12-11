@@ -1,0 +1,2 @@
+1. typing $(ls) in heredoc, cat << EOF
+2. assigning variable like this var=key" opens heredoc

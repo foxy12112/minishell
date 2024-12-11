@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/10 11:32:12 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/11 08:54:41 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,16 @@
 
 # include "libs.h"
 # include <fcntl.h>
-# include <stdio.h>
 # include <limits.h>
+# include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdbool.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# include <signal.h>
-# include <readline/history.h>
-# include <readline/readline.h>
 
 // > - RDR_COMMAND_TO_INPUT, < - RDR_INPUT_TO_COMMAND, << -
 typedef enum s_operation_type
@@ -55,16 +54,16 @@ typedef struct s_heredoc_list
 
 typedef struct s_signal
 {
-	int					signal;
-}						t_signal;
+	int						signal;
+}							t_signal;
 
 typedef struct s_var_list
 {
-	char				*var_name;
-	char				*var_value;
-	struct s_var_list	*next;
-	struct s_var_list	*prev;
-}						t_var_list;
+	char					*var_name;
+	char					*var_value;
+	struct s_var_list		*next;
+	struct s_var_list		*prev;
+}							t_var_list;
 
 typedef struct s_shell_data
 {
@@ -126,6 +125,10 @@ void						free_heredoc_list(t_heredoc_list **head);
 void						pipe_commands(char **cmd1, char **cmd2);
 void						pipe_multiple_commands(char ***commands,
 								int num_commands);
+// utils.c
+static char					ft_is_whitespace(char c);
+// variable_parse.c
+bool						check_valid_variable(char *variable);
 // test.c
 char						*test_get_variable(t_shell_data *shell, char *key);
 void						test_cd(t_shell_data *shell);

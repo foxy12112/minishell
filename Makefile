@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+         #
+#    By: macbook <macbook@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/10 11:31:42 by auplisas         ###   ########.fr        #
+#    Updated: 2024/12/11 05:28:24 by macbook          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,9 @@ ERROR_FILE	=	error.log
 #											Sources												#
 #################################################################################################
 
+_PARSING		=	variable_parse.c
+PARSING			=	$(addprefix parsing/, $(_PARSING))
+
 _REDIRECTS		=	redirect_in.c redirect_out.c redirect_out_append.c redirect_in_heredoc.c redirect_in_heredoc_utils.c
 REDIRECTS		=	$(addprefix redirects/, $(_REDIRECTS))
 
@@ -51,7 +54,7 @@ UTILS		=	$(addprefix utils/, $(_UTILS))
 _BUILTINS		=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
 BUILTINS		=	$(addprefix builtins/, $(_BUILTINS))
 
-_SRCS		=	main.c tests.c $(BUILTINS) $(UTILS) $(REDIRECTS)
+_SRCS		=	main.c tests.c $(BUILTINS) $(UTILS) $(REDIRECTS) $(PARSING)
 SRCS		=	$(addprefix srcs/, $(_SRCS))
 
 OBJS		=	$(SRCS:srcs/%.c=bin/%.o)
@@ -68,13 +71,15 @@ bin:
 				@echo "\t\t\t$(BOLD_BLUE) mkdir -p bin/utils"
 				@echo "\t\t\t$(BOLD_BLUE) mkdir -p bin/builtins"
 				@echo "\t\t\t$(BOLD_BLUE) mkdir -p bin/redirects"
+				@echo "\t\t\t$(BOLD_BLUE) mkdir -p bin/parsing"
 				@mkdir -p bin/utils
 				@mkdir -p bin/builtins
 				@mkdir -p bin/redirects
+				@mkdir -p bin/parsing
 
-bin/%.o:		srcs/%.c | bin
-				@echo "$(GREEN) Compiling $(Compiler) $(CLR_RMV) -c -o $(YELLOW) $@ $(CYAN) $^ $(GREEN) $(EXTRA_FLAGS) $(CFLAGS) $(GREEN) $(INCLUDES) $(NC)"
-				@$(COMPILER) -c -o $@ $^ $(EXTRA_FLAGS) $(CFLAGS) $(INCLUDES) 2> $(ERROR_FILE) || (cat $(ERROR_FILE) && echo "$(RED)Compilation failed :0\nfailed file: \t\t$(YELLOW)$<$(NC)\n\n" && exit 1)
+bin/%.o: srcs/%.c | bin
+				@echo "$(GREEN) Compiling $(Compiler) $(CLR_RMV) -c -o $(YELLOW) $@ $(CYAN) $^ $(GREEN) $(CFLAGS) $(GREEN) $(INCLUDES) $(NC)"
+				@$(COMPILER) -c -o $@ $^ $(CFLAGS) $(INCLUDES) 2> $(ERROR_FILE) || (cat $(ERROR_FILE) && echo "$(RED)Compilation failed :0\nfailed file: \t\t$(YELLOW)$<$(NC)\n\n" && exit 1)
 
 $(LIBRARY):		$(SUBMODULE)
 				@make -C main-libs --silent
@@ -82,8 +87,8 @@ $(LIBRARY):		$(SUBMODULE)
 $(SUBMODULE):
 				@git submodule update --init --recursive
 
-$(NAME):		$(LIBRARY) $(OBJS)
-				@$(COMPILER) $(EXTRA_FLAGS) $(CFLAGS) -o $(NAME) $(OBJS) $(LIB_FLAGS)
+$(NAME): $(LIBRARY) $(OBJS)
+				@$(COMPILER) -o $(NAME) $(OBJS) $(LIB_FLAGS) $(EXTRA_FLAGS) $(CFLAGS)
 				@echo "\t\t\t\t$(RED) compilation success :3"
 
 clean:

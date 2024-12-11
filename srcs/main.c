@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/10 11:32:27 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/11 06:14:24 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,18 +56,20 @@ void	leaks(void)
 
 int	main(int argc, char **argv)
 {
-	// t_shell_data	*shell;
-
-	// atexit(leaks);
 	(void)argv;
 	(void)argc;
-	shell = (t_shell_data *)malloc(sizeof(t_shell_data));
-	if (!shell)
-		return (1);
-	test_pipes();
-	free_env_list(shell->env);
-	free_env_list(shell->variables);
-	free(shell);
+	// t_shell_data	*shell;
+
+	// // atexit(leaks);
+	// shell = (t_shell_data *)malloc(sizeof(t_shell_data));
+	// if (!shell)
+	// 	return (1);
+	// initialize_shell(shell);
+	// test_pipes();
+	// free_env_list(shell->env);
+	// free_env_list(shell->variables);
+	// free(shell);
+	check_valid_variable("hi=\"bye\"");
 	return (0);
 }
 
