@@ -1,2 +1,11 @@
+THINGS TO DO NOW: 
+-Check if variable key is in single quotes and if not do variable getting if there is no \ in front of $sign
+
+
+
 1. typing $(ls) in heredoc, cat << EOF
 2. assigning variable like this var=key" opens heredoc
+
+IMPORANT 
+
+IF WE SEE $SIGN WITH \ in the back - its necessary to take $ sign as it is and dont look for variable

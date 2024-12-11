@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/11 06:14:24 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/11 10:03:04 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,20 @@ int	main(int argc, char **argv)
 	// free_env_list(shell->env);
 	// free_env_list(shell->variables);
 	// free(shell);
-	check_valid_variable("hi=\"bye\"");
+	char **test=ft_split_by_first_equal("hi=this=is=me");
+	int i = 0;
+	while(test[i])
+	{
+		printf("%s\n", test[i]);
+		i++;
+	}
+	i = 0;
+	while(test[i])
+	{
+		free(test[i]);
+		i++;
+	}
+	free(test);
 	return (0);
 }
 

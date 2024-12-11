@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 03:32:40 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/11 09:22:35 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/11 10:14:14 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,6 @@ bool	is_valid_char(char c)
 	return (true);
 }
 
-// NOTE - WHEN DIVIDING KEY VALUE, ONLY FIRST = SHOULD BE SPLIT
-
 bool	check_value(char *value)
 {
 	int	i;
@@ -98,7 +96,11 @@ bool	check_value(char *value)
 	}
 	while (value[i])
 	{
-		if (!is_valid_char(value[i]) || ft_is_whitespace(value[i]))
+		if (value[i - 1] != '\'' && !is_valid_char(value[i]))
+		{
+			return (false);
+		}
+		if (value[i - 1] != '\'' && ft_is_whitespace(value[i]))
 		{
 			return (false);
 		}
@@ -126,11 +128,11 @@ bool	check_valid_variable(char *variable)
 	char	*key;
 	char	*value;
 	bool	valid;
-	int		i;
+	// int		i;
 
-	i = 0;
+	// i = 0;
 	valid = false;
-	key_value = ft_split(variable, '=');
+	key_value = ft_split_by_first_equal(variable);
 	if (!key_value)
 		return (false);
 	key = key_value[0];
@@ -146,6 +148,8 @@ bool	check_valid_variable(char *variable)
 	free(value);
 	return (valid);
 }
+
+// NOTE - WHEN DIVIDING KEY VALUE, ONLY FIRST = SHOULD BE SPLIT
 
 // const	test_valid_key(void)
 // {

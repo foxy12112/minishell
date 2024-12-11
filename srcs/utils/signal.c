@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 15:50:23 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/10 10:56:02 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/11 10:09:04 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 static int	handle_signal(int signal)
 {

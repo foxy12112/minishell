@@ -6,7 +6,7 @@
 #    By: macbook <macbook@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/11 05:28:24 by macbook          ###   ########.fr        #
+#    Updated: 2024/12/11 10:11:42 by macbook          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ PARSING			=	$(addprefix parsing/, $(_PARSING))
 _REDIRECTS		=	redirect_in.c redirect_out.c redirect_out_append.c redirect_in_heredoc.c redirect_in_heredoc_utils.c
 REDIRECTS		=	$(addprefix redirects/, $(_REDIRECTS))
 
-_UTILS		=	env_init.c free.c intialize.c variables.c exec.c pipe.c
+_UTILS		=	env_init.c free.c intialize.c variables.c exec.c parsing.c pipe.c ft_split_varsign.c
 UTILS		=	$(addprefix utils/, $(_UTILS))
 
 _BUILTINS		=	cd.c echo.c env.c exit.c export.c pwd.c unset.c

@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/11 08:54:41 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/11 10:10:46 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,8 @@ void						pipe_commands(char **cmd1, char **cmd2);
 void						pipe_multiple_commands(char ***commands,
 								int num_commands);
 // utils.c
-static char					ft_is_whitespace(char c);
+char						ft_is_whitespace(char c);
+char						**ft_split_by_first_equal(const char *s);
 // variable_parse.c
 bool						check_valid_variable(char *variable);
 // test.c
