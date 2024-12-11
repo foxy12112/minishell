@@ -6,13 +6,14 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 03:32:40 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/11 19:22:18 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/11 19:23:42 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include <string.h>
 
+//VERY IMPORTANT - IF I AM ADDING VAR IN DOUBLE QUOTES AND HAVE $USER, it will not find the var but it has to, need chekcing and testin
 bool	string_in_quotes(char *value)
 {
 	int	last_index;
