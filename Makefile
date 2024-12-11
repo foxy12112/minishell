@@ -6,7 +6,7 @@
 #    By: ldick <ldick@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/10 11:34:36 by ldick            ###   ########.fr        #
+#    Updated: 2024/12/11 16:53:44 by ldick            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ COMPILER	=	cc
 INCLUDES	=	-I includes -I main-libs
 SUBMODULE	=	main-libs/Makefile
 LIB_FLAGS	=	-ls -Lmain-libs
-CFLAGS		=	-Wall -Werror -Wextra -g #-fsanitize=address
+CFLAGS		=	#-Wall -Werror -Wextra -g #-fsanitize=address
 EXTRA_FLAGS	=	-lreadline
 ERROR_FILE	=	error.log
 
@@ -45,7 +45,7 @@ ERROR_FILE	=	error.log
 _REDIRECTS		=	redirect_in.c redirect_out.c redirect_out_append.c redirect_in_heredoc.c redirect_in_heredoc_utils.c
 REDIRECTS		=	$(addprefix redirects/, $(_REDIRECTS))
 
-_UTILS		=	env_init.c free.c intialize.c variables.c exec.c pipe.c
+_UTILS		=	env_init.c free.c intialize.c variables.c exec.c pipe.c parsing.c signal.c
 UTILS		=	$(addprefix utils/, $(_UTILS))
 
 _BUILTINS		=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
@@ -71,7 +71,6 @@ bin:
 				@mkdir -p bin/utils
 				@mkdir -p bin/builtins
 				@mkdir -p bin/redirects
-
 bin/%.o:		srcs/%.c | bin
 				@echo "$(GREEN) Compiling $(Compiler) $(CLR_RMV) -c -o $(YELLOW) $@ $(CYAN) $^ $(GREEN) $(EXTRA_FLAGS) $(CFLAGS) $(GREEN) $(INCLUDES) $(NC)"
 				@$(COMPILER) -c -o $@ $^ $(EXTRA_FLAGS) $(CFLAGS) $(INCLUDES) 2> $(ERROR_FILE) || (cat $(ERROR_FILE) && echo "$(RED)Compilation failed :0\nfailed file: \t\t$(YELLOW)$<$(NC)\n\n" && exit 1)
@@ -85,6 +84,7 @@ $(SUBMODULE):
 $(NAME):		$(LIBRARY) $(OBJS)
 				@$(COMPILER) $(EXTRA_FLAGS) $(CFLAGS) -o $(NAME) $(OBJS) $(LIB_FLAGS)
 				@echo "\t\t\t\t$(RED) compilation success :3"
+				@mkdir -p .git/permanent_history
 
 clean:
 				@rm -rf bin
@@ -94,6 +94,9 @@ clean:
 fclean:			clean
 				@make fclean -C main-libs --silent
 				@rm -f $(NAME)
+
+history:		clean
+				@rm -rf .git/permanent_history
 
 re:				fclean all
 

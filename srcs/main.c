@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/10 11:35:07 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/11 16:54:34 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,15 @@ int	main(int argc, char **argv)
 	// atexit(leaks);
 	(void)argv;
 	(void)argc;
-	shell = (t_shell_data *)malloc(sizeof(t_shell_data));
-	if (!shell)
-		return (1);
-	test_pipes();
-	free_env_list(shell->env);
-	free_env_list(shell->variables);
-	free(shell);
+	init_history();
+	display();
+	// shell = (t_shell_data *)malloc(sizeof(t_shell_data));
+	// if (!shell)
+	// 	return (1);
+	// test_pipes();
+	// free_env_list(shell->env);
+	// free_env_list(shell->variables);
+	// free(shell);
 	return (0);
 }
 

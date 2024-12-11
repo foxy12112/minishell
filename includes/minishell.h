@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/10 11:35:02 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/11 16:55:07 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,5 +146,6 @@ void						test_pipes(void);
 
 void					display(void);
 int						setup_signals(void);
+void					init_history(void);
 
 #endif

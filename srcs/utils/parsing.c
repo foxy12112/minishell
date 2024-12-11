@@ -6,11 +6,51 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/10 10:55:58 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/11 17:01:27 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	init_history(void)
+{
+	int		fd;
+	int		i;
+	int		j;
+	char	buffer[7000];
+	char	tmp[5000];
+
+	i = 0;
+	j = 0;
+	fd= open(".git/permanent_history/history.log" , O_RDONLY);
+	read(fd, buffer, 7000);
+	if (fd != -1)
+	{
+		while(buffer[i])
+		{
+			if (buffer[i + 1] == '\n')
+			{
+				j = 0;
+				add_history(tmp);
+			}
+			tmp[j] = buffer[i];
+			i++;
+			j++;
+		}
+	}
+}
+
+void	add_permanent_history(char *str)
+{
+	int fd;
+	char *file;
+
+	file = ".git/permanent_history/history.log";
+	fd = open(file, O_RDWR | O_CREAT | O_APPEND, 0644);
+	ft_putstr_fd(str, fd);
+	ft_putchar_fd('\n', fd);
+	close(fd);
+}
 
 char	**ft_tokenize(char *input)
 {
@@ -137,7 +177,9 @@ void	display(void)
 	while (1)
 	{
 		input = readline("waiting for input:");
-		add_history(input);
+		add_permanent_history(input);
+		add_history("ji");
+		rl_on_new_line();
 		if (!ft_strncmp(input, "exit", 5))
 			break ;
 		if (setup_signals() >= 2)
@@ -152,4 +194,5 @@ void	display(void)
 		// print_two_d(token_stack);
 		free(input);
 	}
+	rl_clear_history();
 }
