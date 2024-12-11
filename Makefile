@@ -6,7 +6,7 @@
 #    By: macbook <macbook@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/11 10:11:42 by macbook          ###   ########.fr        #
+#    Updated: 2024/12/11 15:36:00 by macbook          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ COMPILER	=	cc
 INCLUDES	=	-I includes -I main-libs
 SUBMODULE	=	main-libs/Makefile
 LIB_FLAGS	=	-ls -Lmain-libs
-CFLAGS		=	-Wall -Werror -Wextra -g #-fsanitize=address
+# CFLAGS		=	-Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS		=	-Wall -Werror -Wextra
 EXTRA_FLAGS	=	-lreadline
 ERROR_FILE	=	error.log
 

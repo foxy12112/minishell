@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/11 10:03:04 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/11 19:00:39 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,33 +56,19 @@ void	leaks(void)
 
 int	main(int argc, char **argv)
 {
+
 	(void)argv;
 	(void)argc;
-	// t_shell_data	*shell;
-
-	// // atexit(leaks);
-	// shell = (t_shell_data *)malloc(sizeof(t_shell_data));
-	// if (!shell)
-	// 	return (1);
-	// initialize_shell(shell);
-	// test_pipes();
-	// free_env_list(shell->env);
-	// free_env_list(shell->variables);
-	// free(shell);
-	char **test=ft_split_by_first_equal("hi=this=is=me");
-	int i = 0;
-	while(test[i])
-	{
-		printf("%s\n", test[i]);
-		i++;
-	}
-	i = 0;
-	while(test[i])
-	{
-		free(test[i]);
-		i++;
-	}
-	free(test);
+	t_shell_data	*shell;
+	// atexit(leaks);
+	shell = (t_shell_data *)malloc(sizeof(t_shell_data));
+	if (!shell)
+		return (1);
+	initialize_shell(shell);
+	parse_variable(shell, "TEST=\"$USER and he is $HOME , YUP!\"");
+	free_env_list(shell->env);
+	free_env_list(shell->variables);
+	free(shell);
 	return (0);
 }
 

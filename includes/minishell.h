@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/11 10:10:46 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/11 11:06:35 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 # include "libs.h"
 # include <fcntl.h>
 # include <limits.h>
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -89,6 +89,9 @@ void						change_pwd_env(t_env_list **head, const char *key,
 								const char *value);
 int							ft_pwd(void);
 int							ft_unset(t_shell_data *shell, char *variables);
+// variable_parse.c
+char						*parse_variable(t_shell_data *shell,
+								char *variable);
 // env.c
 t_env_list					*initialize_env(void);
 void						add_to_variables_list(t_env_list **head,
