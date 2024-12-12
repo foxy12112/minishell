@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 03:32:40 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/11 19:23:42 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/12 07:03:11 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,21 +219,6 @@ int	get_current_key_size(char *value, int i)
 	}
 	return (size - i);
 }
-// char	*check_value_for_var(t_shell_data *shell, char *value)
-// {
-// 	int		i;
-
-// 	i = 0;
-// 	while (value[i])
-// 	{
-// 		if (value[i - 1] != '\'' && value[i] == '$')
-// 		{
-//             printf("Var Value: %s\n", retrieve_key_value(shell, value, i));
-// 		}
-// 		i++;
-// 	}
-//     return (NULL);
-// }
 
 int	count_memory_for_value(t_shell_data *shell, char *value)
 {
@@ -365,12 +350,11 @@ char	*parse_variable(t_shell_data *shell, char *variable)
 		perror("Invalid KeyValue\n");
 		return (NULL);
 	}
-	// printf("TES: %d\n", check_key(key_value[0]));
-	// printf("VAL: %d\n", check_value(key_value[1]));
-	// value_to_check = remove_quotes(value);
 	var_with_no_quotes = remove_quotes(key_value[1]);
-	if (string_in_quotes(key_value[1]))
+	if (string_in_doublequotes(key_value[1]))
 		value = parse_value(shell, var_with_no_quotes);
+    else if(string_in_singlequotes(key_value[1]))
+        value = ft_strdup(var_with_no_quotes);
 	else
 		value = parse_value(shell, key_value[1]);
 	printf("%s\n", join_key_value(key_value[0], value));
