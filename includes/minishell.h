@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/11 11:06:35 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/12 13:47:08 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,18 @@ void						change_pwd_env(t_env_list **head, const char *key,
 								const char *value);
 int							ft_pwd(void);
 int							ft_unset(t_shell_data *shell, char *variables);
+// variable_parse_utils.c
+char						*remove_quotes(char *value);
+bool						string_in_singlequotes(char *value);
+bool						string_in_doublequotes(char *value);
+bool						check_key(char *key);
+bool						contains_valid_chars(char *str);
 // variable_parse.c
+char						*join_key_value(char *key, char *value);
 char						*parse_variable(t_shell_data *shell,
 								char *variable);
+// variable_value.get.c
+char						*parse_value(t_shell_data *shell, char *value);
 // env.c
 t_env_list					*initialize_env(void);
 void						add_to_variables_list(t_env_list **head,
@@ -130,6 +139,7 @@ void						pipe_multiple_commands(char ***commands,
 								int num_commands);
 // utils.c
 char						ft_is_whitespace(char c);
+bool						is_valid_char(char c, char *invalid_chars);
 char						**ft_split_by_first_equal(const char *s);
 // variable_parse.c
 bool						check_valid_variable(char *variable);
