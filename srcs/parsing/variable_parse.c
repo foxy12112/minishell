@@ -6,12 +6,11 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 03:32:40 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/12 12:17:58 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/12 14:14:57 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
 
 bool	check_for_no_quotes(char *value)
 {
@@ -29,10 +28,10 @@ bool	check_for_no_quotes(char *value)
 
 bool	check_value(char *value)
 {
-    if(!string_in_doublequotes(value) && !string_in_singlequotes(value))
+	if (!string_in_doublequotes(value) && !string_in_singlequotes(value))
 		return (check_for_no_quotes(value));
-    else  
-        return (true);
+	else
+		return (true);
 }
 
 char	*join_key_value(char *key, char *value)
@@ -69,22 +68,23 @@ char	*parse_variable(t_shell_data *shell, char *variable)
 	char	**key_value;
 	char	*value;
 	char	*var_with_no_quotes;
+	char	*parsed_key_value;
 
 	key_value = ft_split_by_first_equal(variable);
 	if (!key_value)
 		return (false);
 	if (!check_key(key_value[0]) || !check_value(key_value[1]))
 		return (free_key_value(key_value), perror("Invalid KeyValue\n"), NULL);
-    var_with_no_quotes = remove_quotes(key_value[1]);
+	var_with_no_quotes = remove_quotes(key_value[1]);
 	if (string_in_doublequotes(key_value[1]))
 		value = parse_value(shell, var_with_no_quotes);
 	else if (string_in_singlequotes(key_value[1]))
 		value = ft_strdup(var_with_no_quotes);
 	else
 		value = parse_value(shell, key_value[1]);
-	printf("%s\n", join_key_value(key_value[0], value));
+	parsed_key_value = join_key_value(key_value[0], value);
 	free_key_value(key_value);
 	free(var_with_no_quotes);
 	free(value);
-	return (NULL);
+	return (parsed_key_value);
 }

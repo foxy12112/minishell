@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/12 13:42:51 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/12 14:26:45 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ int	main(int argc, char **argv)
 	if (!shell)
 		return (1);
 	initialize_shell(shell);
-	parse_variable(shell, "TEST=$USER,$HOME-IS-BEST");
+	// parse_variable(shell, "TEST=$USER,$HOME-IS-BEST");
+	test_pipes();
 	free_env_list(shell->env);
 	free_env_list(shell->variables);
 	free(shell);
