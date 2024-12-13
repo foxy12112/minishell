@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/12 13:47:08 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/13 05:37:48 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,20 @@ typedef struct s_var_list
 	struct s_var_list		*prev;
 }							t_var_list;
 
+typedef struct s_var_pipe_list
+{
+	char					*cmd;
+	struct s_var_pipe_list	*next;
+	struct s_var_pipe_list	*prev;
+}							t_var_pipe_list;
+
 typedef struct s_shell_data
 {
 	t_operation_type		operation_type;
 	t_env_list				*env;
 	t_env_list				*variables;
+	int						pipes_count;
+	t_var_pipe_list			*pipe_list;
 	int						fd;
 }							t_shell_data;
 
@@ -141,6 +150,8 @@ void						pipe_multiple_commands(char ***commands,
 char						ft_is_whitespace(char c);
 bool						is_valid_char(char c, char *invalid_chars);
 char						**ft_split_by_first_equal(const char *s);
+char						*ft_trim_whitespaces(char *str);
+int							count_pipe_list_length(t_var_pipe_list *head);
 // variable_parse.c
 bool						check_valid_variable(char *variable);
 // test.c
