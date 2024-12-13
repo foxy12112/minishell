@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/13 05:39:38 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/13 08:06:21 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,10 +126,13 @@ int	main(int argc, char **argv)
 	if (!shell)
 		return (1);
 	initialize_shell(shell);
-	parse_commands(shell, "echo \"Hello World\" | grep 'Hello' | wc -c > output.txt");
-	print_cmd_list(shell);
+	// parse_commands(shell, "echo \"Hello World\" | grep 'Hello' | wc -c > output.txt");
+	// parse_commands(shell, "cat << EOF > output.txt");
+	// print_cmd_list(shell);
+	test_multi_redirect(shell);
 	free_env_list(shell->env);
 	free_env_list(shell->variables);
+	free_var_pipe_list(shell->pipe_list);
 	free(shell);
 	return (0);
 }
@@ -151,7 +154,7 @@ int	main(int argc, char **argv)
 
 // REDIRECT TESTS
 // (>) test_redirect_output("file.txt");
-// (<) test_redirect_input("file.txt", "cat");
+// (<) test_redirect_input(shell, "file.txt", "cat");
 // (>>) test_redirect_append_output("file.txt");
 // (<<) test_redirect_in_heredoc(shell);
 

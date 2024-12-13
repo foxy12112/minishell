@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 05:08:24 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/11 09:56:13 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/13 06:02:45 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,18 @@ void	free_heredoc_list(t_heredoc_list **head)
 		current = temp;
 	}
 	*head = NULL;
+}
+
+void	free_var_pipe_list(t_var_pipe_list *head)
+{
+	t_var_pipe_list *current = head;
+	t_var_pipe_list *next;
+
+	while (current != NULL)
+	{
+		next = current->next;
+		free(current->cmd);
+		free(current);
+		current = next;
+	}
 }

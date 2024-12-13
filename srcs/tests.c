@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 03:18:43 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/10 10:14:34 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/13 08:05:04 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,15 @@ void	test_redirect_in_heredoc(t_shell_data *shell)
 	cell_launch(args);
 }
 
+void	test_multi_redirect(t_shell_data *shell)
+{
+	char	*args[] = {"cat", NULL};
+
+	redirect_input_heredoc(shell, "EOF");
+	redirect_input(shell, "input.txt");
+	redirect_output("output.txt");
+	cell_launch(args);
+}
 // EXECs
 
 void	test_exec(char **command)

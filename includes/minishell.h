@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/13 05:37:48 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/13 08:06:11 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ int							add_variables(t_shell_data *shell,
 int							initialize_shell(t_shell_data *shell);
 // redirects.c
 int							redirect_output(const char *filename);
-void						redirect_input(const char *filename);
+void						redirect_input(t_shell_data *shell,
+								const char *filename);
 int							redirect_output_append(const char *filename);
 void						redirect_input_heredoc(t_shell_data *shell,
 								const char *delimiter);
@@ -141,6 +142,7 @@ void						free_env_list(t_env_list *head);
 void						free_key_value(char **key_value);
 void						free_char_string(char **str);
 void						free_heredoc_list(t_heredoc_list **head);
+void						free_var_pipe_list(t_var_pipe_list *head);
 // pipe.c
 // void						pipe_commands(char ***commands, int cmd_count);
 void						pipe_commands(char **cmd1, char **cmd2);
@@ -163,10 +165,12 @@ void						test_env(t_shell_data *shell);
 void						test_pwd(void);
 void						test_unset(t_shell_data *shell);
 int							test_redirect_output(char *filename);
-void						test_redirect_input(char *filename, char *command);
+void						test_redirect_input(t_shell_data *shell,
+								char *filename, char *command);
 int							test_redirect_append_output(char *filename);
 void						test_redirect_in_heredoc(t_shell_data *shell);
 void						test_exec(char **command);
 void						launch_program(void);
 void						test_pipes(void);
+void						test_multi_redirect(t_shell_data *shell);
 #endif
