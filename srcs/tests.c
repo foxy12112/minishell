@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 03:18:43 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/13 11:15:10 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/14 11:22:30 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	test_redirect_in_heredoc(t_shell_data *shell)
 	cell_launch(args);
 }
 
-// command > output.txt >> log.txt
+// cat > output.txt >> log.txt
 void	test_multi_redirect(t_shell_data *shell)
 {
 	char	*args[] = {"cat", NULL};

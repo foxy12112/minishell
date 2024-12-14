@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/14 09:06:02 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/14 14:36:52 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_redirects
 
 typedef struct s_var_cmd
 {
-	char					*command;
+	char					**command;
 	int						redirect_count;
 	t_redirects				*redirects;
 	struct s_var_cmd		*next;
@@ -158,6 +158,7 @@ bool						is_valid_char(char c, char *invalid_chars);
 char						**ft_split_by_first_equal(const char *s);
 char						*ft_trim_whitespaces(char *str);
 int							count_pipe_list_length(t_var_pipe_list *head);
+char **ft_split_whitespace(char const *s);
 // variable_parse.c
 bool						check_valid_variable(char *variable);
 // test.c

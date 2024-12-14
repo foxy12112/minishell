@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/14 10:08:06 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/14 14:43:39 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,36 +61,6 @@ char	*get_filename_delimiter(t_redirect_type redirect_type, char *redirect)
 	free(filename);
 	return (filename_parsed);
 }
-
-// void	assign_redirects(t_var_cmd *cmd_node, char *redirect)
-// {
-// 	t_redirect_type	redirect_type;
-// 	char			*filename_delimiter;
-// 	t_redirects		*new_redirect;
-// 	t_redirects		*current;
-
-// 	redirect_type = select_redirect_type(redirect);
-// 	filename_delimiter = get_filename_delimiter(redirect_type, redirect);
-// 	new_redirect = (t_redirects *)malloc(sizeof(t_redirects));
-// 	if (!new_redirect)
-// 		return ;
-// 	new_redirect->redirect_type = redirect_type;
-// 	new_redirect->filename = filename_delimiter;
-// 	new_redirect->delimiter = NULL; // Update as needed for heredoc
-// 	new_redirect->next = NULL;
-// 	new_redirect->prev = NULL;
-// 	if (!cmd_node->redirects)
-// 		cmd_node->redirects = new_redirect;
-// 	else
-// 	{
-// 		current = cmd_node->redirects;
-// 		while (current->next)
-// 			current = current->next;
-// 		current->next = new_redirect;
-// 		new_redirect->prev = current;
-// 	}
-// 	cmd_node->redirect_count++;
-// }
 
 t_redirects	*create_redirect_node(char *redirect)
 {
@@ -174,14 +144,7 @@ void	parse_redirects(t_var_cmd *cmd_node, char *command, int *i)
 	}
 }
 
-char	**command_to_ar(char *command)
-{
-	int	i;
-
-	i = 0;
-}
-
-char	*get_simple_cmd(char *command, int *i)
+char	**get_simple_cmd(char *command, int *i)
 {
 	char	*cmd;
 	char	*cmd_parsed;
@@ -197,9 +160,10 @@ char	*get_simple_cmd(char *command, int *i)
 	}
 	cmd = ft_substr(command, 0, *i);
 	cmd_parsed = ft_trim_whitespaces(cmd);
-	cmd_array = command_to_ar(cmd_parsed);
+	cmd_array = ft_split_whitespace(cmd_parsed);
 	free(cmd);
-	return (cmd_parsed);
+	free(cmd_parsed);
+	return (cmd_array);
 }
 
 t_var_cmd	*parse_command(char *command)
@@ -274,12 +238,25 @@ void	print_redirects(t_redirects *redirect)
 	}
 }
 
+void print_arofars(char **str)
+{
+	int i;
+
+	i = 0;
+	while(str[i])
+	{
+		printf("[%s]", str[i]);
+		i++;
+	}
+}
 // Function to print command data
 void	print_commands(t_var_cmd *cmd)
 {
 	while (cmd)
 	{
-		printf("Command: %s\n", cmd->command ? cmd->command : "(null)");
+		printf("Command:");
+		print_arofars(cmd->command);
+		printf("\n");
 		printf("Redirect Count: %d\n", cmd->redirect_count);
 		if (cmd->redirects)
 		{
@@ -320,9 +297,8 @@ int	main(int argc, char **argv)
 	if (!shell)
 		return (1);
 	initialize_shell(shell);
-	parse_readline(shell,
-			"echo \"Hello World\" | grep >> 'Hello' | wc	-c > output.txt | cat << EOF");
-	// parse_readline(shell, "echo yolo | eco test >> test");
+	parse_readline(shell, "echo \"Hello World\" | grep >> 'Hello' | wc -c > output.txt | cat << EOF");
+	// parse_readline(shell, "echo -n \"Hello World and Sun\" ");
 	// parse_readline(shell,
 	// 	"echo 'Hello World' >> output.txt <<EOF > test.txt < wow");
 	// parse_readline(shell,"echo 'Hello World' > output.txt < EOF < test.txt > wow");
