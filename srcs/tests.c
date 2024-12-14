@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tests.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 03:18:43 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/13 08:05:04 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:15:10 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,11 @@ int	test_redirect_output(char *filename)
 }
 
 //(<)
-void	test_redirect_input(char *filename, char *command)
+void	test_redirect_input(t_shell_data *shell, char *filename, char *command)
 {
 	char	*args[] = {command, NULL};
 
-	redirect_input(filename);
+	redirect_input(shell, filename);
 	cell_launch(args);
 }
 
@@ -107,13 +107,17 @@ void	test_redirect_in_heredoc(t_shell_data *shell)
 	cell_launch(args);
 }
 
+// command > output.txt >> log.txt
 void	test_multi_redirect(t_shell_data *shell)
 {
 	char	*args[] = {"cat", NULL};
 
-	redirect_input_heredoc(shell, "EOF");
-	redirect_input(shell, "input.txt");
+	(void)shell;
 	redirect_output("output.txt");
+	redirect_output_append("log.txt");
+	// redirect_input_heredoc(shell, "EOF");
+	// redirect_input(shell, "input.txt");
+	// redirect_output("output.txt");
 	cell_launch(args);
 }
 // EXECs

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_in.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 04:07:19 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/13 08:04:07 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/13 09:26:33 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	redirect_input(t_shell_data *shell, const char *filename)
 {
 	int	fd;
 
+	(void)shell;
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{

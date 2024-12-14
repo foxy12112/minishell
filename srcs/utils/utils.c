@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:26:29 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/13 05:36:17 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/13 12:30:58 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_trim_whitespaces(char *str)
 	start = 0;
 	while (ft_is_whitespace(str[start]))
 		start++;
-	end = strlen(str) - 1;
+	end = ft_strlen(str) - 1;
 	while (end >= start && ft_is_whitespace(str[end]))
 		end--;
 	str[end + 1] = '\0';
@@ -37,6 +37,5 @@ int count_pipe_list_length(t_var_pipe_list *head) {
         count++;
         current = current->next;
     }
-
     return count;
 }

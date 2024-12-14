@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/13 08:06:11 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/14 06:45:59 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,11 @@
 # include <unistd.h>
 
 // > - RDR_COMMAND_TO_INPUT, < - RDR_INPUT_TO_COMMAND, << -
-typedef enum s_operation_type
+
+typedef struct s_signal
 {
-	RDR_INPUT,
-	RDR_OUTPUT,
-	RDR_HEREDOC,
-	RDR_APPEND,
-	PIPE,
-	NO_RDR,
-}							t_operation_type;
+	int						signal;
+}							t_signal;
 
 typedef struct s_env_list
 {
@@ -52,29 +48,43 @@ typedef struct s_heredoc_list
 	struct s_heredoc_list	*prev;
 }							t_heredoc_list;
 
-typedef struct s_signal
+typedef enum e_redirect_type
 {
-	int						signal;
-}							t_signal;
+	REDIR_FAIL = 0,
+	OP_REDIRECT_IN = 1,
+	OP_REDIRECT_OUT,
+	OP_APPEND_OUT,
+	OP_HEREDOC,
+}							t_redirect_type;
 
-typedef struct s_var_list
+typedef struct s_redirects
 {
-	char					*var_name;
-	char					*var_value;
-	struct s_var_list		*next;
-	struct s_var_list		*prev;
-}							t_var_list;
+	char					*redirect_type;
+	char					*delimiter;
+	char					*filename;
+	struct s_redirects		*next;
+	struct s_redirects		*prev;
+}							t_redirects;
+
+typedef struct s_var_cmd
+{
+	char					*command;
+	int						redirect_count;
+	t_redirects				*redirects;
+	struct s_var_cmd		*next;
+	struct s_var_cmd		*prev;
+}							t_var_cmd;
 
 typedef struct s_var_pipe_list
 {
 	char					*cmd;
+	int						parsed_cmd;
 	struct s_var_pipe_list	*next;
 	struct s_var_pipe_list	*prev;
 }							t_var_pipe_list;
 
 typedef struct s_shell_data
 {
-	t_operation_type		operation_type;
 	t_env_list				*env;
 	t_env_list				*variables;
 	int						pipes_count;
@@ -82,13 +92,8 @@ typedef struct s_shell_data
 	int						fd;
 }							t_shell_data;
 
-typedef struct s_nodes
-{
-}							t_nodes;
-
 int							main(int argc, char **argv);
 int							utils(void);
-
 // builtins
 int							fd_cd(t_shell_data *shell, char *path);
 int							ft_echo(char **args, int fd, bool n_option);

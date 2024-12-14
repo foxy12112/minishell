@@ -3,55 +3,136 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/13 08:06:21 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/14 06:27:24 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	select_operation_type(char **args_ar, t_shell_data *data_tree)
+void	leaks(void)
+{
+	system("leaks minishell");
+}
+
+t_redirect_type	select_redirect_type(char *redirect)
 {
 	int	i;
 
 	i = 0;
-	while (args_ar[i])
+	if (redirect[i] == '<')
 	{
-		if (ft_strcmp(args_ar[i], "<") == 0)
-			data_tree->operation_type = RDR_OUTPUT;
-		else if (ft_strcmp(args_ar[i], ">") == 0)
-			data_tree->operation_type = RDR_INPUT;
-		else if (ft_strcmp(args_ar[i], ">>") == 0)
-			data_tree->operation_type = RDR_APPEND;
-		else if (ft_strcmp(args_ar[i], "<<") == 0)
-			data_tree->operation_type = RDR_HEREDOC;
-		else if (ft_strcmp(args_ar[i], "|") == 0)
-			data_tree->operation_type = PIPE;
-		else
-			data_tree->operation_type = NO_RDR;
+		while (redirect[i] == '<')
+			i++;
+		if (i == 1)
+			return (OP_REDIRECT_IN);
+		else if (i == 2)
+			return (OP_HEREDOC);
+	}
+	else if (redirect[i] == '>')
+	{
+		while (redirect[i] == '>')
+			i++;
+		if (i == 1)
+			return (OP_REDIRECT_OUT);
+		else if (i == 2)
+			return (OP_APPEND_OUT);
+	}
+	return (REDIR_FAIL);
+}
+
+void	assign_redirects(t_shell_data *shell, char *redirect)
+{
+	t_redirect_type	redirect_type;
+	int				i;
+	int				redirect_length;
+	char			*filename;
+	char			*filename_parsed;
+
+	i = 0;
+	(void)shell;
+	redirect_type = select_redirect_type(redirect);
+	redirect_length = ft_strlen(redirect);
+	printf("Redir Type: %d\n", redirect_type);
+	if (redirect_type == 1 || redirect_type == 2)
+	{
+		i = 1;
+	}
+	else if (redirect_type == 3)
+	{
+		i = 2;
+	}
+	else if (redirect_type == 4)
+	{
+		i = 2;
+	}
+	filename = ft_substr(redirect, i, redirect_length - i);
+	filename_parsed = ft_trim_whitespaces(filename);
+	free(filename);
+	printf("Filename: %s\n\n", filename_parsed);
+	free(filename_parsed);
+}
+
+void	parse_redirects(t_shell_data *shell, char *command, int *i)
+{
+	char	*redirect;
+	char	*redirects_parsed;
+	int		j;
+
+	j = *i;
+	(void)shell;
+	while (command[*i] == command[(*i) + 1])
+		(*i)++;
+	while (command[*i])
+	{
+		(*i)++;
+		if (command[*i] == '>' || command[*i] == '<' || command[*i] == '\0')
+		{
+			redirect = ft_substr(command, j, *i - j);
+			redirects_parsed = ft_trim_whitespaces(redirect);
+			assign_redirects(shell, redirects_parsed);
+			free(redirects_parsed);
+			free(redirect);
+			j = *i;
+			while (command[*i] == command[(*i) + 1])
+				(*i)++;
+		}
 	}
 }
 
-int	execute_arguments(char **args_ar)
+char	*get_simple_cmd(t_shell_data *shell, char *command, int *i)
 {
-	t_shell_data	*data_tree;
+	char	*cmd;
+	char	*cmd_parsed;
 
-	data_tree = malloc(1 * sizeof(t_shell_data));
-	if (!data_tree)
-		return (1);
-	select_operation_type(args_ar, data_tree);
-	if (data_tree->operation_type != NO_RDR)
+	(void)shell;
+	while (command[*i])
 	{
-		// launch_redirect();
+		if (command[*i] == '>' || command[*i] == '<')
+		{
+			break ;
+		}
+		(*i)++;
 	}
+	cmd = ft_substr(command, 0, *i);
+	cmd_parsed = ft_trim_whitespaces(cmd);
+	free(cmd);
+	return (cmd_parsed);
+}
+
+int	parse_command(t_shell_data *shell, char *command)
+{
+	char	*cmd;
+	int		i;
+
+	i = 0;
+	cmd = get_simple_cmd(shell, command, &i);
+	printf("Command: %s\n", cmd);
+	parse_redirects(shell, command, &i);
+	free(cmd);
 	return (0);
-}
-
-void	leaks(void)
-{
-	system("leaks minishell");
 }
 
 int	add_to_pipelist(t_shell_data *shell, char *command)
@@ -59,11 +140,11 @@ int	add_to_pipelist(t_shell_data *shell, char *command)
 	t_var_pipe_list	*new_node;
 	t_var_pipe_list	*current;
 
-	// printf("Test: %s\n", ft_trim_whitespaces(command));
 	new_node = (t_var_pipe_list *)malloc(sizeof(t_var_pipe_list));
 	if (!new_node)
 		return (-1);
 	new_node->cmd = ft_trim_whitespaces(command);
+	new_node->parsed_cmd = parse_command(shell, command);
 	new_node->next = NULL;
 	new_node->prev = NULL;
 	if (!shell->pipe_list)
@@ -79,7 +160,7 @@ int	add_to_pipelist(t_shell_data *shell, char *command)
 	return (0);
 }
 
-int	parse_commands(t_shell_data *shell, char *commands)
+int	parse_readline(t_shell_data *shell, char *commands)
 {
 	char	**pipe_splitted;
 	int		i;
@@ -115,6 +196,8 @@ void	print_cmd_list(t_shell_data *shell)
 	}
 	printf("Amount of Pipes: %d\n", shell->pipes_count);
 }
+
+// WHEN HEREDOC IS USED REDIRECT_IN HAS TO BE DISABLED --- IMPORTANT NOTICE TO DO
 int	main(int argc, char **argv)
 {
 	t_shell_data	*shell;
@@ -126,10 +209,12 @@ int	main(int argc, char **argv)
 	if (!shell)
 		return (1);
 	initialize_shell(shell);
-	// parse_commands(shell, "echo \"Hello World\" | grep 'Hello' | wc -c > output.txt");
-	// parse_commands(shell, "cat << EOF > output.txt");
+	// "echo \"Hello World\" | grep 'Hello' | wc -c > output.txt ";
+	// parse_readline(shell, "cat << EOF > output.txt");
+	parse_readline(shell,
+		"echo 'Hello World' >> output.txt <<EOF > test.txt < wow");
+	// parse_readline(shell,"echo 'Hello World' > output.txt < EOF < test.txt > wow");
 	// print_cmd_list(shell);
-	test_multi_redirect(shell);
 	free_env_list(shell->env);
 	free_env_list(shell->variables);
 	free_var_pipe_list(shell->pipe_list);
