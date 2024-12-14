@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/14 06:45:59 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/14 09:06:02 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef enum e_redirect_type
 
 typedef struct s_redirects
 {
-	char					*redirect_type;
+	t_redirect_type redirect_type;
 	char					*delimiter;
 	char					*filename;
 	struct s_redirects		*next;
@@ -77,8 +77,7 @@ typedef struct s_var_cmd
 
 typedef struct s_var_pipe_list
 {
-	char					*cmd;
-	int						parsed_cmd;
+	t_var_cmd				*cmd;
 	struct s_var_pipe_list	*next;
 	struct s_var_pipe_list	*prev;
 }							t_var_pipe_list;

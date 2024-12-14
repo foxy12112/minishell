@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/14 06:27:24 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/14 10:08:06 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,46 +43,118 @@ t_redirect_type	select_redirect_type(char *redirect)
 	return (REDIR_FAIL);
 }
 
-void	assign_redirects(t_shell_data *shell, char *redirect)
+char	*get_filename_delimiter(t_redirect_type redirect_type, char *redirect)
 {
-	t_redirect_type	redirect_type;
-	int				i;
-	int				redirect_length;
-	char			*filename;
-	char			*filename_parsed;
+	int		i;
+	char	*filename;
+	char	*filename_parsed;
+	int		redirect_length;
 
 	i = 0;
-	(void)shell;
-	redirect_type = select_redirect_type(redirect);
 	redirect_length = ft_strlen(redirect);
-	printf("Redir Type: %d\n", redirect_type);
-	if (redirect_type == 1 || redirect_type == 2)
-	{
+	if (redirect_type == OP_REDIRECT_IN || redirect_type == OP_REDIRECT_OUT)
 		i = 1;
-	}
-	else if (redirect_type == 3)
-	{
+	else if (redirect_type == OP_HEREDOC || redirect_type == OP_APPEND_OUT)
 		i = 2;
-	}
-	else if (redirect_type == 4)
-	{
-		i = 2;
-	}
 	filename = ft_substr(redirect, i, redirect_length - i);
 	filename_parsed = ft_trim_whitespaces(filename);
 	free(filename);
-	printf("Filename: %s\n\n", filename_parsed);
-	free(filename_parsed);
+	return (filename_parsed);
 }
 
-void	parse_redirects(t_shell_data *shell, char *command, int *i)
+// void	assign_redirects(t_var_cmd *cmd_node, char *redirect)
+// {
+// 	t_redirect_type	redirect_type;
+// 	char			*filename_delimiter;
+// 	t_redirects		*new_redirect;
+// 	t_redirects		*current;
+
+// 	redirect_type = select_redirect_type(redirect);
+// 	filename_delimiter = get_filename_delimiter(redirect_type, redirect);
+// 	new_redirect = (t_redirects *)malloc(sizeof(t_redirects));
+// 	if (!new_redirect)
+// 		return ;
+// 	new_redirect->redirect_type = redirect_type;
+// 	new_redirect->filename = filename_delimiter;
+// 	new_redirect->delimiter = NULL; // Update as needed for heredoc
+// 	new_redirect->next = NULL;
+// 	new_redirect->prev = NULL;
+// 	if (!cmd_node->redirects)
+// 		cmd_node->redirects = new_redirect;
+// 	else
+// 	{
+// 		current = cmd_node->redirects;
+// 		while (current->next)
+// 			current = current->next;
+// 		current->next = new_redirect;
+// 		new_redirect->prev = current;
+// 	}
+// 	cmd_node->redirect_count++;
+// }
+
+t_redirects	*create_redirect_node(char *redirect)
+{
+	t_redirect_type	redirect_type;
+	char			*filename_delimiter;
+	t_redirects		*new_redirect;
+
+	redirect_type = select_redirect_type(redirect);
+	filename_delimiter = get_filename_delimiter(redirect_type, redirect);
+	new_redirect = (t_redirects *)malloc(sizeof(t_redirects));
+	if (!new_redirect)
+		return (NULL);
+	new_redirect->redirect_type = redirect_type;
+	if (redirect_type == 4)
+	{
+		new_redirect->filename = NULL;
+		new_redirect->delimiter = filename_delimiter;
+	}
+	else
+	{
+		new_redirect->filename = filename_delimiter;
+		new_redirect->delimiter = NULL;
+	}
+	new_redirect->next = NULL;
+	new_redirect->prev = NULL;
+	return (new_redirect);
+}
+
+void	add_redirect_to_cmd_node(t_var_cmd *cmd_node, t_redirects *new_redirect)
+{
+	t_redirects	*current;
+
+	if (!cmd_node->redirects)
+	{
+		cmd_node->redirects = new_redirect;
+	}
+	else
+	{
+		current = cmd_node->redirects;
+		while (current->next)
+			current = current->next;
+		current->next = new_redirect;
+		new_redirect->prev = current;
+	}
+	cmd_node->redirect_count++;
+}
+
+void	assign_redirects(t_var_cmd *cmd_node, char *redirect)
+{
+	t_redirects	*new_redirect;
+
+	new_redirect = create_redirect_node(redirect);
+	if (!new_redirect)
+		return ;
+	add_redirect_to_cmd_node(cmd_node, new_redirect);
+}
+
+void	parse_redirects(t_var_cmd *cmd_node, char *command, int *i)
 {
 	char	*redirect;
 	char	*redirects_parsed;
 	int		j;
 
 	j = *i;
-	(void)shell;
 	while (command[*i] == command[(*i) + 1])
 		(*i)++;
 	while (command[*i])
@@ -92,7 +164,7 @@ void	parse_redirects(t_shell_data *shell, char *command, int *i)
 		{
 			redirect = ft_substr(command, j, *i - j);
 			redirects_parsed = ft_trim_whitespaces(redirect);
-			assign_redirects(shell, redirects_parsed);
+			assign_redirects(cmd_node, redirects_parsed);
 			free(redirects_parsed);
 			free(redirect);
 			j = *i;
@@ -102,12 +174,19 @@ void	parse_redirects(t_shell_data *shell, char *command, int *i)
 	}
 }
 
-char	*get_simple_cmd(t_shell_data *shell, char *command, int *i)
+char	**command_to_ar(char *command)
+{
+	int	i;
+
+	i = 0;
+}
+
+char	*get_simple_cmd(char *command, int *i)
 {
 	char	*cmd;
 	char	*cmd_parsed;
+	char	**cmd_array;
 
-	(void)shell;
 	while (command[*i])
 	{
 		if (command[*i] == '>' || command[*i] == '<')
@@ -118,21 +197,27 @@ char	*get_simple_cmd(t_shell_data *shell, char *command, int *i)
 	}
 	cmd = ft_substr(command, 0, *i);
 	cmd_parsed = ft_trim_whitespaces(cmd);
+	cmd_array = command_to_ar(cmd_parsed);
 	free(cmd);
 	return (cmd_parsed);
 }
 
-int	parse_command(t_shell_data *shell, char *command)
+t_var_cmd	*parse_command(char *command)
 {
-	char	*cmd;
-	int		i;
+	t_var_cmd	*cmd_node;
+	int			i;
 
 	i = 0;
-	cmd = get_simple_cmd(shell, command, &i);
-	printf("Command: %s\n", cmd);
-	parse_redirects(shell, command, &i);
-	free(cmd);
-	return (0);
+	cmd_node = (t_var_cmd *)malloc(sizeof(t_var_cmd));
+	if (!cmd_node)
+		return (NULL);
+	cmd_node->command = get_simple_cmd(command, &i);
+	cmd_node->redirect_count = 0;
+	cmd_node->redirects = NULL;
+	parse_redirects(cmd_node, command, &i);
+	cmd_node->next = NULL;
+	cmd_node->prev = NULL;
+	return (cmd_node);
 }
 
 int	add_to_pipelist(t_shell_data *shell, char *command)
@@ -143,8 +228,7 @@ int	add_to_pipelist(t_shell_data *shell, char *command)
 	new_node = (t_var_pipe_list *)malloc(sizeof(t_var_pipe_list));
 	if (!new_node)
 		return (-1);
-	new_node->cmd = ft_trim_whitespaces(command);
-	new_node->parsed_cmd = parse_command(shell, command);
+	new_node->cmd = parse_command(command);
 	new_node->next = NULL;
 	new_node->prev = NULL;
 	if (!shell->pipe_list)
@@ -179,22 +263,49 @@ int	parse_readline(t_shell_data *shell, char *commands)
 	return (0);
 }
 
-void	print_cmd_list(t_shell_data *shell)
+void	print_redirects(t_redirects *redirect)
 {
-	t_var_pipe_list	*current;
+	while (redirect)
+	{
+		printf("\tRedirect Type: %d\n", redirect->redirect_type);
+		printf("\tFilename: %s\n", redirect->filename);
+		printf("\tDelimiter: %s\n", redirect->delimiter);
+		redirect = redirect->next;
+	}
+}
 
-	if (!shell || !shell->pipe_list)
+// Function to print command data
+void	print_commands(t_var_cmd *cmd)
+{
+	while (cmd)
 	{
-		printf("Pipe list is empty or shell is NULL.\n");
-		return ;
+		printf("Command: %s\n", cmd->command ? cmd->command : "(null)");
+		printf("Redirect Count: %d\n", cmd->redirect_count);
+		if (cmd->redirects)
+		{
+			printf("Redirects:\n");
+			print_redirects(cmd->redirects);
+		}
+		cmd = cmd->next;
 	}
-	current = shell->pipe_list;
-	while (current)
+}
+
+// Function to print the pipe list data
+void	print_pipe_list(t_var_pipe_list *pipe_list)
+{
+	while (pipe_list)
 	{
-		printf("%s\n", current->cmd);
-		current = current->next;
+		if (pipe_list->cmd)
+		{
+			print_commands(pipe_list->cmd);
+		}
+		else
+		{
+			printf("No commands in this pipe.\n");
+		}
+		printf("\n\n");
+		pipe_list = pipe_list->next;
 	}
-	printf("Amount of Pipes: %d\n", shell->pipes_count);
 }
 
 // WHEN HEREDOC IS USED REDIRECT_IN HAS TO BE DISABLED --- IMPORTANT NOTICE TO DO
@@ -209,12 +320,14 @@ int	main(int argc, char **argv)
 	if (!shell)
 		return (1);
 	initialize_shell(shell);
-	// "echo \"Hello World\" | grep 'Hello' | wc -c > output.txt ";
-	// parse_readline(shell, "cat << EOF > output.txt");
 	parse_readline(shell,
-		"echo 'Hello World' >> output.txt <<EOF > test.txt < wow");
+			"echo \"Hello World\" | grep >> 'Hello' | wc	-c > output.txt | cat << EOF");
+	// parse_readline(shell, "echo yolo | eco test >> test");
+	// parse_readline(shell,
+	// 	"echo 'Hello World' >> output.txt <<EOF > test.txt < wow");
 	// parse_readline(shell,"echo 'Hello World' > output.txt < EOF < test.txt > wow");
-	// print_cmd_list(shell);
+	printf("\nPipes Count: %d\n\n", shell->pipes_count);
+	print_pipe_list(shell->pipe_list);
 	free_env_list(shell->env);
 	free_env_list(shell->variables);
 	free_var_pipe_list(shell->pipe_list);
