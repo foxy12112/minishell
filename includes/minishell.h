@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/15 05:48:13 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/15 06:05:16 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ t_var_cmd					*parse_command(char *command);
 // pipe_split.c
 int							add_to_pipelist(t_shell_data *shell, char *command);
 int							parse_readline(t_shell_data *shell, char *commands);
+void						process_pipe_list(t_var_pipe_list *pipe_list);
 // variable_parse_utils.c
 char						*remove_quotes(char *value);
 bool						string_in_singlequotes(char *value);

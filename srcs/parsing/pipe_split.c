@@ -6,11 +6,22 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 04:29:58 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/15 04:31:00 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/15 06:25:46 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int count_pipe_list_length(t_var_pipe_list *head) {
+    int count = 0;
+    t_var_pipe_list *current = head;
+
+    while (current) {
+        count++;
+        current = current->next;
+    }
+    return count;
+}
 
 int	add_to_pipelist(t_shell_data *shell, char *command)
 {
@@ -53,4 +64,21 @@ int	parse_readline(t_shell_data *shell, char *commands)
 	shell->pipes_count = count_pipe_list_length(shell->pipe_list) - 1;
 	free_char_string(pipe_splitted);
 	return (0);
+}
+
+void	process_pipe_list(t_var_pipe_list *pipe_list)
+{
+	t_var_pipe_list	*current_pipe;
+	t_redirects		**redirects;
+
+	current_pipe = pipe_list;
+	while (current_pipe)
+	{
+		if (current_pipe->cmd)
+		{
+			redirects = &current_pipe->cmd->redirects;
+			sort_redirects(redirects);
+		}
+		current_pipe = current_pipe->next;
+	}
 }

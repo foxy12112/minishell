@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/15 05:49:13 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/15 06:37:02 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,21 +88,15 @@ void	test_multi_redirect(t_shell_data *shell)
 	test_echo(ft_split("xarfruit apple zebanana cherry", ' '), STDOUT_FILENO);
 }
 
-// Function to iterate through the pipe list and sort redirects
-void	process_pipe_list(t_var_pipe_list *pipe_list)
+int	execute_script(t_shell_data *shell)
 {
-	t_var_pipe_list	*current_pipe;
-	t_redirects		**redirects;
-
-	current_pipe = pipe_list;
-	while (current_pipe)
+	if (shell->pipes_count > 0)
 	{
-		if (current_pipe->cmd)
-		{
-			redirects = &current_pipe->cmd->redirects;
-			sort_redirects(redirects);
-		}
-		current_pipe = current_pipe->next;
+		//launch pipes
+	}
+	else if
+	{
+
 	}
 }
 
@@ -119,10 +113,10 @@ int	main(int argc, char **argv)
 		return (1);
 	initialize_shell(shell);
 	// test_multi_redirect(shell);
-	// parse_readline(shell, "echo \"Hello World\" | grep >> 'Hello' | wc -c > output.txt | cat << EOF");
+	parse_readline(shell, "echo \"Hello World\" | grep >> 'Hello' | wc -c > output.txt");
 	// parse_readline(shell, "echo -n \"Hello World and Sun\" ");
-	parse_readline(shell,
-		"echo 'Hello World' >> test < zaza >> output.txt <<EOF > test.txt < wow | cat >> LALAL > outpas.c << EOF");
+	// parse_readline(shell,
+	// 	"echo 'Hello World' >> test < zaza >> output.txt <<EOF > test.txt < wow | cat >> LALAL > outpas.c << EOF");
 	process_pipe_list(shell->pipe_list);
 	// parse_readline(shell,"echo 'Hello World' > output.txt < EOF < test.txt > wow");
 	printf("\nPipes Count: %d\n\n", shell->pipes_count);
