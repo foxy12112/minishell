@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 03:18:43 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/15 10:44:10 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/15 11:21:38 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,12 +125,12 @@ void	launch_program(void)
 
 // PIPES
 
-void	test_pipes(void)
-{
-	char *cmd1[] = {"echo", "xarfruit apple zebanana cherry", NULL};
-	char *cmd2[] = {"tr", " ", "\n", NULL};
-	char *cmd3[] = {"sort", NULL};
-	char **commands[] = {cmd1, cmd2, cmd3};
+// void	test_pipes(t_shell_data *shell)
+// {
+// 	char *cmd1[] = {"echo", "xarfruit apple zebanana cherry", NULL};
+// 	char *cmd2[] = {"tr", " ", "\n", NULL};
+// 	char *cmd3[] = {"sort", NULL};
+// 	char **commands[] = {cmd1, cmd2, cmd3};
 
-	pipe_multiple_commands(commands, 3);
-}
+// 	pipe_multiple_commands(shell, commands, 3);
+// }

@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/15 11:00:00 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/15 11:20:40 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,7 +264,7 @@ int	execute_script(t_shell_data *shell)
 	// printf("TEST1-------\n");
 	if (shell->pipes_count > 0)
 	{
-		// setup pipes, setup redirects and then launch command;
+		pipe_multiple_commands(shell, shell->pipe_list, shell->pipes_count);
 		return (0);
 	}
 	else
@@ -287,13 +287,13 @@ int	main(int argc, char **argv)
 		return (1);
 	initialize_shell(shell);
 	// test_multi_redirect(shell);
-	parse_readline(shell, "ls -l");
+	parse_readline(shell, "ls | wc -l");
 	// parse_readline(shell, "echo -n \"Hello World and Sun\" > output.txt");
 	// parse_readline(shell, "echo \"Hello World\" | grep >> 'Hello' | wc -c > output.txt ");
 	// parse_readline(shell,
 	// 	"echo 'Hello World' >> test < zaza >> output.txt <<EOF > test.txt < wow | cat >> LALAL > outpas.c << EOF");
-	process_pipe_list(shell->pipe_list);
 	// parse_readline(shell,"echo 'Hello World' > output.txt < EOF < test.txt > wow");
+	// process_pipe_list(shell->pipe_list);
 	execute_script(shell);
 	// printf("\nPipes Count: %d\n\n", shell->pipes_count);
 	// print_pipe_list(shell->pipe_list);

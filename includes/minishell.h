@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/15 10:44:38 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/15 11:21:07 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_shell_data
 
 int							main(int argc, char **argv);
 int							utils(void);
+int	execute_single_cmd(t_shell_data *shell, t_var_cmd *cmd);
 // builtins
 int							fd_cd(t_shell_data *shell, char *path);
 int							ft_echo(char *args, int fd, bool n_option);
@@ -173,8 +174,9 @@ void						free_var_pipe_list(t_var_pipe_list *head);
 // pipe.c
 // void						pipe_commands(char ***commands, int cmd_count);
 void						pipe_commands(char **cmd1, char **cmd2);
-void						pipe_multiple_commands(char ***commands,
-								int num_commands);
+// void	pipe_multiple_commands(t_shell_data *shell, char ***commands, int cmd_count);
+void	pipe_multiple_commands(t_shell_data *shell, t_var_pipe_list *pipe_list,
+		int cmd_count);
 // utils.c
 char						ft_is_whitespace(char c);
 bool						is_valid_char(char c, char *invalid_chars);

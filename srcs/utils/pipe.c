@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 01:20:11 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/15 11:02:59 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/15 11:23:00 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,37 @@ void	create_pipes(int *pipe_fd)
 	}
 }
 
-void	create_child_processes(int *pipe_fd, char ***commands, int *iterators,
+// void	create_child_processes(int *pipe_fd, char ***commands, int *iterators,
+// 		int *input_fd)
+// {
+// 	pid_t	pid;
+
+// 	pid = ft_fork();
+// 	if (pid == 0)
+// 	{
+// 		if (iterators[0] > 0)
+// 		{
+// 			dup2(*input_fd, STDIN_FILENO);
+// 			close(*input_fd);
+// 		}
+// 		if (iterators[0] < iterators[1] - 1)
+// 		{
+// 			close(pipe_fd[0]);
+// 			dup2(pipe_fd[1], STDOUT_FILENO);
+// 			close(pipe_fd[1]);
+// 		}
+// 		cell_launch(commands[iterators[0]]);
+// 		exit(0);
+// 	}
+// 	else
+// 	{
+// 		if (iterators[0] < iterators[1] - 1)
+// 			close(pipe_fd[1]);
+// 		*input_fd = pipe_fd[0];
+// 	}
+// }
+
+void	create_child_processes(t_shell_data *shell, int *pipe_fd, t_var_pipe_list *current,
 		int *input_fd)
 {
 	pid_t	pid;
@@ -29,49 +59,79 @@ void	create_child_processes(int *pipe_fd, char ***commands, int *iterators,
 	pid = ft_fork();
 	if (pid == 0)
 	{
-		if (iterators[0] > 0)
+		if (*input_fd != 0)
 		{
 			dup2(*input_fd, STDIN_FILENO);
 			close(*input_fd);
 		}
-		if (iterators[0] < iterators[1] - 1)
+		if (current->next != NULL)
 		{
 			close(pipe_fd[0]);
 			dup2(pipe_fd[1], STDOUT_FILENO);
 			close(pipe_fd[1]);
 		}
-		cell_launch(commands[iterators[0]]);
+		execute_single_cmd(shell, current->cmd);
+		// cell_launch(current->cmd);
 		exit(0);
 	}
 	else
 	{
-		if (iterators[0] < iterators[1] - 1)
+		if (current->next != NULL)
+		{
 			close(pipe_fd[1]);
+		}
 		*input_fd = pipe_fd[0];
 	}
 }
 
-void	pipe_multiple_commands(char ***commands, int cmd_count)
+void	pipe_multiple_commands(t_shell_data *shell, t_var_pipe_list *pipe_list,
+		int cmd_count)
 {
-	int	pipe_fd[2];
-	int	iterators[2];
-	int	input_fd;
+	int				pipe_fd[2];
+	int				input_fd;
+	t_var_pipe_list	*current;
 
-	iterators[0] = 0;
-	iterators[1] = cmd_count;
+	(void)cmd_count;
 	input_fd = 0;
-	while (iterators[0] < cmd_count)
+	current = pipe_list;
+	while (current != NULL)
 	{
-		if (iterators[0] < cmd_count - 1)
+		if (current->next != NULL)
 		{
 			create_pipes(pipe_fd);
 		}
-		create_child_processes(pipe_fd, commands, iterators, &input_fd);
-		iterators[0]++;
+		create_child_processes(shell, pipe_fd, current, &input_fd);
+		current = current->next;
 	}
-	while (iterators[0] > 0)
+	current = pipe_list;
+	while (current != NULL)
 	{
 		wait(NULL);
-		iterators[0]--;
+		current = current->next;
 	}
 }
+
+// void	pipe_multiple_commands(char ***commands, int cmd_count)
+// {
+// 	int	pipe_fd[2];
+// 	int	iterators[2];
+// 	int	input_fd;
+
+// 	iterators[0] = 0;
+// 	iterators[1] = cmd_count;
+// 	input_fd = 0;
+// 	while (iterators[0] < cmd_count)
+// 	{
+// 		if (iterators[0] < cmd_count - 1)
+// 		{
+// 			create_pipes(pipe_fd);
+// 		}
+// 		create_child_processes(pipe_fd, commands, iterators, &input_fd);
+// 		iterators[0]++;
+// 	}
+// 	while (iterators[0] > 0)
+// 	{
+// 		wait(NULL);
+// 		iterators[0]--;
+// 	}
+// }
