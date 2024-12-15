@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/15 17:03:31 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/15 17:23:50 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,11 +213,12 @@ int	parse_launch_export(t_shell_data *shell, char **command)
 	return (0);
 }
 
-int	parse_launch_pwd(char **command)
+int	parse_launch_pwd(t_shell_data *shell, char **command)
 {
 	int	args_count;
 
 	args_count = 0;
+	(void)shell;
 	while (command[args_count])
 		args_count++;
 	if (args_count > 1)
@@ -228,6 +229,28 @@ int	parse_launch_pwd(char **command)
 	ft_pwd();
 	return (0);
 }
+
+int	parse_launch_unset(t_shell_data *shell, char **command)
+{
+	int	args_count;
+
+	args_count = 0;
+	while (command[args_count])
+		args_count++;
+	if (args_count < 2)
+	{
+		perror("not enough arguments");
+		return (1);
+	}
+	args_count = 1;
+	while (command[args_count])
+	{
+		ft_unset(shell, command[args_count]);
+		args_count++;
+	}
+	return (0);
+}
+
 
 int	select_launch_builtin(t_shell_data *shell, char **command)
 {
@@ -245,9 +268,9 @@ int	select_launch_builtin(t_shell_data *shell, char **command)
 	else if (ft_strcmp(command_toupper, "EXPORT") == 0)
 		parse_launch_export(shell, command);
 	else if (ft_strcmp(command_toupper, "PWD") == 0)
-		parse_launch_pwd(command);
+		parse_launch_pwd(shell, command);
 	else if (ft_strcmp(command_toupper, "UNSET") == 0)
-		return (0);
+		parse_launch_unset(shell, command);
 	else if (ft_strcmp(command_toupper, "EXIT") == 0)
 		return (0);
 	if (command_toupper)
@@ -268,7 +291,6 @@ int	launch_single_command(t_shell_data *shell, char **command)
 	}
 	else
 	{
-		// launch exec function
 		cell_launch(command);
 		return (0);
 	}
@@ -338,7 +360,7 @@ int	main(int argc, char **argv)
 
 	(void)argv;
 	(void)argc;
-	atexit(leaks);
+	// atexit(leaks);
 	shell = (t_shell_data *)malloc(sizeof(t_shell_data));
 	if (!shell)
 		return (1);
@@ -347,14 +369,16 @@ int	main(int argc, char **argv)
 	// parse_readline(shell, "cat << EOF > output.txt");
 	// parse_readline(shell,"echo 'apple apple apple' | sed 's/apple/orange/g' > output.txt");
 	/// parse_readline(shell, "cat << EOF > output.txt");
-	parse_readline(shell, "pwd > output.txt");
+	print_variables_list(shell->variables);
+	parse_readline(shell, "unset USER SHELLasd");
 	// parse_readline(shell,"echo 'Hello World' > output.txt < EOF < test.txt > wow");
 	// process_pipe_list(shell->pipe_list);
+	ft_putstr_fd("HIHIHI\n\n", 1);
 	execute_script(shell);
 	// printf("%s\n", test_get_variable(shell, "PWD"));
 	// printf("\nPipes Count: %d\n\n", shell->pipes_count);
 	// print_pipe_list(shell->pipe_list);
-	// print_variables_list(shell->variables);
+	print_variables_list(shell->variables);
 	free_env_list(shell->env);
 	free_env_list(shell->variables);
 	free_var_pipe_list(shell->pipe_list);
