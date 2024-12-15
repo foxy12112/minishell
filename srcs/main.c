@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/15 11:20:40 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/15 13:25:22 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,9 +287,9 @@ int	main(int argc, char **argv)
 		return (1);
 	initialize_shell(shell);
 	// test_multi_redirect(shell);
-	parse_readline(shell, "ls | wc -l");
-	// parse_readline(shell, "echo -n \"Hello World and Sun\" > output.txt");
-	// parse_readline(shell, "echo \"Hello World\" | grep >> 'Hello' | wc -c > output.txt ");
+	parse_readline(shell, "ls >./outfiles/outfile01 >>./outfiles/outfile01");
+	// parse_readline(shell, "echo 'apple apple apple' | sed 's/apple/orange/g' > output.txt");
+	///parse_readline(shell, "cat << EOF > output.txt");
 	// parse_readline(shell,
 	// 	"echo 'Hello World' >> test < zaza >> output.txt <<EOF > test.txt < wow | cat >> LALAL > outpas.c << EOF");
 	// parse_readline(shell,"echo 'Hello World' > output.txt < EOF < test.txt > wow");

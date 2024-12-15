@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/15 11:21:07 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/15 12:13:50 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_shell_data
 int							main(int argc, char **argv);
 int							utils(void);
 int	execute_single_cmd(t_shell_data *shell, t_var_cmd *cmd);
+void	print_arofars(char **str);
 // builtins
 int							fd_cd(t_shell_data *shell, char *path);
 int							ft_echo(char *args, int fd, bool n_option);

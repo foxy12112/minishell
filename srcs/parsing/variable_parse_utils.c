@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variable_parse_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 08:33:41 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/12 13:45:44 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/15 12:22:23 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*remove_quotes(char *value)
 		i++;
 		j++;
 	}
+	parsed[j] = '\0'; 
 	return (parsed);
 }
 
