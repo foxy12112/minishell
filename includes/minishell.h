@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/15 06:05:16 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/15 09:29:35 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int							main(int argc, char **argv);
 int							utils(void);
 // builtins
 int							fd_cd(t_shell_data *shell, char *path);
-int							ft_echo(char **args, int fd, bool n_option);
+int							ft_echo(char *args, int fd, bool n_option);
 int							ft_env(t_shell_data *shell);
 int							ft_export(t_shell_data *shell, char **variables);
 void						change_pwd_env(t_env_list **head, const char *key,
@@ -123,6 +123,7 @@ t_var_cmd					*parse_command(char *command);
 int							add_to_pipelist(t_shell_data *shell, char *command);
 int							parse_readline(t_shell_data *shell, char *commands);
 void						process_pipe_list(t_var_pipe_list *pipe_list);
+int							count_pipe_list_length(t_var_pipe_list *head);
 // variable_parse_utils.c
 char						*remove_quotes(char *value);
 bool						string_in_singlequotes(char *value);
@@ -179,8 +180,8 @@ char						ft_is_whitespace(char c);
 bool						is_valid_char(char c, char *invalid_chars);
 char						**ft_split_by_first_equal(const char *s);
 char						*ft_trim_whitespaces(char *str);
-int							count_pipe_list_length(t_var_pipe_list *head);
 char						**ft_split_whitespace(char const *s);
+char	*ft_strtoupper(char *str);
 // variable_parse.c
 bool						check_valid_variable(char *variable);
 // test.c

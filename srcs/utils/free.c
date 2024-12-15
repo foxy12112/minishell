@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 05:08:24 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/13 06:02:45 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/15 09:18:49 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,42 @@ void	free_heredoc_list(t_heredoc_list **head)
 	*head = NULL;
 }
 
+void free_redirects(t_redirects *redirect)
+{
+    t_redirects *temp;
+
+    while (redirect)
+    {
+        temp = redirect->next;
+
+        if (redirect->filename)
+            free(redirect->filename);
+        if (redirect->delimiter)
+            free(redirect->delimiter);
+
+        free(redirect);
+
+        redirect = temp;
+    }
+}
+
+void free_commands(t_var_cmd *cmd)
+{
+    t_var_cmd *temp;
+
+    while (cmd)
+    {
+        temp = cmd;
+        free_char_string(cmd->command);
+        if (cmd->redirects)
+        {
+            free_redirects(cmd->redirects);
+        }
+        cmd = cmd->next;
+        free(temp);
+    }
+}
+
 void	free_var_pipe_list(t_var_pipe_list *head)
 {
 	t_var_pipe_list *current = head;
@@ -78,7 +114,7 @@ void	free_var_pipe_list(t_var_pipe_list *head)
 	while (current != NULL)
 	{
 		next = current->next;
-		free(current->cmd);
+		free_commands(current->cmd);
 		free(current);
 		current = next;
 	}

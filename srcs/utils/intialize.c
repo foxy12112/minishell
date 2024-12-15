@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intialize.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 03:17:18 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/14 16:14:02 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/15 09:00:24 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@ int	initialize_shell(t_shell_data *shell)
 	shell->variables = initialize_env();
 	shell->pipes_count = 0;
 	shell->heredoc_launched = false;
+	shell->pipe_list = NULL;
 	return (0);
 }

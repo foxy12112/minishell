@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 04:29:58 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/15 06:25:46 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/15 09:00:47 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	add_to_pipelist(t_shell_data *shell, char *command)
 	if (!new_node)
 		return (-1);
 	new_node->cmd = parse_command(command);
+	if (!new_node->cmd)
+		return (free(new_node), (-1));
 	new_node->next = NULL;
 	new_node->prev = NULL;
 	if (!shell->pipe_list)
