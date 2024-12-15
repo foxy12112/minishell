@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/14 14:36:52 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/15 05:48:13 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef enum e_redirect_type
 
 typedef struct s_redirects
 {
-	t_redirect_type redirect_type;
+	t_redirect_type			redirect_type;
 	char					*delimiter;
 	char					*filename;
 	struct s_redirects		*next;
@@ -88,6 +88,7 @@ typedef struct s_shell_data
 	t_env_list				*variables;
 	int						pipes_count;
 	t_var_pipe_list			*pipe_list;
+	bool					heredoc_launched;
 	int						fd;
 }							t_shell_data;
 
@@ -102,6 +103,25 @@ void						change_pwd_env(t_env_list **head, const char *key,
 								const char *value);
 int							ft_pwd(void);
 int							ft_unset(t_shell_data *shell, char *variables);
+// redirect_parse_utils.c
+void						sort_redirects(t_redirects **redirects);
+t_redirect_type				select_redirect_type(char *redirect);
+char						*get_filename_delimiter(t_redirect_type redirect_type,
+								char *redirect);
+// redirect_parse.c
+void						parse_redirects(t_var_cmd *cmd_node, char *command,
+								int *i);
+void						assign_redirects(t_var_cmd *cmd_node,
+								char *redirect);
+void						add_redirect_to_cmd_node(t_var_cmd *cmd_node,
+								t_redirects *new_redirect);
+t_redirects					*create_redirect_node(char *redirect);
+// cmd_parse.c
+char						**get_simple_cmd(char *command, int *i);
+t_var_cmd					*parse_command(char *command);
+// pipe_split.c
+int							add_to_pipelist(t_shell_data *shell, char *command);
+int							parse_readline(t_shell_data *shell, char *commands);
 // variable_parse_utils.c
 char						*remove_quotes(char *value);
 bool						string_in_singlequotes(char *value);
@@ -124,7 +144,8 @@ int							add_variables(t_shell_data *shell,
 								char **variables);
 int							initialize_shell(t_shell_data *shell);
 // redirects.c
-int							redirect_output(const char *filename);
+int							redirect_output(t_shell_data *shell,
+								const char *filename);
 void						redirect_input(t_shell_data *shell,
 								const char *filename);
 int							redirect_output_append(const char *filename);
@@ -158,7 +179,7 @@ bool						is_valid_char(char c, char *invalid_chars);
 char						**ft_split_by_first_equal(const char *s);
 char						*ft_trim_whitespaces(char *str);
 int							count_pipe_list_length(t_var_pipe_list *head);
-char **ft_split_whitespace(char const *s);
+char						**ft_split_whitespace(char const *s);
 // variable_parse.c
 bool						check_valid_variable(char *variable);
 // test.c
@@ -169,7 +190,8 @@ void						test_echo(char **string, int fd);
 void						test_env(t_shell_data *shell);
 void						test_pwd(void);
 void						test_unset(t_shell_data *shell);
-int							test_redirect_output(char *filename);
+int							test_redirect_output(t_shell_data *shell,
+								char *filename);
 void						test_redirect_input(t_shell_data *shell,
 								char *filename, char *command);
 int							test_redirect_append_output(char *filename);

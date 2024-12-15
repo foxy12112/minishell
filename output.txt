@@ -1,5 +1,0 @@
--rw-r--r--@  1 macbook  staff    338 Dec 13 09:11 edgecases.txt
--rw-r--r--@  1 macbook  staff     27 Dec 14 10:17 input.txt
--rw-r--r--@  1 macbook  staff     67 Dec 13 11:15 log.txt
--rw-r--r--@  1 macbook  staff      0 Dec 14 10:32 output.txt
--rw-r--r--@  1 macbook  staff      7 Dec 13 09:11 test.txt

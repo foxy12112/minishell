@@ -6,7 +6,7 @@
 #    By: macbook <macbook@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/14 14:36:18 by macbook          ###   ########.fr        #
+#    Updated: 2024/12/15 05:49:40 by macbook          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ ERROR_FILE	=	error.log
 #											Sources												#
 #################################################################################################
 
-_PARSING		=	variable_parse.c variable_value_get.c variable_parse_utils.c
+_PARSING		=	variable_parse.c variable_value_get.c variable_parse_utils.c redirect_parse.c redirect_parse_utils.c cmd_parse.c pipe_split.c
 PARSING			=	$(addprefix parsing/, $(_PARSING))
 
 _REDIRECTS		=	redirect_in.c redirect_out.c redirect_out_append.c redirect_in_heredoc.c redirect_in_heredoc_utils.c

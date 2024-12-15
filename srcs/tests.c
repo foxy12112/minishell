@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 03:18:43 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/14 11:22:30 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/14 16:59:00 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ void	test_unset(t_shell_data *shell)
 // REDIRECT TESTS
 
 //(>)
-int	test_redirect_output(char *filename)
+int	test_redirect_output(t_shell_data *shell, char *filename)
 {
-	if (redirect_output(filename) < 0)
+	if (redirect_output(shell, filename) < 0)
 	{
 		return (1);
 	}
@@ -103,23 +103,12 @@ void	test_redirect_in_heredoc(t_shell_data *shell)
 	char	*args[] = {"cat", NULL};
 
 	redirect_input_heredoc(shell, "EOF");
-	redirect_output("test.txt");
+	redirect_output(shell, "test.txt");
 	cell_launch(args);
 }
 
 // cat > output.txt >> log.txt
-void	test_multi_redirect(t_shell_data *shell)
-{
-	char	*args[] = {"cat", NULL};
 
-	(void)shell;
-	redirect_output("output.txt");
-	redirect_output_append("log.txt");
-	// redirect_input_heredoc(shell, "EOF");
-	// redirect_input(shell, "input.txt");
-	// redirect_output("output.txt");
-	cell_launch(args);
-}
 // EXECs
 
 void	test_exec(char **command)
