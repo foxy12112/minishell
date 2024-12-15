@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tests.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 03:18:43 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/14 16:59:00 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/15 10:44:10 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	test_export(t_shell_data *shell)
 	print_variables_list(shell->variables);
 }
 
-void	test_echo(char **string, int fd)
+void	test_echo(char *string, int fd)
 {
 	ft_echo(string, fd, false);
 }
@@ -75,7 +75,7 @@ int	test_redirect_output(t_shell_data *shell, char *filename)
 	{
 		return (1);
 	}
-	test_echo(ft_split("HI THIS IS TEST", ' '), STDOUT_FILENO);
+	test_echo("HI THIS IS TEST", STDOUT_FILENO);
 	return (0);
 }
 
@@ -88,13 +88,13 @@ void	test_redirect_input(t_shell_data *shell, char *filename, char *command)
 	cell_launch(args);
 }
 
-int	test_redirect_append_output(char *filename)
+int	test_redirect_append_output(t_shell_data *shell, char *filename)
 {
-	if (redirect_output_append(filename) < 0)
+	if (redirect_output_append(shell, filename) < 0)
 	{
 		return (1);
 	}
-	test_echo(ft_split("GELA", ' '), STDOUT_FILENO);
+	test_echo("GELA", STDOUT_FILENO);
 	return (0);
 }
 

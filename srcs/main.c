@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/15 09:46:42 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/15 11:00:00 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	print_commands(t_var_cmd *cmd)
 	}
 }
 
-
 void	print_pipe_list(t_var_pipe_list *pipe_list)
 {
 	while (pipe_list)
@@ -81,7 +80,7 @@ void	print_pipe_list(t_var_pipe_list *pipe_list)
 // 	(void)shell;
 // 	redirect_input_heredoc(shell, "EOF");
 // 	redirect_output(shell, "output.txt");
-// 	redirect_output_append("append.txt");
+// 	redirect_output_append(shell, "append.txt");
 // 	// redirect_input(shell, "input.txt");
 // 	// redirect_input_heredoc(shell, "EOF");
 // 	// redirect_output(shell, "output.txt");
@@ -109,7 +108,7 @@ char	*command_is_builtin(char *command)
 		return (command_toupper);
 	else if (ft_strcmp(command_toupper, "CD") == 0)
 		return (command_toupper);
-	else if (ft_strcmp(command_toupper, "ENV") == 0) 
+	else if (ft_strcmp(command_toupper, "ENV") == 0)
 		return (command_toupper);
 	else if (ft_strcmp(command_toupper, "EXIT") == 0)
 		return (command_toupper);
@@ -123,47 +122,53 @@ char	*command_is_builtin(char *command)
 		return (free(command_toupper), NULL);
 }
 
-char *join_arof_ars(char **array, int start) {
-    char *result = NULL;
-    char *temp;
-    int i = 0;
+char	*join_arof_ars(char **array, int start)
+{
+	char	*result;
+	char	*temp;
+	int		i;
 
-    while (i < start && array[i] != NULL) {
-        i++;
-    }
-
-    while (array[i] != NULL) {
-        if (result == NULL) {
-            result = ft_strjoin("", array[i]);
-        } else {
-            temp = ft_strjoin(result, " ");
-            free(result);
-            result = ft_strjoin(temp, array[i]);
-            free(temp);
-        }
-        i++;
-    }
-
-    return result;
+	result = NULL;
+	i = 0;
+	while (i < start && array[i] != NULL)
+	{
+		i++;
+	}
+	while (array[i] != NULL)
+	{
+		if (result == NULL)
+		{
+			result = ft_strjoin("", array[i]);
+		}
+		else
+		{
+			temp = ft_strjoin(result, " ");
+			free(result);
+			result = ft_strjoin(temp, array[i]);
+			free(temp);
+		}
+		i++;
+	}
+	return (result);
 }
 
-int parse_launch_echo(char **command)
+int	parse_launch_echo(char **command)
 {
-	bool has_n_option;
-	char *echo_string;
+	bool	has_n_option;
+	char	*echo_string;
+
 	has_n_option = false;
-	if(ft_strcmp(command[1], "-n") == 0)
+	if (ft_strcmp(command[1], "-n") == 0)
 		has_n_option = true;
-	
-	if(has_n_option)
-		echo_string = join_arof_ars(command , 2);
+	if (has_n_option)
+		echo_string = join_arof_ars(command, 2);
 	else
-		echo_string = join_arof_ars(command , 1);
+		echo_string = join_arof_ars(command, 1);
 	ft_echo(echo_string, STDOUT_FILENO, has_n_option);
 	return (0);
 }
 
-int select_launch_builtin(char **command)
+int	select_launch_builtin(char **command)
 {
 	char	*command_toupper;
 
@@ -174,7 +179,7 @@ int select_launch_builtin(char **command)
 		parse_launch_echo(command);
 	else if (ft_strcmp(command_toupper, "CD") == 0)
 		return (0);
-	else if (ft_strcmp(command_toupper, "ENV") == 0) 
+	else if (ft_strcmp(command_toupper, "ENV") == 0)
 		return (0);
 	else if (ft_strcmp(command_toupper, "EXIT") == 0)
 		return (0);
@@ -184,14 +189,14 @@ int select_launch_builtin(char **command)
 		return (0);
 	else if (ft_strcmp(command_toupper, "UNSET") == 0)
 		return (0);
-	if(command_toupper)
+	if (command_toupper)
 		free(command_toupper);
 	return (0);
 }
 
 int	launch_single_command(char **command)
 {
-	char *builtin_command_type;
+	char	*builtin_command_type;
 
 	builtin_command_type = command_is_builtin(command[0]);
 	if (builtin_command_type)
@@ -203,32 +208,46 @@ int	launch_single_command(char **command)
 	else
 	{
 		// launch exec function
+		cell_launch(command);
 		return (0);
 	}
 	return (0);
 }
 
-int setup_redirects(t_redirects	*redirects)
+int	setup_redirects(t_shell_data *shell, t_redirects *redirects)
 {
+	(void)shell;
 	while (redirects)
 	{
-		printf("\tRedirect Type: %d\n", redirects->redirect_type);
-		printf("\tFilename: %s\n", redirects->filename);
-		printf("\tDelimiter: %s\n", redirects->delimiter);
-		printf("\n");
+		// printf("\tRedirect Type: %d\n", redirects->redirect_type);
+		// printf("\tFilename: %s\n", redirects->filename);
+		// printf("\tDelimiter: %s\n", redirects->delimiter);
+		// printf("\n");
+		if (redirects->redirect_type == OP_REDIRECT_IN)
+			redirect_input(shell, redirects->filename);
+		else if (redirects->redirect_type == OP_REDIRECT_OUT)
+			redirect_output(shell, redirects->filename);
+		else if (redirects->redirect_type == OP_APPEND_OUT)
+			redirect_output_append(shell, redirects->filename);
+		else if (redirects->redirect_type == OP_HEREDOC)
+			redirect_input_heredoc(shell, redirects->delimiter);
+		else
+		{
+			perror("WRONG REDIRECT COMMAND");
+			return (1);
+		}
 		redirects = redirects->next;
 	}
 	return (0);
 }
 
-int	execute_single_cmd(t_var_cmd *cmd)
+int	execute_single_cmd(t_shell_data *shell, t_var_cmd *cmd)
 {
 	while (cmd)
 	{
 		if (cmd->redirect_count > 0)
 		{
-			
-			setup_redirects(cmd->redirects);
+			setup_redirects(shell, cmd->redirects);
 			launch_single_command(cmd->command);
 		}
 		else
@@ -250,7 +269,7 @@ int	execute_script(t_shell_data *shell)
 	}
 	else
 	{
-		execute_single_cmd(shell->pipe_list->cmd);
+		execute_single_cmd(shell, shell->pipe_list->cmd);
 	}
 	return (0);
 }
@@ -268,7 +287,8 @@ int	main(int argc, char **argv)
 		return (1);
 	initialize_shell(shell);
 	// test_multi_redirect(shell);
-	parse_readline(shell, "echo - n \"Hello World and Sun\" > output.txt");
+	parse_readline(shell, "ls -l");
+	// parse_readline(shell, "echo -n \"Hello World and Sun\" > output.txt");
 	// parse_readline(shell, "echo \"Hello World\" | grep >> 'Hello' | wc -c > output.txt ");
 	// parse_readline(shell,
 	// 	"echo 'Hello World' >> test < zaza >> output.txt <<EOF > test.txt < wow | cat >> LALAL > outpas.c << EOF");
@@ -302,7 +322,7 @@ int	main(int argc, char **argv)
 // REDIRECT TESTS
 // (>) test_redirect_output(shell, "file.txt");
 // (<) test_redirect_input(shell, "file.txt", "cat");
-// (>>) test_redirect_append_output("file.txt");
+// (>>) test_redirect_append_output(shell, "file.txt");
 // (<<) test_redirect_in_heredoc(shell);
 
 // PIPE TESTS

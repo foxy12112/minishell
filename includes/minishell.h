@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/15 09:29:35 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/15 10:44:38 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ int							redirect_output(t_shell_data *shell,
 								const char *filename);
 void						redirect_input(t_shell_data *shell,
 								const char *filename);
-int							redirect_output_append(const char *filename);
+int	redirect_output_append(t_shell_data *shell, const char *filename);
 void						redirect_input_heredoc(t_shell_data *shell,
 								const char *delimiter);
 // heredocutils.c
@@ -188,7 +188,7 @@ bool						check_valid_variable(char *variable);
 char						*test_get_variable(t_shell_data *shell, char *key);
 void						test_cd(t_shell_data *shell);
 void						test_export(t_shell_data *shell);
-void						test_echo(char **string, int fd);
+void						test_echo(char *string, int fd);
 void						test_env(t_shell_data *shell);
 void						test_pwd(void);
 void						test_unset(t_shell_data *shell);
@@ -196,7 +196,7 @@ int							test_redirect_output(t_shell_data *shell,
 								char *filename);
 void						test_redirect_input(t_shell_data *shell,
 								char *filename, char *command);
-int							test_redirect_append_output(char *filename);
+int							test_redirect_append_output(t_shell_data *shell, char *filename);
 void						test_redirect_in_heredoc(t_shell_data *shell);
 void						test_exec(char **command);
 void						launch_program(void);

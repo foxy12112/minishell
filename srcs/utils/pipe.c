@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 01:20:11 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/14 11:22:02 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/15 11:02:59 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,6 @@ void	create_child_processes(int *pipe_fd, char ***commands, int *iterators,
 			close(pipe_fd[1]);
 		}
 		cell_launch(commands[iterators[0]]);
-		// if (iterators[0] == 0)
-		// {
-		// 	test_echo(ft_split("xarfruit apple zebanana cherry", ' '),
-		// 		STDOUT_FILENO);
-		// }
-		// else if (iterators[0] == 2)
-		// {
-		// 	redirect_output("output.txt");
-		// 	cell_launch(commands[iterators[0]]);
-		// }
-		// else
-		// {
-		// 	cell_launch(commands[iterators[0]]);
-		// }
 		exit(0);
 	}
 	else
