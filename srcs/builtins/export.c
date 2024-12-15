@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:17 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/06 03:40:39 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/15 16:44:06 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_export(t_shell_data *shell, char **variables)
 	{
 		i++;
 	}
-	if (i < 1)
+	if (i < 2)
 	{
         sort_env_list(shell->variables);
 		print_variables_list(shell->variables);
@@ -71,7 +71,7 @@ int	ft_export(t_shell_data *shell, char **variables)
 	{
 		add_variables(shell, variables);
 		sort_env_list(shell->variables);
-		free_char_string(variables);
+		// free_char_string(variables);
 	}
 	return (0);
 }

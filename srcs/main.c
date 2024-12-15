@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/15 16:32:01 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/15 17:03:31 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,19 +168,21 @@ int	parse_launch_echo(char **command)
 	return (0);
 }
 
-int parse_launch_cd(t_shell_data *shell, char **command)
+int	parse_launch_cd(t_shell_data *shell, char **command)
 {
-	int args_count;
-	char *parsed_path;
+	int		args_count;
+	char	*parsed_path;
+
 	args_count = 0;
-	while(command[args_count])
+	while (command[args_count])
 		args_count++;
-	if(args_count > 2)
+	if (args_count > 2)
 	{
 		perror("Too many arguments");
-		return (1);		
+		return (1);
 	}
-	if (string_in_doublequotes(command[1]) || string_in_singlequotes(command[1]))
+	if (string_in_doublequotes(command[1])
+		|| string_in_singlequotes(command[1]))
 		parsed_path = remove_quotes(command[1]);
 	else
 		parsed_path = ft_strdup(command[1]);
@@ -189,22 +191,45 @@ int parse_launch_cd(t_shell_data *shell, char **command)
 	return (0);
 }
 
-int parse_launch_env(t_shell_data *shell, char **command)
+int	parse_launch_env(t_shell_data *shell, char **command)
 {
-	int args_count;
+	int	args_count;
+
 	args_count = 0;
-	while(command[args_count])
+	while (command[args_count])
 		args_count++;
-	if(args_count > 1)
+	if (args_count > 1)
 	{
 		perror("Too many arguments");
-		return (1);		
+		return (1);
 	}
 	ft_env(shell);
 	return (0);
 }
 
-int	select_launch_builtin(t_shell_data *shell,char **command)
+int	parse_launch_export(t_shell_data *shell, char **command)
+{
+	ft_export(shell, command);
+	return (0);
+}
+
+int	parse_launch_pwd(char **command)
+{
+	int	args_count;
+
+	args_count = 0;
+	while (command[args_count])
+		args_count++;
+	if (args_count > 1)
+	{
+		perror("Too many arguments");
+		return (1);
+	}
+	ft_pwd();
+	return (0);
+}
+
+int	select_launch_builtin(t_shell_data *shell, char **command)
 {
 	char	*command_toupper;
 
@@ -217,13 +242,13 @@ int	select_launch_builtin(t_shell_data *shell,char **command)
 		parse_launch_cd(shell, command);
 	else if (ft_strcmp(command_toupper, "ENV") == 0)
 		parse_launch_env(shell, command);
-	else if (ft_strcmp(command_toupper, "EXIT") == 0)
-		return (0);
 	else if (ft_strcmp(command_toupper, "EXPORT") == 0)
-		return (0);
+		parse_launch_export(shell, command);
 	else if (ft_strcmp(command_toupper, "PWD") == 0)
-		return (0);
+		parse_launch_pwd(command);
 	else if (ft_strcmp(command_toupper, "UNSET") == 0)
+		return (0);
+	else if (ft_strcmp(command_toupper, "EXIT") == 0)
 		return (0);
 	if (command_toupper)
 		free(command_toupper);
@@ -252,13 +277,8 @@ int	launch_single_command(t_shell_data *shell, char **command)
 
 int	setup_redirects(t_shell_data *shell, t_redirects *redirects)
 {
-	(void)shell;
 	while (redirects)
 	{
-		// printf("\tRedirect Type: %d\n", redirects->redirect_type);
-		// printf("\tFilename: %s\n", redirects->filename);
-		// printf("\tDelimiter: %s\n", redirects->delimiter);
-		// printf("\n");
 		if (redirects->redirect_type == OP_REDIRECT_IN)
 			redirect_input(shell, redirects->filename);
 		else if (redirects->redirect_type == OP_REDIRECT_OUT)
@@ -310,30 +330,31 @@ int	execute_script(t_shell_data *shell)
 	return (0);
 }
 
-// WHEN HEREDOC IS USED REDIRECT_IN HAS TO BE DISABLED --- IMPORTANT NOTICE TO DO
+// WE NEEED TO ADD VARIABLE EXPANSION EITHER IN MAIN COMMAND OR IN EXPORT
+// ALSO IN HEREDOC IT NEEDS TO FIX VARIABLE EXPANSION INSIDE DOUBLE QUOTES
 int	main(int argc, char **argv)
 {
 	t_shell_data	*shell;
 
 	(void)argv;
 	(void)argc;
-	// atexit(leaks);
+	atexit(leaks);
 	shell = (t_shell_data *)malloc(sizeof(t_shell_data));
 	if (!shell)
 		return (1);
 	initialize_shell(shell);
 	// test_multi_redirect(shell);
-	parse_readline(shell, "env");
-	// parse_readline(shell, "echo 'apple apple apple' | sed 's/apple/orange/g' > output.txt");
-	///parse_readline(shell, "cat << EOF > output.txt");
-	// parse_readline(shell,
-	// 	"echo 'Hello World' >> test < zaza >> output.txt <<EOF > test.txt < wow | cat >> LALAL > outpas.c << EOF");
+	// parse_readline(shell, "cat << EOF > output.txt");
+	// parse_readline(shell,"echo 'apple apple apple' | sed 's/apple/orange/g' > output.txt");
+	/// parse_readline(shell, "cat << EOF > output.txt");
+	parse_readline(shell, "pwd > output.txt");
 	// parse_readline(shell,"echo 'Hello World' > output.txt < EOF < test.txt > wow");
 	// process_pipe_list(shell->pipe_list);
 	execute_script(shell);
-	printf("%s\n", test_get_variable(shell, "PWD"));
+	// printf("%s\n", test_get_variable(shell, "PWD"));
 	// printf("\nPipes Count: %d\n\n", shell->pipes_count);
 	// print_pipe_list(shell->pipe_list);
+	// print_variables_list(shell->variables);
 	free_env_list(shell->env);
 	free_env_list(shell->variables);
 	free_var_pipe_list(shell->pipe_list);
