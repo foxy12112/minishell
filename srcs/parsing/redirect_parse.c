@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 04:10:09 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/15 09:14:21 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/15 14:08:59 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	parse_redirects(t_var_cmd *cmd_node, char *command, int *i)
 	int		j;
 
 	j = *i;
-	while (command[*i] == command[(*i) + 1])
+	while (command[*i] && command[*i] == command[(*i) + 1])
 		(*i)++;
 	while (command[*i])
 	{
@@ -88,8 +88,43 @@ void	parse_redirects(t_var_cmd *cmd_node, char *command, int *i)
 			free(redirects_parsed);
 			free(redirect);
 			j = *i;
-			while (command[*i] == command[(*i) + 1])
+			while (command[*i] && command[*i] == command[(*i) + 1])
 				(*i)++;
 		}
 	}
 }
+
+// void parse_redirects(t_var_cmd *cmd_node, char *command, int *i)
+// {
+//     char    *redirect;
+//     char    *redirects_parsed;
+//     int     j;
+
+//     j = *i;
+
+//     // Ensure no out-of-bounds access for consecutive characters
+//     while (command[*i] && command[*i] == command[(*i) + 1])
+//         (*i)++;
+    
+//     while (command[*i])
+//     {
+//         (*i)++;
+//         // Check bounds before accessing `command[(*i) + 1]`
+//         if (command[*i] == '>' || command[*i] == '<' || command[*i] == '\0')
+//         {
+//             redirect = ft_substr(command, j, *i - j); // Extract the substring
+//             redirects_parsed = ft_trim_whitespaces(redirect); // Trim whitespace
+//             assign_redirects(cmd_node, redirects_parsed); // Assign parsed redirects
+            
+//             // Free allocated memory
+//             free(redirects_parsed);
+//             free(redirect);
+
+//             j = *i;
+
+//             // Ensure no out-of-bounds access for consecutive characters
+//             while (command[*i] && command[*i] == command[(*i) + 1])
+//                 (*i)++;
+//         }
+//     }
+// }

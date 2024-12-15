@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/15 13:25:22 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/15 16:32:01 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,43 @@ int	parse_launch_echo(char **command)
 	return (0);
 }
 
-int	select_launch_builtin(char **command)
+int parse_launch_cd(t_shell_data *shell, char **command)
+{
+	int args_count;
+	char *parsed_path;
+	args_count = 0;
+	while(command[args_count])
+		args_count++;
+	if(args_count > 2)
+	{
+		perror("Too many arguments");
+		return (1);		
+	}
+	if (string_in_doublequotes(command[1]) || string_in_singlequotes(command[1]))
+		parsed_path = remove_quotes(command[1]);
+	else
+		parsed_path = ft_strdup(command[1]);
+	fd_cd(shell, parsed_path);
+	free(parsed_path);
+	return (0);
+}
+
+int parse_launch_env(t_shell_data *shell, char **command)
+{
+	int args_count;
+	args_count = 0;
+	while(command[args_count])
+		args_count++;
+	if(args_count > 1)
+	{
+		perror("Too many arguments");
+		return (1);		
+	}
+	ft_env(shell);
+	return (0);
+}
+
+int	select_launch_builtin(t_shell_data *shell,char **command)
 {
 	char	*command_toupper;
 
@@ -178,9 +214,9 @@ int	select_launch_builtin(char **command)
 	if (ft_strcmp(command_toupper, "ECHO") == 0)
 		parse_launch_echo(command);
 	else if (ft_strcmp(command_toupper, "CD") == 0)
-		return (0);
+		parse_launch_cd(shell, command);
 	else if (ft_strcmp(command_toupper, "ENV") == 0)
-		return (0);
+		parse_launch_env(shell, command);
 	else if (ft_strcmp(command_toupper, "EXIT") == 0)
 		return (0);
 	else if (ft_strcmp(command_toupper, "EXPORT") == 0)
@@ -194,14 +230,14 @@ int	select_launch_builtin(char **command)
 	return (0);
 }
 
-int	launch_single_command(char **command)
+int	launch_single_command(t_shell_data *shell, char **command)
 {
 	char	*builtin_command_type;
 
 	builtin_command_type = command_is_builtin(command[0]);
 	if (builtin_command_type)
 	{
-		select_launch_builtin(command);
+		select_launch_builtin(shell, command);
 		free(builtin_command_type);
 		return (1);
 	}
@@ -248,11 +284,11 @@ int	execute_single_cmd(t_shell_data *shell, t_var_cmd *cmd)
 		if (cmd->redirect_count > 0)
 		{
 			setup_redirects(shell, cmd->redirects);
-			launch_single_command(cmd->command);
+			launch_single_command(shell, cmd->command);
 		}
 		else
 		{
-			launch_single_command(cmd->command);
+			launch_single_command(shell, cmd->command);
 		}
 		cmd = cmd->next;
 	}
@@ -287,7 +323,7 @@ int	main(int argc, char **argv)
 		return (1);
 	initialize_shell(shell);
 	// test_multi_redirect(shell);
-	parse_readline(shell, "ls >./outfiles/outfile01 >>./outfiles/outfile01");
+	parse_readline(shell, "env");
 	// parse_readline(shell, "echo 'apple apple apple' | sed 's/apple/orange/g' > output.txt");
 	///parse_readline(shell, "cat << EOF > output.txt");
 	// parse_readline(shell,
@@ -295,6 +331,7 @@ int	main(int argc, char **argv)
 	// parse_readline(shell,"echo 'Hello World' > output.txt < EOF < test.txt > wow");
 	// process_pipe_list(shell->pipe_list);
 	execute_script(shell);
+	printf("%s\n", test_get_variable(shell, "PWD"));
 	// printf("\nPipes Count: %d\n\n", shell->pipes_count);
 	// print_pipe_list(shell->pipe_list);
 	free_env_list(shell->env);
