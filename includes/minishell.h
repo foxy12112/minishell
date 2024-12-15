@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/15 12:13:50 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:27:32 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,17 +94,36 @@ typedef struct s_shell_data
 
 int							main(int argc, char **argv);
 int							utils(void);
-int	execute_single_cmd(t_shell_data *shell, t_var_cmd *cmd);
-void	print_arofars(char **str);
+int							execute_single_cmd(t_shell_data *shell,
+								t_var_cmd *cmd);
+void						print_arofars(char **str);
 // builtins
 int							fd_cd(t_shell_data *shell, char *path);
+int							parse_launch_cd(t_shell_data *shell,
+								char **command);
 int							ft_echo(char *args, int fd, bool n_option);
+int							parse_launch_echo(char **command);
 int							ft_env(t_shell_data *shell);
+int							parse_launch_env(t_shell_data *shell,
+								char **command);
 int							ft_export(t_shell_data *shell, char **variables);
+int							parse_launch_export(t_shell_data *shell,
+								char **command);
 void						change_pwd_env(t_env_list **head, const char *key,
 								const char *value);
 int							ft_pwd(void);
+int							parse_launch_pwd(t_shell_data *shell,
+								char **command);
 int							ft_unset(t_shell_data *shell, char *variables);
+int							parse_launch_unset(t_shell_data *shell,
+								char **command);
+// execute builtins
+char						*command_is_builtin(char *command);
+int							select_launch_builtin(t_shell_data *shell,
+								char **command);
+int							setup_redirects(t_shell_data *shell,
+								t_redirects *redirects);
+int							execute_script(t_shell_data *shell);
 // redirect_parse_utils.c
 void						sort_redirects(t_redirects **redirects);
 t_redirect_type				select_redirect_type(char *redirect);
@@ -152,7 +171,8 @@ int							redirect_output(t_shell_data *shell,
 								const char *filename);
 void						redirect_input(t_shell_data *shell,
 								const char *filename);
-int	redirect_output_append(t_shell_data *shell, const char *filename);
+int							redirect_output_append(t_shell_data *shell,
+								const char *filename);
 void						redirect_input_heredoc(t_shell_data *shell,
 								const char *delimiter);
 // heredocutils.c
@@ -173,18 +193,16 @@ void						free_char_string(char **str);
 void						free_heredoc_list(t_heredoc_list **head);
 void						free_var_pipe_list(t_var_pipe_list *head);
 // pipe.c
-// void						pipe_commands(char ***commands, int cmd_count);
-void						pipe_commands(char **cmd1, char **cmd2);
-// void	pipe_multiple_commands(t_shell_data *shell, char ***commands, int cmd_count);
-void	pipe_multiple_commands(t_shell_data *shell, t_var_pipe_list *pipe_list,
-		int cmd_count);
+void						pipe_multiple_commands(t_shell_data *shell,
+								t_var_pipe_list *pipe_list, int cmd_count);
 // utils.c
 char						ft_is_whitespace(char c);
 bool						is_valid_char(char c, char *invalid_chars);
 char						**ft_split_by_first_equal(const char *s);
 char						*ft_trim_whitespaces(char *str);
 char						**ft_split_whitespace(char const *s);
-char	*ft_strtoupper(char *str);
+char						*ft_strtoupper(char *str);
+char						*join_arof_ars(char **array, int start);
 // variable_parse.c
 bool						check_valid_variable(char *variable);
 // test.c
@@ -199,7 +217,8 @@ int							test_redirect_output(t_shell_data *shell,
 								char *filename);
 void						test_redirect_input(t_shell_data *shell,
 								char *filename, char *command);
-int							test_redirect_append_output(t_shell_data *shell, char *filename);
+int							test_redirect_append_output(t_shell_data *shell,
+								char *filename);
 void						test_redirect_in_heredoc(t_shell_data *shell);
 void						test_exec(char **command);
 void						launch_program(void);

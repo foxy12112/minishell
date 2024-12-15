@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:26:29 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/15 08:05:20 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:13:40 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,34 @@ char	*ft_strtoupper(char *str)
 	}
 	new_str[i] = '\0';
 	return (new_str);
+}
+
+char	*join_arof_ars(char **array, int start)
+{
+	char	*result;
+	char	*temp;
+	int		i;
+
+	result = NULL;
+	i = 0;
+	while (i < start && array[i] != NULL)
+	{
+		i++;
+	}
+	while (array[i] != NULL)
+	{
+		if (result == NULL)
+		{
+			result = ft_strjoin("", array[i]);
+		}
+		else
+		{
+			temp = ft_strjoin(result, " ");
+			free(result);
+			result = ft_strjoin(temp, array[i]);
+			free(temp);
+		}
+		i++;
+	}
+	return (result);
 }

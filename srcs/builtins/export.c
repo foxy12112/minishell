@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:17 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/15 16:44:06 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:01:34 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,11 @@ int	ft_export(t_shell_data *shell, char **variables)
 		sort_env_list(shell->variables);
 		// free_char_string(variables);
 	}
+	return (0);
+}
+
+int	parse_launch_export(t_shell_data *shell, char **command)
+{
+	ft_export(shell, command);
 	return (0);
 }
