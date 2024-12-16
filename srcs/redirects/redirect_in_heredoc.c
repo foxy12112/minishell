@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:03:07 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/09 03:05:36 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/14 16:18:07 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,6 @@ void	redirect_input_heredoc(t_shell_data *shell, const char *delimiter)
 	close(pipe_fd[1]);
 	if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
 		return (perror("dup2 failed"), exit(EXIT_FAILURE));
+	shell->heredoc_launched = true;
 	close(pipe_fd[0]);
 }

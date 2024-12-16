@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:18:21 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/09 03:08:35 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/15 20:02:41 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,28 @@ int	fd_cd(t_shell_data *shell, char *path)
 	change_pwd_env(&shell->env, "PWD", path);
 	free(path);
 	free(old_pwd);
+	return (0);
+}
+
+int	parse_launch_cd(t_shell_data *shell, char **command)
+{
+	int		args_count;
+	char	*parsed_path;
+
+	args_count = 0;
+	while (command[args_count])
+		args_count++;
+	if (args_count > 2)
+	{
+		perror("Too many arguments");
+		return (1);
+	}
+	if (string_in_doublequotes(command[1])
+		|| string_in_singlequotes(command[1]))
+		parsed_path = remove_quotes(command[1]);
+	else
+		parsed_path = ft_strdup(command[1]);
+	fd_cd(shell, parsed_path);
+	free(parsed_path);
 	return (0);
 }
