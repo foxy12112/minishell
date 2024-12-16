@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:09 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/15 20:01:15 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/16 12:32:11 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_env(t_shell_data *shell)
 
 int	parse_launch_env(t_shell_data *shell, char **command)
 {
-	int args_count;
+	int	args_count;
 
 	args_count = 0;
 	while (command[args_count])

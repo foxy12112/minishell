@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_varsign.c                                 :+:      :+:    :+:   */
+/*   ft_split_byfirstequal.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 09:55:37 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/11 14:38:54 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/16 13:00:31 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*allocate_and_copy_by_first_equal(const char *s, int startindex, int count)
+char	*allocate_and_copy_by_first_equal(const char *s, int startindex,
+		int count)
 {
 	char	*subarray;
 

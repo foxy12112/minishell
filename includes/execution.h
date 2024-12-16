@@ -1,35 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirect_out_append.c                              :+:      :+:    :+:   */
+/*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/07 23:52:17 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/16 12:10:19 by macbook          ###   ########.fr       */
+/*   Created: 2024/12/16 13:25:20 by macbook           #+#    #+#             */
+/*   Updated: 2024/12/16 13:46:55 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
-// Symbol (>>)
-int	redirect_output_append(t_shell_data *shell, const char *filename)
-{
-	int	fd;
-
-	(void)shell;
-	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd < 0)
-	{
-		perror("Failed to open output file");
-		return (-1);
-	}
-	if (dup2(fd, STDOUT_FILENO) < 0)
-	{
-		perror("dup2 failed");
-		close(fd);
-		return (-1);
-	}
-	close(fd);
-	return (0);
-}
+// execute_builtins.c
+char	*command_is_builtin(char *command);
+int		select_launch_builtin(t_shell_data *shell, char **command);
+// execute_redirects.c
+int		setup_redirects(t_shell_data *shell, t_redirects *redirects);
+// execute_command.c
+int		execute_script(t_shell_data *shell);
+int		execute_single_cmd(t_shell_data *shell, t_var_cmd *cmd);

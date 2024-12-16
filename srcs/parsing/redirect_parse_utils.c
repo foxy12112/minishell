@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 05:46:42 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/15 05:47:21 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/16 12:25:20 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,19 @@ char	*get_filename_delimiter(t_redirect_type redirect_type, char *redirect)
 	return (filename_parsed);
 }
 
+void	move_heredoc_to_head(t_redirects **head, t_redirects *current)
+{
+	if (current->prev)
+		current->prev->next = current->next;
+	if (current->next)
+		current->next->prev = current->prev;
+	current->next = *head;
+	if (*head)
+		(*head)->prev = current;
+	current->prev = NULL;
+	*head = current;
+}
+
 void	sort_redirects(t_redirects **redirects)
 {
 	t_redirects	*current;
@@ -72,17 +85,39 @@ void	sort_redirects(t_redirects **redirects)
 		next = current->next;
 		if (current->redirect_type == OP_HEREDOC && current != head)
 		{
-			if (current->prev)
-				current->prev->next = current->next;
-			if (current->next)
-				current->next->prev = current->prev;
-			current->next = head;
-			if (head)
-				head->prev = current;
-			current->prev = NULL;
-			head = current;
+			move_heredoc_to_head(&head, current);
 			*redirects = head;
 		}
 		current = next;
 	}
 }
+
+// void	sort_redirects(t_redirects **redirects)
+// {
+// 	t_redirects	*current;
+// 	t_redirects	*head;
+// 	t_redirects	*next;
+
+// 	if (!redirects || !(*redirects))
+// 		return ;
+// 	current = *redirects;
+// 	head = *redirects;
+// 	while (current)
+// 	{
+// 		next = current->next;
+// 		if (current->redirect_type == OP_HEREDOC && current != head)
+// 		{
+// 			if (current->prev)
+// 				current->prev->next = current->next;
+// 			if (current->next)
+// 				current->next->prev = current->prev;
+// 			current->next = head;
+// 			if (head)
+// 				head->prev = current;
+// 			current->prev = NULL;
+// 			head = current;
+// 			*redirects = head;
+// 		}
+// 		current = next;
+// 	}
+// }

@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 04:23:30 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/15 04:24:20 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/16 13:57:20 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ char	**get_simple_cmd(char *command, int *i)
 
 	while (command[*i])
 	{
-		if (command[*i] == '>' || command[*i] == '<')
+		if ((command[*i] == '>' || command[*i] == '<') && !quote_check(command,
+				(*i)))
 		{
 			break ;
 		}
@@ -28,7 +29,7 @@ char	**get_simple_cmd(char *command, int *i)
 	}
 	cmd = ft_substr(command, 0, *i);
 	cmd_parsed = ft_trim_whitespaces(cmd);
-	cmd_array = ft_split_whitespace(cmd_parsed);
+	cmd_array = ft_split_quotes(cmd_parsed, ' ');
 	free(cmd);
 	free(cmd_parsed);
 	return (cmd_array);

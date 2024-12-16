@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 15:50:23 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/11 10:09:04 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/16 12:11:21 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,17 @@ int	setup_signals(void)
 
 	sa.sa_handler = handle_signal;
 	signal = handle_signal;
-	sa.sa_flags	=	0;
-	
+	sa.sa_flags = 0;
 	sigemptyset(&sigset);
 	sigaddset(&sigset, SIGINT);
 	sigaddset(&sigset, SIGQUIT);
 	sigaddset(&sigset, SIGTERM);
 	sa.sa_mask = sigset;
-
 	if (sigaction(SIGINT, &sa, NULL) == -1)
 		printf("error setting up SIGINT Handler");
 	else if (sigaction(SIGQUIT, &sa, NULL) == -1)
 		printf("error setting up SIGINT Handler");
 	else if (sigaction(SIGTERM, &sa, NULL) == -1)
 		printf("error setting up SIGINT Handler");
-	return(signal);
+	return (signal);
 }

@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 02:20:43 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/11 11:10:01 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/16 12:35:47 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ t_env_list	*initialize_env(void)
 	{
 		key_value = ft_split(env[i], '=');
 		add_to_variables_list(&variables, key_value);
-		free_key_value(key_value);
+		free_string_array(key_value);
 		i++;
 	}
 	return (variables);

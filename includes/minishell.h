@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/15 20:27:32 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/16 13:49:11 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-// > - RDR_COMMAND_TO_INPUT, < - RDR_INPUT_TO_COMMAND, << -
-
 typedef struct s_signal
 {
 	int						signal;
@@ -40,13 +38,6 @@ typedef struct s_env_list
 	struct s_env_list		*next;
 	struct s_env_list		*prev;
 }							t_env_list;
-
-typedef struct s_heredoc_list
-{
-	char					*word;
-	struct s_heredoc_list	*next;
-	struct s_heredoc_list	*prev;
-}							t_heredoc_list;
 
 typedef enum e_redirect_type
 {
@@ -92,119 +83,17 @@ typedef struct s_shell_data
 	int						fd;
 }							t_shell_data;
 
+// Import Files
+# include "builtins.h"
+# include "execution.h"
+# include "parsing.h"
+# include "redirects.h"
+# include "utils.h"
+
 int							main(int argc, char **argv);
 int							utils(void);
-int							execute_single_cmd(t_shell_data *shell,
-								t_var_cmd *cmd);
 void						print_arofars(char **str);
-// builtins
-int							fd_cd(t_shell_data *shell, char *path);
-int							parse_launch_cd(t_shell_data *shell,
-								char **command);
-int							ft_echo(char *args, int fd, bool n_option);
-int							parse_launch_echo(char **command);
-int							ft_env(t_shell_data *shell);
-int							parse_launch_env(t_shell_data *shell,
-								char **command);
-int							ft_export(t_shell_data *shell, char **variables);
-int							parse_launch_export(t_shell_data *shell,
-								char **command);
-void						change_pwd_env(t_env_list **head, const char *key,
-								const char *value);
-int							ft_pwd(void);
-int							parse_launch_pwd(t_shell_data *shell,
-								char **command);
-int							ft_unset(t_shell_data *shell, char *variables);
-int							parse_launch_unset(t_shell_data *shell,
-								char **command);
-// execute builtins
-char						*command_is_builtin(char *command);
-int							select_launch_builtin(t_shell_data *shell,
-								char **command);
-int							setup_redirects(t_shell_data *shell,
-								t_redirects *redirects);
-int							execute_script(t_shell_data *shell);
-// redirect_parse_utils.c
-void						sort_redirects(t_redirects **redirects);
-t_redirect_type				select_redirect_type(char *redirect);
-char						*get_filename_delimiter(t_redirect_type redirect_type,
-								char *redirect);
-// redirect_parse.c
-void						parse_redirects(t_var_cmd *cmd_node, char *command,
-								int *i);
-void						assign_redirects(t_var_cmd *cmd_node,
-								char *redirect);
-void						add_redirect_to_cmd_node(t_var_cmd *cmd_node,
-								t_redirects *new_redirect);
-t_redirects					*create_redirect_node(char *redirect);
-// cmd_parse.c
-char						**get_simple_cmd(char *command, int *i);
-t_var_cmd					*parse_command(char *command);
-// pipe_split.c
-int							add_to_pipelist(t_shell_data *shell, char *command);
-int							parse_readline(t_shell_data *shell, char *commands);
-void						process_pipe_list(t_var_pipe_list *pipe_list);
-int							count_pipe_list_length(t_var_pipe_list *head);
-// variable_parse_utils.c
-char						*remove_quotes(char *value);
-bool						string_in_singlequotes(char *value);
-bool						string_in_doublequotes(char *value);
-bool						check_key(char *key);
-bool						contains_valid_chars(char *str);
-// variable_parse.c
-char						*join_key_value(char *key, char *value);
-char						*parse_variable(t_shell_data *shell,
-								char *variable);
-// variable_value.get.c
-char						*parse_value(t_shell_data *shell, char *value);
-// env.c
-t_env_list					*initialize_env(void);
-void						add_to_variables_list(t_env_list **head,
-								char **key_value);
-void						print_env_list(t_env_list *variables);
-void						print_variables_list(t_env_list *variables);
-int							add_variables(t_shell_data *shell,
-								char **variables);
-int							initialize_shell(t_shell_data *shell);
-// redirects.c
-int							redirect_output(t_shell_data *shell,
-								const char *filename);
-void						redirect_input(t_shell_data *shell,
-								const char *filename);
-int							redirect_output_append(t_shell_data *shell,
-								const char *filename);
-void						redirect_input_heredoc(t_shell_data *shell,
-								const char *delimiter);
-// heredocutils.c
-int							count_line_size(t_heredoc_list **head);
-t_heredoc_list				*create_heredoc_node(char *word);
-t_heredoc_list				*handle_variable_node(t_shell_data *shell,
-								char *word);
-// exec.c
-pid_t						ft_fork(void);
-void						cell_launch(char **args);
-// variables.c
-void						sort_env_list(t_env_list *head);
-char						*retrieve_variable(t_shell_data *shell, char *key);
-// free.c
-void						free_env_list(t_env_list *head);
-void						free_key_value(char **key_value);
-void						free_char_string(char **str);
-void						free_heredoc_list(t_heredoc_list **head);
-void						free_var_pipe_list(t_var_pipe_list *head);
-// pipe.c
-void						pipe_multiple_commands(t_shell_data *shell,
-								t_var_pipe_list *pipe_list, int cmd_count);
-// utils.c
-char						ft_is_whitespace(char c);
-bool						is_valid_char(char c, char *invalid_chars);
-char						**ft_split_by_first_equal(const char *s);
-char						*ft_trim_whitespaces(char *str);
-char						**ft_split_whitespace(char const *s);
-char						*ft_strtoupper(char *str);
-char						*join_arof_ars(char **array, int start);
-// variable_parse.c
-bool						check_valid_variable(char *variable);
+
 // test.c
 char						*test_get_variable(t_shell_data *shell, char *key);
 void						test_cd(t_shell_data *shell);

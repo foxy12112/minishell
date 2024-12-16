@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 03:32:40 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/12 14:14:57 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/16 12:36:27 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ char	*parse_variable(t_shell_data *shell, char *variable)
 	if (!key_value)
 		return (false);
 	if (!check_key(key_value[0]) || !check_value(key_value[1]))
-		return (free_key_value(key_value), perror("Invalid KeyValue\n"), NULL);
+		return (free_string_array(key_value), perror("Invalid KeyValue\n"),
+			NULL);
 	var_with_no_quotes = remove_quotes(key_value[1]);
 	if (string_in_doublequotes(key_value[1]))
 		value = parse_value(shell, var_with_no_quotes);
@@ -83,8 +84,26 @@ char	*parse_variable(t_shell_data *shell, char *variable)
 	else
 		value = parse_value(shell, key_value[1]);
 	parsed_key_value = join_key_value(key_value[0], value);
-	free_key_value(key_value);
+	free_string_array(key_value);
 	free(var_with_no_quotes);
 	free(value);
 	return (parsed_key_value);
+}
+
+char	*parse_string(t_shell_data *shell, char *string)
+{
+	char	*var_with_no_quotes;
+	char	*value;
+
+	var_with_no_quotes = remove_quotes(string);
+	if (string_in_doublequotes(string))
+		value = parse_value(shell, var_with_no_quotes);
+	else if (string_in_singlequotes(string))
+		value = ft_strdup(var_with_no_quotes);
+	else
+		value = parse_value(shell, string);
+	if (!value)
+		return (NULL);
+	free(var_with_no_quotes);
+	return (value);
 }

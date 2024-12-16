@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/12 13:45:34 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/16 12:10:55 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,6 @@ char	**ft_tokenize(char *input)
 
 	token_stack = ft_split(input, ' ');
 	return (token_stack);
-}
-
-char	ft_is_whitespace(char c)
-{
-	if ((c >= 9 && c <= 13) || c == 32)
-		return (1);
-	return (0);
 }
 
 // static int	possible_var(char *input)
