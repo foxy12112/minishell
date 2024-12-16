@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:26:29 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/16 09:44:01 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/16 18:18:34 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,14 @@ char	*ft_trim_whitespaces(char *str)
 
 char	*ft_strtoupper(char *str)
 {
-	int i;
-	char *new_str;
+	int		i;
+	char	*new_str;
 
 	if (!str)
 		return (NULL);
-
 	new_str = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (!new_str)
 		return (NULL);
-
 	i = 0;
 	while (str[i] != '\0')
 	{
@@ -67,9 +65,7 @@ char	*join_arof_ars(char **array, int start)
 	result = NULL;
 	i = 0;
 	while (i < start && array[i] != NULL)
-	{
 		i++;
-	}
 	while (array[i] != NULL)
 	{
 		if (result == NULL)
@@ -86,4 +82,11 @@ char	*join_arof_ars(char **array, int start)
 		i++;
 	}
 	return (result);
+}
+
+char	ft_is_whitespace(char c)
+{
+	if ((c >= 9 && c <= 13) || c == 32)
+		return (1);
+	return (0);
 }

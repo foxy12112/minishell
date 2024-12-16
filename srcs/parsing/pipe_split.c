@@ -3,24 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 04:29:58 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/15 09:00:47 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/16 12:34:19 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int count_pipe_list_length(t_var_pipe_list *head) {
-    int count = 0;
-    t_var_pipe_list *current = head;
+int	count_pipe_list_length(t_var_pipe_list *head)
+{
+	int				count;
+	t_var_pipe_list	*current;
 
-    while (current) {
-        count++;
-        current = current->next;
-    }
-    return count;
+	count = 0;
+	current = head;
+	while (current)
+	{
+		count++;
+		current = current->next;
+	}
+	return (count);
 }
 
 int	add_to_pipelist(t_shell_data *shell, char *command)
@@ -55,7 +59,7 @@ int	parse_readline(t_shell_data *shell, char *commands)
 	int		i;
 
 	i = 0;
-	pipe_splitted = ft_split(commands, '|');
+	pipe_splitted = ft_split_quotes(commands, '|');
 	if (!pipe_splitted)
 		return (-1);
 	while (pipe_splitted[i])
@@ -64,10 +68,12 @@ int	parse_readline(t_shell_data *shell, char *commands)
 		i++;
 	}
 	shell->pipes_count = count_pipe_list_length(shell->pipe_list) - 1;
-	free_char_string(pipe_splitted);
+	free_string_array(pipe_splitted);
 	return (0);
 }
 
+//This function is launched after everything is parsed
+//It iterates and sorts redirects as HEREDOC always needs to be launched first
 void	process_pipe_list(t_var_pipe_list *pipe_list)
 {
 	t_var_pipe_list	*current_pipe;

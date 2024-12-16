@@ -6,11 +6,40 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 07:05:53 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/12 13:44:52 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/16 12:13:00 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+bool	check_if_surrounded_by_quotes(char *value, char *key, int start)
+{
+	int		end;
+	int		key_length;
+	bool	quote_before;
+	bool	quote_after;
+
+	key_length = ft_strlen(key);
+	end = start + key_length;
+	quote_before = false;
+	quote_after = false;
+	while (value[end])
+	{
+		if (value[end] == '\'')
+			quote_after = true;
+		end++;
+	}
+	while (start > 0)
+	{
+		if (value[start] == '\'')
+			quote_before = true;
+		start--;
+	}
+	if (quote_before && quote_after)
+		return (true);
+	else
+		return (false);
+}
 
 char	*retrieve_key_value(t_shell_data *shell, char *value, int i)
 {
@@ -28,7 +57,10 @@ char	*retrieve_key_value(t_shell_data *shell, char *value, int i)
 	key = ft_substr(value, start + 1, end - start - 1);
 	if (!key)
 		return (NULL);
-	variable = retrieve_variable(shell, key);
+	if (check_if_surrounded_by_quotes(value, key, start))
+		variable = ft_strjoin("$", key);
+	else
+		variable = retrieve_variable(shell, key);
 	free(key);
 	return (variable);
 }

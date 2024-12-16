@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 04:07:19 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/14 16:18:49 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/16 14:10:04 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	redirect_input(t_shell_data *shell, const char *filename)
 {
 	int	fd;
 
+	printf("File: %s\n", filename);
 	if (shell->heredoc_launched)
 		return ;
 	fd = open(filename, O_RDONLY);

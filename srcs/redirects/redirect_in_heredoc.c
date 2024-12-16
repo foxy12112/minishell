@@ -6,83 +6,17 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:03:07 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/14 16:18:07 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/16 12:10:13 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	add_to_heredoc_list(t_shell_data *shell, t_heredoc_list **head,
-		char *word)
-{
-	t_heredoc_list	*new_node;
-	t_heredoc_list	*temp;
-
-	if (!head)
-		return ;
-	if (word[0] == '$')
-		new_node = handle_variable_node(shell, word);
-	else
-		new_node = create_heredoc_node(word);
-	if (!new_node)
-		return ;
-	if (*head == NULL)
-		*head = new_node;
-	else
-	{
-		temp = *head;
-		while (temp->next)
-			temp = temp->next;
-		temp->next = new_node;
-		new_node->prev = temp;
-	}
-}
-
-char	*create_sentence(t_heredoc_list **head)
-{
-	t_heredoc_list	*current;
-	char			*sentence;
-	int				index;
-	int				len;
-
-	current = *head;
-	index = 0;
-	sentence = (char *)malloc(sizeof(char) * (count_line_size(head) + 1));
-	if (!sentence)
-		return (NULL);
-	while (current)
-	{
-		if (current->word)
-		{
-			len = ft_strlen(current->word);
-			ft_memcpy(&sentence[index], current->word, len);
-			index += len;
-		}
-		if (current->next)
-			sentence[index++] = ' ';
-		current = current->next;
-	}
-	sentence[index] = '\0';
-	return (sentence);
-}
-
 char	*parse_heredoc(t_shell_data *shell, char *str)
 {
-	char			**words;
-	t_heredoc_list	*words_list;
-	char			*line;
-	int				i;
+	char	*line;
 
-	words = ft_split(str, ' ');
-	words_list = NULL;
-	i = 0;
-	if (!words)
-		return (NULL);
-	while (words[i])
-		add_to_heredoc_list(shell, &words_list, words[i++]);
-	line = create_sentence(&words_list);
-	free_heredoc_list(&words_list);
-	free_char_string(words);
+	line = parse_string(shell, str);
 	return (line);
 }
 

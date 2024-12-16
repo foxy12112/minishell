@@ -6,7 +6,11 @@
 #    By: ldick <ldick@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2024/12/16 11:04:59 by ldick            ###   ########.fr        #
+=======
+#    Updated: 2024/12/16 12:12:01 by macbook          ###   ########.fr        #
+>>>>>>> 8bd0b8cd6c29531ad8da97ede464bbef5ed05d57
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,13 +49,13 @@ ERROR_FILE	=	error.log
 _EXECUTION		=	execute_builtins.c execute_command.c execute_redirects.c
 EXECUTION		=	$(addprefix execution/, $(_EXECUTION))
 
-_PARSING		=	variable_parse.c variable_value_get.c variable_parse_utils.c redirect_parse.c redirect_parse_utils.c cmd_parse.c pipe_split.c
+_PARSING		=	variable_parse.c variable_value_get.c variable_parse_utils.c redirect_parse.c redirect_parse_utils.c cmd_parse.c pipe_split.c quotes_utils.c
 PARSING			=	$(addprefix parsing/, $(_PARSING))
 
-_REDIRECTS		=	redirect_in.c redirect_out.c redirect_out_append.c redirect_in_heredoc.c redirect_in_heredoc_utils.c
+_REDIRECTS		=	redirect_in.c redirect_out.c redirect_out_append.c redirect_in_heredoc.c
 REDIRECTS		=	$(addprefix redirects/, $(_REDIRECTS))
 
-_UTILS		=	env_init.c free.c utils.c intialize.c variables.c exec.c parsing.c pipe.c ft_split_varsign.c ft_split_whitespaces.c signal.c
+_UTILS		=	env_init.c free.c utils.c intialize.c variables.c exec.c parsing.c pipe.c ft_split_byfirstequal.c ft_split_whitespaces.c ft_split_quotes.c
 UTILS		=	$(addprefix utils/, $(_UTILS))
 
 _BUILTINS		=	cd.c echo.c env.c exit.c export.c pwd.c unset.c

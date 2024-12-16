@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 01:20:11 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/15 11:23:00 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:20:17 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	create_pipes(int *pipe_fd)
 // 	}
 // }
 
-void	create_child_processes(t_shell_data *shell, int *pipe_fd, t_var_pipe_list *current,
-		int *input_fd)
+void	create_child_processes(t_shell_data *shell, int *pipe_fd,
+		t_var_pipe_list *current, int *input_fd)
 {
 	pid_t	pid;
 
@@ -71,15 +71,12 @@ void	create_child_processes(t_shell_data *shell, int *pipe_fd, t_var_pipe_list *
 			close(pipe_fd[1]);
 		}
 		execute_single_cmd(shell, current->cmd);
-		// cell_launch(current->cmd);
 		exit(0);
 	}
 	else
 	{
 		if (current->next != NULL)
-		{
 			close(pipe_fd[1]);
-		}
 		*input_fd = pipe_fd[0];
 	}
 }
@@ -110,28 +107,3 @@ void	pipe_multiple_commands(t_shell_data *shell, t_var_pipe_list *pipe_list,
 		current = current->next;
 	}
 }
-
-// void	pipe_multiple_commands(char ***commands, int cmd_count)
-// {
-// 	int	pipe_fd[2];
-// 	int	iterators[2];
-// 	int	input_fd;
-
-// 	iterators[0] = 0;
-// 	iterators[1] = cmd_count;
-// 	input_fd = 0;
-// 	while (iterators[0] < cmd_count)
-// 	{
-// 		if (iterators[0] < cmd_count - 1)
-// 		{
-// 			create_pipes(pipe_fd);
-// 		}
-// 		create_child_processes(pipe_fd, commands, iterators, &input_fd);
-// 		iterators[0]++;
-// 	}
-// 	while (iterators[0] > 0)
-// 	{
-// 		wait(NULL);
-// 		iterators[0]--;
-// 	}
-// }

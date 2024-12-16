@@ -6,24 +6,11 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 05:08:24 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/16 09:02:48 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/16 18:18:04 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	free_key_value(char **key_value)
-{
-	int	i;
-
-	i = 0;
-	while (key_value[i])
-	{
-		free(key_value[i]);
-		i++;
-	}
-	free(key_value);
-}
 
 void	free_env_list(t_env_list *head)
 {
@@ -39,7 +26,7 @@ void	free_env_list(t_env_list *head)
 	}
 }
 
-void	free_char_string(char **str)
+void	free_string_array(char **str)
 {
 	int	i;
 
@@ -52,65 +39,45 @@ void	free_char_string(char **str)
 	free(str);
 }
 
-void	free_heredoc_list(t_heredoc_list **head)
+void	free_redirects(t_redirects *redirect)
 {
-	t_heredoc_list	*current;
-	t_heredoc_list	*temp;
+	t_redirects	*temp;
 
-	if (!head || !*head)
-		return ;
-	current = *head;
-	while (current)
+	while (redirect)
 	{
-		temp = current->next;
-		free(current->word);
-		free(current);
-		current = temp;
+		temp = redirect->next;
+		if (redirect->filename)
+			free(redirect->filename);
+		if (redirect->delimiter)
+			free(redirect->delimiter);
+		free(redirect);
+		redirect = temp;
 	}
-	*head = NULL;
 }
 
-void free_redirects(t_redirects *redirect)
+void	free_commands(t_var_cmd *cmd)
 {
-    t_redirects *temp;
+	t_var_cmd	*temp;
 
-    while (redirect)
-    {
-        temp = redirect->next;
-
-        if (redirect->filename)
-            free(redirect->filename);
-        if (redirect->delimiter)
-            free(redirect->delimiter);
-
-        free(redirect);
-
-        redirect = temp;
-    }
-}
-
-void free_commands(t_var_cmd *cmd)
-{
-    t_var_cmd *temp;
-
-    while (cmd)
-    {
-        temp = cmd;
-        free_char_string(cmd->command);
-        if (cmd->redirects)
-        {
-            free_redirects(cmd->redirects);
-        }
-        cmd = cmd->next;
-        free(temp);
-    }
+	while (cmd)
+	{
+		temp = cmd;
+		free_string_array(cmd->command);
+		if (cmd->redirects)
+		{
+			free_redirects(cmd->redirects);
+		}
+		cmd = cmd->next;
+		free(temp);
+	}
 }
 
 void	free_var_pipe_list(t_var_pipe_list *head)
 {
-	t_var_pipe_list *current = head;
-	t_var_pipe_list *next;
+	t_var_pipe_list	*current;
+	t_var_pipe_list	*next;
 
+	current = head;
 	while (current != NULL)
 	{
 		next = current->next;
@@ -118,4 +85,18 @@ void	free_var_pipe_list(t_var_pipe_list *head)
 		free(current);
 		current = next;
 	}
+}
+
+char	**free_all(char **parentarray, int arrayindex)
+{
+	int	j;
+
+	j = 0;
+	while (j < arrayindex)
+	{
+		free(parentarray[j]);
+		j++;
+	}
+	free(parentarray);
+	return (NULL);
 }

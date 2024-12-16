@@ -1,35 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirect_out_append.c                              :+:      :+:    :+:   */
+/*   redirects.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/07 23:52:17 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/16 12:10:19 by macbook          ###   ########.fr       */
+/*   Created: 2024/12/16 13:36:43 by macbook           #+#    #+#             */
+/*   Updated: 2024/12/16 13:46:47 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
-// Symbol (>>)
-int	redirect_output_append(t_shell_data *shell, const char *filename)
-{
-	int	fd;
-
-	(void)shell;
-	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd < 0)
-	{
-		perror("Failed to open output file");
-		return (-1);
-	}
-	if (dup2(fd, STDOUT_FILENO) < 0)
-	{
-		perror("dup2 failed");
-		close(fd);
-		return (-1);
-	}
-	close(fd);
-	return (0);
-}
+// redirects
+int		redirect_output(t_shell_data *shell, const char *filename);
+void	redirect_input(t_shell_data *shell, const char *filename);
+int		redirect_output_append(t_shell_data *shell, const char *filename);
+void	redirect_input_heredoc(t_shell_data *shell, const char *delimiter);
