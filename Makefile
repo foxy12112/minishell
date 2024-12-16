@@ -6,7 +6,7 @@
 #    By: ldick <ldick@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/16 09:02:20 by ldick            ###   ########.fr        #
+#    Updated: 2024/12/16 11:04:59 by ldick            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,9 +33,9 @@ NC			:= \033[0m
 COMPILER	=	cc
 INCLUDES	=	-I includes -I main-libs
 SUBMODULE	=	main-libs/Makefile
-LIB_FLAGS	=	-ls -Lmain-libs
-CFLAGS		=	#-Wall -Werror -Wextra -g #-fsanitize=address
-EXTRA_FLAGS	=	-lreadline
+LIB_FLAGS	=	-lreadline -ls -Lmain-libs
+CFLAGS		=	-Wall -Werror -Wextra -g #-fsanitize=address
+EXTRA_FLAGS	=	
 ERROR_FILE	=	error.log
 
 #################################################################################################
@@ -51,7 +51,7 @@ PARSING			=	$(addprefix parsing/, $(_PARSING))
 _REDIRECTS		=	redirect_in.c redirect_out.c redirect_out_append.c redirect_in_heredoc.c redirect_in_heredoc_utils.c
 REDIRECTS		=	$(addprefix redirects/, $(_REDIRECTS))
 
-_UTILS		=	env_init.c free.c utils.c intialize.c variables.c exec.c parsing.c pipe.c ft_split_varsign.c ft_split_whitespaces.c parsing.c signal.c
+_UTILS		=	env_init.c free.c utils.c intialize.c variables.c exec.c parsing.c pipe.c ft_split_varsign.c ft_split_whitespaces.c signal.c
 UTILS		=	$(addprefix utils/, $(_UTILS))
 
 _BUILTINS		=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
@@ -79,6 +79,9 @@ bin:
 				@mkdir -p bin/utils
 				@mkdir -p bin/builtins
 				@mkdir -p bin/redirects
+				@mkdir -p bin/parsing
+				@mkdir -p bin/execution
+
 bin/%.o:		srcs/%.c | bin
 				@echo "$(GREEN) Compiling $(Compiler) $(CLR_RMV) -c -o $(YELLOW) $@ $(CYAN) $^ $(GREEN) $(EXTRA_FLAGS) $(CFLAGS) $(GREEN) $(INCLUDES) $(NC)"
 				@$(COMPILER) -c -o $@ $^ $(EXTRA_FLAGS) $(CFLAGS) $(INCLUDES) 2> $(ERROR_FILE) || (cat $(ERROR_FILE) && echo "$(RED)Compilation failed :0\nfailed file: \t\t$(YELLOW)$<$(NC)\n\n" && exit 1)

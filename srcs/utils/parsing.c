@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/12/16 08:57:27 by ldick            ###   ########.fr       */
-=======
-/*   Updated: 2024/12/12 13:45:34 by macbook          ###   ########.fr       */
->>>>>>> d5679bfd0c6a2d9c688178af7d4ba644e2a22b8c
+/*   Updated: 2024/12/16 09:32:30 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +30,7 @@ void	init_history(void)
 	close(fd);
 }
 
-<<<<<<< HEAD
 void	add_permanent_history(char *str)
-=======
-char	ft_is_whitespace(char c)
->>>>>>> d5679bfd0c6a2d9c688178af7d4ba644e2a22b8c
 {
 	int fd;
 	char *file;
@@ -48,13 +40,6 @@ char	ft_is_whitespace(char c)
 	ft_putstr_fd(str, fd);
 	ft_putchar_fd('\n', fd);
 	close(fd);
-}
-
-static char	ft_is_whitespace(char c)
-{
-	if ((c >= 9 && c <= 13) || c == 32)
-		return (1);
-	return (0);
 }
 
 // static void	print_two_d(char **array)
@@ -69,34 +54,10 @@ static char	ft_is_whitespace(char c)
 // 	}
 // }
 
-char	**tokenize(char *input)
+void	display(t_shell_data *shell)
 {
+	char	*input;
 	int		i;
-	int		j;
-	int		k;
-	char	*tmp;
-	char	**ret;
-
-	k = 0;
-	j = 0;
-	i = 0;
-	while(input[i] && ft_is_whitespace(input[i]))
-		i++;
-	while(input[i])
-	{
-		if (input[i] == ' ')
-		tmp[j] = input[i];
-		i++;
-		j++;
-	}
-}
-
-// void	display(void)
-// {
-// 	char	*input;
-// 	char	**token_stack;
-// 	char	**variables;
-// 	int		i;
 
 	i = 0;
 	while (1)
@@ -107,10 +68,8 @@ char	**tokenize(char *input)
 		// rl_redisplay();
 		if (!ft_strncmp(input, "exit", 5))
 			break ;
-		if (setup_signals() >= 2)
-			continue ;
-		token_stack = tokenize(input);
-		print_two_d(token_stack);
+		parse_readline(shell, input);
+		execute_script(shell);
 		free(input);
 	}
 	rl_clear_history();

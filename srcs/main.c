@@ -3,17 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 23:38:18 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/11 16:54:34 by ldick            ###   ########.fr       */
-=======
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/15 20:29:04 by macbook          ###   ########.fr       */
->>>>>>> d5679bfd0c6a2d9c688178af7d4ba644e2a22b8c
+/*   Updated: 2024/12/16 10:32:17 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,16 +88,18 @@ int	main(int argc, char **argv)
 	if (!shell)
 		return (1);
 	initialize_shell(shell);
+	init_history();
+	display(shell);
 	// test_multi_redirect(shell);
 	// parse_readline(shell, "cat << EOF > output.txt");
-	parse_readline(shell,"echo 'apple apple apple a[asd] apple' | sed 's/apple/orange/g' > output.txt");
+	// parse_readline(shell,"echo 'apple apple apple a[asd] apple' | sed 's/apple/orange/g' > output.txt");
 	/// parse_readline(shell, "cat << EOF > output.txt");
 	// print_variables_list(shell->variables);
 	// parse_readline(shell, "unset USER SHELLasd");
 	// parse_readline(shell,"echo 'Hello World' > output.txt < EOF < test.txt > wow");
 	// process_pipe_list(shell->pipe_list);
 	// ft_putstr_fd("HIHIHI\n\n", 1);
-	execute_script(shell);
+	// execute_script(shell);
 	// printf("%s\n", test_get_variable(shell, "PWD"));
 	// printf("\nPipes Count: %d\n\n", shell->pipes_count);
 	// print_pipe_list(shell->pipe_list);

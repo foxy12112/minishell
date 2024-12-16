@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/16 09:02:33 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/16 09:54:44 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,14 +197,14 @@ void						pipe_multiple_commands(t_shell_data *shell,
 								t_var_pipe_list *pipe_list, int cmd_count);
 // utils.c
 char						ft_is_whitespace(char c);
-bool						is_valid_char(char c, char *invalid_chars);
+// bool						is_valid_char(char c, char *invalid_chars);
 char						**ft_split_by_first_equal(const char *s);
 char						*ft_trim_whitespaces(char *str);
 char						**ft_split_whitespace(char const *s);
 char						*ft_strtoupper(char *str);
 char						*join_arof_ars(char **array, int start);
 // variable_parse.c
-bool						check_valid_variable(char *variable);
+// bool						check_valid_variable(char *variable);
 // test.c
 char						*test_get_variable(t_shell_data *shell, char *key);
 void						test_cd(t_shell_data *shell);
@@ -222,13 +222,14 @@ int							test_redirect_append_output(t_shell_data *shell,
 void						test_redirect_in_heredoc(t_shell_data *shell);
 void						test_exec(char **command);
 void						launch_program(void);
-void						test_pipes(void);
+// void						test_pipes(void);
 
 // parsing
 
-void					display(void);
-int						setup_signals(void);
+void					display(t_shell_data *shell);
+// int						setup_signals(void);
 void					init_history(void);
+void					add_permanent_history(char *str);
 
-void						test_multi_redirect(t_shell_data *shell);
+// void						test_multi_redirect(t_shell_data *shell);
 #endif

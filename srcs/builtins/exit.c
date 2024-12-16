@@ -6,11 +6,16 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 00:56:03 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/10 11:35:10 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/16 15:20:05 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// int	ft_exit(t_shell_data *shell, char *argv[])
+// {
+	
+// }
 
 int utils(void)
 {
