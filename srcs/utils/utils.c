@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:26:29 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/16 18:18:34 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/16 18:39:49 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,4 @@ char	*join_arof_ars(char **array, int start)
 		i++;
 	}
 	return (result);
-}
-
-char	ft_is_whitespace(char c)
-{
-	if ((c >= 9 && c <= 13) || c == 32)
-		return (1);
-	return (0);
 }

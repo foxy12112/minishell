@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/16 13:19:53 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/16 18:57:05 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	ft_execvp(const char *file, char *const argv[])
 	if (execvp(file, argv) == -1)
 	{
 		perror("Ececvp failed");
+		fflush(stderr);
 		exit(EXIT_FAILURE);
 	}
 }
