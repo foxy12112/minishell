@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 01:20:11 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/10 10:13:40 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/15 11:23:00 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	create_pipes(int *pipe_fd)
 {
-	// Creates pipe for every command except last one and checks that pipe did not fail
 	if (pipe(pipe_fd) < 0)
 	{
 		perror("Pipe failed");
@@ -22,48 +21,62 @@ void	create_pipes(int *pipe_fd)
 	}
 }
 
-void	create_child_processes(int *pipe_fd, char ***commands, int i,
-		int cmd_count, int *input_fd)
+// void	create_child_processes(int *pipe_fd, char ***commands, int *iterators,
+// 		int *input_fd)
+// {
+// 	pid_t	pid;
+
+// 	pid = ft_fork();
+// 	if (pid == 0)
+// 	{
+// 		if (iterators[0] > 0)
+// 		{
+// 			dup2(*input_fd, STDIN_FILENO);
+// 			close(*input_fd);
+// 		}
+// 		if (iterators[0] < iterators[1] - 1)
+// 		{
+// 			close(pipe_fd[0]);
+// 			dup2(pipe_fd[1], STDOUT_FILENO);
+// 			close(pipe_fd[1]);
+// 		}
+// 		cell_launch(commands[iterators[0]]);
+// 		exit(0);
+// 	}
+// 	else
+// 	{
+// 		if (iterators[0] < iterators[1] - 1)
+// 			close(pipe_fd[1]);
+// 		*input_fd = pipe_fd[0];
+// 	}
+// }
+
+void	create_child_processes(t_shell_data *shell, int *pipe_fd, t_var_pipe_list *current,
+		int *input_fd)
 {
 	pid_t	pid;
 
 	pid = ft_fork();
-	// INTERESTING PART ABOUT THIS CODE IS THAT AS FOR CHILD PROCESS ITS OWN PID IS 0 IT MEANS THAT IF ITS WORKING
-	// IN ITSELF IT SHOULD TO THIGNS BELOW, IF NOT
 	if (pid == 0)
 	{
-		// IF NOT THE FIRST COMMAND
-		if (i > 0)
+		if (*input_fd != 0)
 		{
 			dup2(*input_fd, STDIN_FILENO);
 			close(*input_fd);
 		}
-		// IF NOT THE LAST COMMAND
-		if (i < cmd_count - 1)
+		if (current->next != NULL)
 		{
 			close(pipe_fd[0]);
 			dup2(pipe_fd[1], STDOUT_FILENO);
 			close(pipe_fd[1]);
 		}
-		if (i == 0)
-		{
-			test_echo(ft_split("xarfruit apple zebanana cherry", ' '),
-				STDOUT_FILENO);
-		}
-		else if(i == 2)
-		{
-			redirect_output("output.txt");
-			cell_launch(commands[i]);
-		}
-		else
-		{
-			cell_launch(commands[i]);
-		}
+		execute_single_cmd(shell, current->cmd);
+		// cell_launch(current->cmd);
 		exit(0);
 	}
 	else
 	{
-		if (i < cmd_count - 1)
+		if (current->next != NULL)
 		{
 			close(pipe_fd[1]);
 		}
@@ -71,28 +84,54 @@ void	create_child_processes(int *pipe_fd, char ***commands, int i,
 	}
 }
 
-void	pipe_multiple_commands(char ***commands, int cmd_count)
+void	pipe_multiple_commands(t_shell_data *shell, t_var_pipe_list *pipe_list,
+		int cmd_count)
 {
-	int	pipe_fd[2];
-	int	i;
-	int	input_fd;
+	int				pipe_fd[2];
+	int				input_fd;
+	t_var_pipe_list	*current;
 
-	i = 0;
+	(void)cmd_count;
 	input_fd = 0;
-	// ITERATE THROUGH EVERY COMMAND
-	while (i < cmd_count)
+	current = pipe_list;
+	while (current != NULL)
 	{
-		// IF NOT THE LAST COMMAND PIPE IS OPENED
-		if (i < cmd_count - 1)
+		if (current->next != NULL)
 		{
 			create_pipes(pipe_fd);
 		}
-		create_child_processes(pipe_fd, commands, i, cmd_count, &input_fd);
-		i++;
+		create_child_processes(shell, pipe_fd, current, &input_fd);
+		current = current->next;
 	}
-	while (i > 0)
+	current = pipe_list;
+	while (current != NULL)
 	{
 		wait(NULL);
-		i--;
+		current = current->next;
 	}
 }
+
+// void	pipe_multiple_commands(char ***commands, int cmd_count)
+// {
+// 	int	pipe_fd[2];
+// 	int	iterators[2];
+// 	int	input_fd;
+
+// 	iterators[0] = 0;
+// 	iterators[1] = cmd_count;
+// 	input_fd = 0;
+// 	while (iterators[0] < cmd_count)
+// 	{
+// 		if (iterators[0] < cmd_count - 1)
+// 		{
+// 			create_pipes(pipe_fd);
+// 		}
+// 		create_child_processes(pipe_fd, commands, iterators, &input_fd);
+// 		iterators[0]++;
+// 	}
+// 	while (iterators[0] > 0)
+// 	{
+// 		wait(NULL);
+// 		iterators[0]--;
+// 	}
+// }

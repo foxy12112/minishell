@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 03:18:43 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/10 10:14:34 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/15 11:21:38 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	test_export(t_shell_data *shell)
 	print_variables_list(shell->variables);
 }
 
-void	test_echo(char **string, int fd)
+void	test_echo(char *string, int fd)
 {
 	ft_echo(string, fd, false);
 }
@@ -69,32 +69,32 @@ void	test_unset(t_shell_data *shell)
 // REDIRECT TESTS
 
 //(>)
-int	test_redirect_output(char *filename)
+int	test_redirect_output(t_shell_data *shell, char *filename)
 {
-	if (redirect_output(filename) < 0)
+	if (redirect_output(shell, filename) < 0)
 	{
 		return (1);
 	}
-	test_echo(ft_split("HI THIS IS TEST", ' '), STDOUT_FILENO);
+	test_echo("HI THIS IS TEST", STDOUT_FILENO);
 	return (0);
 }
 
 //(<)
-void	test_redirect_input(char *filename, char *command)
+void	test_redirect_input(t_shell_data *shell, char *filename, char *command)
 {
 	char	*args[] = {command, NULL};
 
-	redirect_input(filename);
+	redirect_input(shell, filename);
 	cell_launch(args);
 }
 
-int	test_redirect_append_output(char *filename)
+int	test_redirect_append_output(t_shell_data *shell, char *filename)
 {
-	if (redirect_output_append(filename) < 0)
+	if (redirect_output_append(shell, filename) < 0)
 	{
 		return (1);
 	}
-	test_echo(ft_split("GELA", ' '), STDOUT_FILENO);
+	test_echo("GELA", STDOUT_FILENO);
 	return (0);
 }
 
@@ -103,9 +103,11 @@ void	test_redirect_in_heredoc(t_shell_data *shell)
 	char	*args[] = {"cat", NULL};
 
 	redirect_input_heredoc(shell, "EOF");
-	redirect_output("test.txt");
+	redirect_output(shell, "test.txt");
 	cell_launch(args);
 }
+
+// cat > output.txt >> log.txt
 
 // EXECs
 
@@ -123,12 +125,12 @@ void	launch_program(void)
 
 // PIPES
 
-void	test_pipes(void)
-{
-	char *cmd1[] = {"echo", "xarfruit apple zebanana cherry", NULL};
-	char *cmd2[] = {"tr", " ", "\n", NULL};
-	char *cmd3[] = {"sort", NULL};
-	char **commands[] = {cmd1, cmd2, cmd3};
+// void	test_pipes(t_shell_data *shell)
+// {
+// 	char *cmd1[] = {"echo", "xarfruit apple zebanana cherry", NULL};
+// 	char *cmd2[] = {"tr", " ", "\n", NULL};
+// 	char *cmd3[] = {"sort", NULL};
+// 	char **commands[] = {cmd1, cmd2, cmd3};
 
-	pipe_multiple_commands(commands, 3);
-}
+// 	pipe_multiple_commands(shell, commands, 3);
+// }

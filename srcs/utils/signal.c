@@ -6,11 +6,11 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 15:50:23 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/12 17:40:38 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/16 09:03:24 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 static int	handle_signal(int signal)
 {

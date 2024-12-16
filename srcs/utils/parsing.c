@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/12/16 08:57:27 by ldick            ###   ########.fr       */
+=======
+/*   Updated: 2024/12/12 13:45:34 by macbook          ###   ########.fr       */
+>>>>>>> d5679bfd0c6a2d9c688178af7d4ba644e2a22b8c
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 void	init_history(void)
 {
@@ -30,7 +34,11 @@ void	init_history(void)
 	close(fd);
 }
 
+<<<<<<< HEAD
 void	add_permanent_history(char *str)
+=======
+char	ft_is_whitespace(char c)
+>>>>>>> d5679bfd0c6a2d9c688178af7d4ba644e2a22b8c
 {
 	int fd;
 	char *file;
@@ -49,17 +57,17 @@ static char	ft_is_whitespace(char c)
 	return (0);
 }
 
-static void	print_two_d(char **array)
-{
-	int	i;
+// static void	print_two_d(char **array)
+// {
+// 	int	i;
 
-	i = 0;
-	while (array[i])
-	{
-		printf("%s\n", array[i]);
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (array[i])
+// 	{
+// 		printf("%s\n", array[i]);
+// 		i++;
+// 	}
+// }
 
 char	**tokenize(char *input)
 {
@@ -83,12 +91,12 @@ char	**tokenize(char *input)
 	}
 }
 
-void	display(void)
-{
-	char	*input;
-	char	**token_stack;
-	char	**variables;
-	int		i;
+// void	display(void)
+// {
+// 	char	*input;
+// 	char	**token_stack;
+// 	char	**variables;
+// 	int		i;
 
 	i = 0;
 	while (1)

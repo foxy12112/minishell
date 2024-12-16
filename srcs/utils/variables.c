@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 17:17:23 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/06 03:40:18 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/11 10:14:51 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	add_variables(t_shell_data *shell, char **variables)
 	(void)shell;
 	while (variables[i])
 	{
-		key_value = ft_split(variables[i], '=');
+		key_value = ft_split_by_first_equal(variables[i]);
 		add_to_variables_list(&shell->env, key_value);
 		add_to_variables_list(&shell->variables, key_value);
 		free_char_string(key_value);

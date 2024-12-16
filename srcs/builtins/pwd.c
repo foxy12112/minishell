@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:20 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/06 02:40:05 by auplisas         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:01:59 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,22 @@ int	ft_pwd(void)
 	{
 		perror("Pwd error");
 	}
+	return (0);
+}
+
+int	parse_launch_pwd(t_shell_data *shell, char **command)
+{
+	int	args_count;
+
+	args_count = 0;
+	(void)shell;
+	while (command[args_count])
+		args_count++;
+	if (args_count > 1)
+	{
+		perror("Too many arguments");
+		return (1);
+	}
+	ft_pwd();
 	return (0);
 }

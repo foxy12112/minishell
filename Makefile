@@ -6,7 +6,7 @@
 #    By: ldick <ldick@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/11 16:53:44 by ldick            ###   ########.fr        #
+#    Updated: 2024/12/16 09:02:20 by ldick            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,16 +42,22 @@ ERROR_FILE	=	error.log
 #											Sources												#
 #################################################################################################
 
+_EXECUTION		=	execute_builtins.c execute_command.c execute_redirects.c
+EXECUTION		=	$(addprefix execution/, $(_EXECUTION))
+
+_PARSING		=	variable_parse.c variable_value_get.c variable_parse_utils.c redirect_parse.c redirect_parse_utils.c cmd_parse.c pipe_split.c
+PARSING			=	$(addprefix parsing/, $(_PARSING))
+
 _REDIRECTS		=	redirect_in.c redirect_out.c redirect_out_append.c redirect_in_heredoc.c redirect_in_heredoc_utils.c
 REDIRECTS		=	$(addprefix redirects/, $(_REDIRECTS))
 
-_UTILS		=	env_init.c free.c intialize.c variables.c exec.c pipe.c parsing.c signal.c
+_UTILS		=	env_init.c free.c utils.c intialize.c variables.c exec.c parsing.c pipe.c ft_split_varsign.c ft_split_whitespaces.c parsing.c signal.c
 UTILS		=	$(addprefix utils/, $(_UTILS))
 
 _BUILTINS		=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
 BUILTINS		=	$(addprefix builtins/, $(_BUILTINS))
 
-_SRCS		=	main.c tests.c $(BUILTINS) $(UTILS) $(REDIRECTS)
+_SRCS		=	main.c tests.c $(BUILTINS) $(UTILS) $(REDIRECTS) $(PARSING) $(EXECUTION)
 SRCS		=	$(addprefix srcs/, $(_SRCS))
 
 OBJS		=	$(SRCS:srcs/%.c=bin/%.o)
@@ -68,6 +74,8 @@ bin:
 				@echo "\t\t\t$(BOLD_BLUE) mkdir -p bin/utils"
 				@echo "\t\t\t$(BOLD_BLUE) mkdir -p bin/builtins"
 				@echo "\t\t\t$(BOLD_BLUE) mkdir -p bin/redirects"
+				@echo "\t\t\t$(BOLD_BLUE) mkdir -p bin/parsing"
+				@echo "\t\t\t$(BOLD_BLUE) mkdir -p bin/execution"
 				@mkdir -p bin/utils
 				@mkdir -p bin/builtins
 				@mkdir -p bin/redirects
@@ -81,8 +89,8 @@ $(LIBRARY):		$(SUBMODULE)
 $(SUBMODULE):
 				@git submodule update --init --recursive
 
-$(NAME):		$(LIBRARY) $(OBJS)
-				@$(COMPILER) $(EXTRA_FLAGS) $(CFLAGS) -o $(NAME) $(OBJS) $(LIB_FLAGS)
+$(NAME): $(LIBRARY) $(OBJS)
+				@$(COMPILER) -o $(NAME) $(OBJS) $(LIB_FLAGS) $(EXTRA_FLAGS) $(CFLAGS)
 				@echo "\t\t\t\t$(RED) compilation success :3"
 				@mkdir -p .git/permanent_history
 
