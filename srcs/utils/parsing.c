@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/16 18:46:47 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/17 18:47:44 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ void	add_permanent_history(char *str)
 
 	file = ".git/permanent_history/history.log";
 	fd = open(file, O_RDWR | O_CREAT | O_APPEND, 0644);
+	if (*str == '\0')
+	{
+		ft_putchar_fd('\n', fd);
+		close(fd);
+		return ;
+	}
 	ft_putstr_fd(str, fd);
 	ft_putchar_fd('\n', fd);
 	close(fd);
@@ -62,10 +68,17 @@ void	display(t_shell_data *shell)
 	i = 0;
 	while (1)
 	{
+		setup_signals();
 		input = readline("waiting for input:");
+		if (input == NULL)
+		{
+			write(1, CTRL_D, sizeof(CTRL_D) - 1);
+			break ;
+		}
 		add_permanent_history(input);
 		add_history(input);
-		// rl_redisplay();
+		if (*input == '\0')
+			continue ;
 		if (!ft_strncmp(input, "exit", 5))
 			break ;
 		parse_readline(shell, input);

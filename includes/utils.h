@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:43:34 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/16 13:46:49 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/17 09:55:13 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,3 +45,6 @@ char		ft_is_whitespace(char c);
 char		*ft_trim_whitespaces(char *str);
 char		*ft_strtoupper(char *str);
 char		*join_arof_ars(char **array, int start);
+
+
+void		setup_signals(void);

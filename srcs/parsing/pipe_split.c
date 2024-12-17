@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 04:29:58 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/16 12:34:19 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/17 09:18:51 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ int	parse_readline(t_shell_data *shell, char *commands)
 	int		i;
 
 	i = 0;
+	if (commands == NULL)
+		printf("im empty, fill me up\n");
+	if (commands == NULL)
+		return (ft_putchar_fd('\n', 1), 1);
 	pipe_splitted = ft_split_quotes(commands, '|');
 	if (!pipe_splitted)
 		return (-1);

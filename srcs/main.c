@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/16 18:17:45 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/17 09:14:36 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,11 @@ int	main(int argc, char **argv)
 	// parse_readline(shell,"cat << EOF");
 	init_history();
 	display(shell);
-	parse_readline(shell, "echo hi > output.txt | echo bye");
-	process_pipe_list(shell->pipe_list);
+	// parse_readline(shell, "echo hi > output.txt | echo bye");
+	// process_pipe_list(shell->pipe_list);
 	// printf("\nPipes Count: %d\n\n", shell->pipes_count);
 	// print_pipe_list(shell->pipe_list);
-	execute_script(shell);
+	// execute_script(shell);
 	free_env_list(shell->env);
 	free_env_list(shell->variables);
 	free_var_pipe_list(shell->pipe_list);

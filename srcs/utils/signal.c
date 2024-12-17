@@ -6,44 +6,41 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 15:50:23 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/16 18:18:29 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/17 14:49:35 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// static int	handle_signal(int signal)
-// {
-// 	if (signal == SIGINT)
-// 		return (1);
-// 	else if (signal == SIGQUIT)
-// 		return (2);
-// 	else if (signal == SIGTERM)
-// 		return (3);
-// 	return (0);
-// }
+static void	handler(int signal)
+{
+	if (signal == SIGINT)
+		printf("Received SIGINT\n");
+	else if (signal == SIGQUIT)
+		printf("Received SIGQUIT\n");
+	else if (signal == SIGTERM)
+		printf("Received SIGTERM\n");
+	printf("Received signal: %d\n", signal);
+}
 
-// int	setup_signals(void)
-// {
-// 	struct sigaction	sa;
-// 	sigset_t			sigset;
-// 	int					signal;
+void	setup_signals(void)
+{
+	struct sigaction	sa;
+	sigset_t			sigset;
 
-// 	sa.sa_handler = handle_signal;
-// 	signal = handle_signal;
-// 	sa.sa_flags	=	0;
-	
-// 	sigemptyset(&sigset);
-// 	sigaddset(&sigset, SIGINT);
-// 	sigaddset(&sigset, SIGQUIT);
-// 	sigaddset(&sigset, SIGTERM);
-// 	sa.sa_mask = sigset;
+	sa.sa_handler = handler;
+	sa.sa_flags	=	0;
 
-// 	if (sigaction(SIGINT, &sa, NULL) == -1)
-// 		printf("error setting up SIGINT Handler");
-// 	else if (sigaction(SIGQUIT, &sa, NULL) == -1)
-// 		printf("error setting up SIGINT Handler");
-// 	else if (sigaction(SIGTERM, &sa, NULL) == -1)
-// 		printf("error setting up SIGINT Handler");
-// 	return(signal);
-// }
+	sigemptyset(&sigset);
+	sigaddset(&sigset, SIGINT);
+	sigaddset(&sigset, SIGQUIT);
+	sigaddset(&sigset, SIGTERM);
+	sa.sa_mask = sigset;
+
+	if (sigaction(SIGINT, &sa, NULL) == -1)
+		printf("error setting up SIGINT Handler");
+	else if (sigaction(SIGQUIT, &sa, NULL) == -1)
+		printf("error setting up SIGINT Handler");
+	else if (sigaction(SIGTERM, &sa, NULL) == -1)
+		printf("error setting up SIGINT Handler");
+}

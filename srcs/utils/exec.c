@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/16 18:57:05 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/17 09:13:19 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,9 @@ void	ft_execvp(const char *file, char *const argv[])
 		printf("Execvp: invalid arguments\n");
 		exit(EXIT_FAILURE);
 	}
-	fflush(stdout);
 	if (execvp(file, argv) == -1)
 	{
-		perror("Ececvp failed");
-		fflush(stderr);
+		printf("Ececvp failed\n");
 		exit(EXIT_FAILURE);
 	}
 }
