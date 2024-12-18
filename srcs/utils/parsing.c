@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/17 18:47:44 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/18 17:52:26 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,27 +63,26 @@ void	add_permanent_history(char *str)
 void	display(t_shell_data *shell)
 {
 	char	*input;
-	int		i;
 
-	i = 0;
 	while (1)
 	{
 		setup_signals();
 		input = readline("waiting for input:");
 		if (input == NULL)
 		{
-			write(1, CTRL_D, sizeof(CTRL_D) - 1);
+			printf("%s", CTRL_D);
 			break ;
 		}
-		add_permanent_history(input);
-		add_history(input);
 		if (*input == '\0')
 			continue ;
+		add_permanent_history(input);
+		add_history(input);
 		if (!ft_strncmp(input, "exit", 5))
 			break ;
 		parse_readline(shell, input);
 		execute_script(shell);
 		free(input);
 	}
+	restore_control_echo(shell);
 	rl_clear_history();
 }

@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/17 18:48:09 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/18 17:34:11 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@
 # include <fcntl.h>
 # include <limits.h>
 # include <stdio.h>
+# include <stdlib.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
-# include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <termios.h>
 # include <unistd.h>
 
 # define CTRL_D "\033[A\033[2Kwaiting for input:exit\n"
@@ -32,6 +33,11 @@ typedef struct s_signal
 {
 	int						signal;
 }							t_signal;
+
+typedef struct s_term_settings
+{
+	struct termios			original;
+}							t_term_settings;
 
 typedef struct s_env_list
 {
@@ -79,6 +85,7 @@ typedef struct s_shell_data
 {
 	t_env_list				*env;
 	t_env_list				*variables;
+	t_term_settings			*terminal_settings;
 	int						pipes_count;
 	t_var_pipe_list			*pipe_list;
 	bool					heredoc_launched;
@@ -116,10 +123,12 @@ void						launch_program(void);
 
 // parsing
 
-void					display(t_shell_data *shell);
+void						display(t_shell_data *shell);
 // int						setup_signals(void);
-void					init_history(void);
-void					add_permanent_history(char *str);
+void						init_history(void);
+void						add_permanent_history(char *str);
+int							disable_control_echo(t_shell_data *shell);
+void						restore_control_echo(t_shell_data *shell);
 
 // void						test_multi_redirect(t_shell_data *shell);
 #endif

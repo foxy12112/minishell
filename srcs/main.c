@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/17 09:14:36 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/18 17:25:11 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	main(int argc, char **argv)
 	(void)argc;
 	// atexit(leaks);
 	shell = (t_shell_data *)malloc(sizeof(t_shell_data));
+	shell->terminal_settings = malloc(sizeof(t_term_settings));
 	if (!shell)
 		return (1);
 	initialize_shell(shell);
