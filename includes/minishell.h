@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/18 17:34:11 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/19 13:40:03 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_shell_data
 	t_var_pipe_list			*pipe_list;
 	bool					heredoc_launched;
 	int						fd;
+	int						last_exit;
 }							t_shell_data;
 
 // Import Files
@@ -128,7 +129,7 @@ void						display(t_shell_data *shell);
 void						init_history(void);
 void						add_permanent_history(char *str);
 int							disable_control_echo(t_shell_data *shell);
-void						restore_control_echo(t_shell_data *shell);
+int							restore_control_echo(t_shell_data *shell);
 
 // void						test_multi_redirect(t_shell_data *shell);
 #endif

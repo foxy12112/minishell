@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 15:50:23 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/18 17:51:12 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/19 16:09:22 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,25 @@ int	disable_control_echo(t_shell_data *shell)
 
 	if (tcgetattr(STDIN_FILENO, &terminal) != 0)
 		return (EXIT_FAILURE);
-	shell->terminal_settings->original = terminal;
+	if (tcgetattr(STDIN_FILENO, &shell->terminal_settings->original) != 0)
+		return (EXIT_FAILURE);
 	terminal.c_lflag &= ~ECHOCTL;
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &terminal) != 0)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
-void	restore_control_echo(t_shell_data *shell)
+int	restore_control_echo(t_shell_data *shell)
 {
-	tcsetattr(STDIN_FILENO, TCSANOW, &shell->terminal_settings->original);
+	struct termios	terminal;
+
+	(void) shell;
+	if (tcgetattr(STDIN_FILENO, &terminal) != 0)
+		return (EXIT_FAILURE);
+	terminal.c_lflag |= ECHOCTL;
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &terminal) != 0)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 void	setup_signals(void)

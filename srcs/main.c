@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/18 17:25:11 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/19 17:49:31 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	print_pipe_list(t_var_pipe_list *pipe_list)
 
 // EDGE CASES NEEDED TO BE HANDLES
 // EXIT STATUS AND ERROR HANDLING NEEDED
+
 int	main(int argc, char **argv)
 {
 	t_shell_data	*shell;
@@ -96,14 +97,17 @@ int	main(int argc, char **argv)
 	if (!shell)
 		return (1);
 	initialize_shell(shell);
+	printf("%s\n", retrieve_variable(shell, "USER"));
 	// parse_readline(shell,"cat << EOF");
 	init_history();
 	display(shell);
+	// print_variables_list(shell->variables);
 	// parse_readline(shell, "echo hi > output.txt | echo bye");
 	// process_pipe_list(shell->pipe_list);
 	// printf("\nPipes Count: %d\n\n", shell->pipes_count);
 	// print_pipe_list(shell->pipe_list);
 	// execute_script(shell);
+	// print_terminal_attributes(shell);
 	free_env_list(shell->env);
 	free_env_list(shell->variables);
 	free_var_pipe_list(shell->pipe_list);
