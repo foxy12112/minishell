@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/19 19:58:16 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/20 15:03:38 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,12 @@ int	main(int argc, char **argv)
 	if (!shell)
 		return (1);
 	initialize_shell(shell);
+	init_history();
 	// parse_readline(shell,"cat << EOF");
-	printf("%s\n", retrieve_variable(shell, "$USER"));
-	parse_readline(shell, "echo hi > output.txt | echo bye");
-	process_pipe_list(shell->pipe_list);
+	// printf("%s\n", retrieve_variable(shell, "USER"));
+	display(shell);
+	// parse_readline(shell, "echo hi > output.txt | echo bye");
+	// process_pipe_list(shell->pipe_list);
 	// printf("\nPipes Count: %d\n\n", shell->pipes_count);
 	// print_pipe_list(shell->pipe_list);
 	execute_script(shell);

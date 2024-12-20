@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/19 17:48:50 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/20 15:07:06 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,52 @@ void	add_permanent_history(char *str)
 // 	}
 // }
 
-// static char	*replace_var_expanded(t_shell_data *shell, char *var, char *input,
-// 		int i)
-// {
-// 	char	*expanded;
-// 	int		j;
+static void	insert_word(char *original, char *word, int pos, char *result)
+{
+	int	origin_len;
+	int	word_len;
 
-// 	(void)shell;
-// 	(void)var;
-// 	expanded = ft_strdup(input);
-// 	while(!ft_is_whitespace(expanded[i]))
+	origin_len = ft_strlen(original);
+	if (word == NULL)
+		word = "";
+	word_len = ft_strlen(word);
+	strncpy(result, original, pos);
+	result[pos] = '\0';
+	ft_strcat(result, word);
+	result[pos + word_len] = '\0';
+}
+
+// static int	var_double_quotes(const char *str, int dollar_pos)
+// {
+// 	int	i;
+// 	int	double_quote_count;
+// 	int	single_quote_count;
+
+// 	i = 0;
+// 	double_quote_count = 0;
+// 	single_quote_count = 0;
+// 	while (i < dollar_pos)
 // 	{
-// 		expanded[i] = retrieve_variable(shell, var)
+// 		if (str[i] == '"' && single_quote_count % 2 == 0)
+// 			double_quote_count++;
+// 		else if (str[i] == '\'' && double_quote_count % 2 == 0)
+// 			single_quote_count++;
+// 		i++;
 // 	}
-// 	input[i] = '0';
-// 	printf("%s\n", input);
-// 	return input;
+// 	return (double_quote_count % 2 == 1);
 // }
+
+static char	*replace_var_expanded(t_shell_data *shell, char *var, char *input,
+		int i)
+{
+	char	*expanded;
+
+	expanded = malloc((sizeof(char) * ft_strlen(input)
+				+ ft_strlen(retrieve_variable(shell, var))));
+	// if (!var_double_quotes(input, i))
+	insert_word(input, retrieve_variable(shell, var), i, expanded);
+	return (expanded);
+}
 
 static char	*ft_expand_variables(t_shell_data *shell, char *input)
 {
@@ -102,11 +131,13 @@ static char	*ft_expand_variables(t_shell_data *shell, char *input)
 				j++;
 			}
 			var[j] = '\0';
-			// replace_var_expanded(shell, var, input, i - ft_strlen(var));
+			printf("%c--%d--%zu\n", input[i - ft_strlen(var)], i, ft_strlen(var));
+			j = 0;
+			input = replace_var_expanded(shell, var, input, i - ft_strlen(var) + 1);
+			ft_bzero(var, ft_strlen(var));
 		}
 		i++;
 	}
-	// printf("%s\n", var);
 	return (input);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 17:17:23 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/19 19:56:32 by macbook          ###   ########.fr       */
+/*   Updated: 2024/12/20 09:55:24 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*retrieve_variable(t_shell_data *shell, char *key)
 	if (key[0] == '$')
 		key_parsed = key + 1;
 	else
-		key_parsed = key;
+		key_parsed = NULL;
 	while (variables)
 	{
 		if (ft_strcmp(variables->key, key_parsed) == 0)
