@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/20 15:03:38 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/21 12:34:06 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	main(int argc, char **argv)
 		return (1);
 	initialize_shell(shell);
 	init_history();
+	// print_variables_list(shell->variables);
 	// parse_readline(shell,"cat << EOF");
 	// printf("%s\n", retrieve_variable(shell, "USER"));
 	display(shell);

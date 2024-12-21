@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/20 15:07:06 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/21 18:25:23 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,10 @@ static char	*replace_var_expanded(t_shell_data *shell, char *var, char *input,
 	expanded = malloc((sizeof(char) * ft_strlen(input)
 				+ ft_strlen(retrieve_variable(shell, var))));
 	// if (!var_double_quotes(input, i))
-	insert_word(input, retrieve_variable(shell, var), i, expanded);
+	if (ft_strcmp(var, "$?") == 0)
+		insert_word(input, ft_itoa(shell->last_exit), i, expanded);
+	else
+		insert_word(input, retrieve_variable(shell, var), i, expanded);
 	return (expanded);
 }
 
@@ -131,9 +134,8 @@ static char	*ft_expand_variables(t_shell_data *shell, char *input)
 				j++;
 			}
 			var[j] = '\0';
-			printf("%c--%d--%zu\n", input[i - ft_strlen(var)], i, ft_strlen(var));
 			j = 0;
-			input = replace_var_expanded(shell, var, input, i - ft_strlen(var) + 1);
+			input = replace_var_expanded(shell, var, input, i - ft_strlen(var));
 			ft_bzero(var, ft_strlen(var));
 		}
 		i++;

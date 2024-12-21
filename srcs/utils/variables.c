@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 17:17:23 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/20 09:55:24 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/21 17:55:37 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	add_variables(t_shell_data *shell, char **variables)
 	char	**key_value;
 
 	i = 0;
-	(void)shell;
 	while (variables[i])
 	{
 		key_value = ft_split_by_first_equal(variables[i]);

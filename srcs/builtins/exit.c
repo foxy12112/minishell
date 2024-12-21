@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 00:56:03 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/19 13:44:53 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/21 15:35:04 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 
 int	ft_exit(t_shell_data *shell)
 {
-	int	i;
+	static int	i;
 
-	i = shell->last_exit;
+	i = shell->last_exit % 256;
 	free_env_list(shell->env);
 	free_env_list(shell->variables);
 	free_var_pipe_list(shell->pipe_list);
 	restore_control_echo(shell);
 	free(shell);
+	printf("%d\n", shell->last_exit);
 	exit(i);
 }
 
