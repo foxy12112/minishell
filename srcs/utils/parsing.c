@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/21 18:25:23 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/22 12:16:13 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	insert_word(char *original, char *word, int pos, char *result)
 	if (word == NULL)
 		word = "";
 	word_len = ft_strlen(word);
-	strncpy(result, original, pos);
+	ft_strncpy(result, original, pos);
 	result[pos] = '\0';
 	ft_strcat(result, word);
 	result[pos + word_len] = '\0';
