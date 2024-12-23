@@ -6,7 +6,7 @@
 #    By: ldick <ldick@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/23 12:03:33 by ldick            ###   ########.fr        #
+#    Updated: 2024/12/23 13:45:58 by ldick            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,9 +31,9 @@ NC			:= \033[0m
 #################################################################################################
 
 COMPILER	=	cc
-INCLUDES	=	-I includes -I main-libs
-SUBMODULE	=	main-libs/Makefile
-LIB_FLAGS	=	-lreadline -ls -Lmain-libs
+INCLUDES	=	-I includes -I libft
+SUBMODULE	=	ft_printf/Makefile
+LIB_FLAGS	=	-lreadline -lft -Llibft
 CFLAGS		=	-Wall -Werror -Wextra -g #-fsanitize=address
 EXTRA_FLAGS	=	
 ERROR_FILE	=	error.log
@@ -51,17 +51,17 @@ PARSING			=	$(addprefix parsing/, $(_PARSING))
 _REDIRECTS		=	redirect_in.c redirect_out.c redirect_out_append.c redirect_in_heredoc.c
 REDIRECTS		=	$(addprefix redirects/, $(_REDIRECTS))
 
-_UTILS		=	env_init.c free.c utils.c intialize.c variables.c exec.c parsing.c pipe.c ft_split_byfirstequal.c ft_split_whitespaces.c ft_split_quotes.c signal.c
-UTILS		=	$(addprefix utils/, $(_UTILS))
+_UTILS			=	env_init.c free.c utils.c intialize.c variables.c exec.c parsing.c pipe.c ft_split_byfirstequal.c ft_split_whitespaces.c ft_split_quotes.c signal.c
+UTILS			=	$(addprefix utils/, $(_UTILS))
 
 _BUILTINS		=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
 BUILTINS		=	$(addprefix builtins/, $(_BUILTINS))
 
-_SRCS		=	main.c tests.c $(BUILTINS) $(UTILS) $(REDIRECTS) $(PARSING) $(EXECUTION)
-SRCS		=	$(addprefix srcs/, $(_SRCS))
+_SRCS			=	main.c tests.c $(BUILTINS) $(UTILS) $(REDIRECTS) $(PARSING) $(EXECUTION)
+SRCS			=	$(addprefix srcs/, $(_SRCS))
 
-OBJS		=	$(SRCS:srcs/%.c=bin/%.o)
-LIBRARY		=	main-libs/libs.a
+OBJS			=	$(SRCS:srcs/%.c=bin/%.o)
+LIBRARY			=	libft/libft.a
 
 #################################################################################################
 #											Rules												#
@@ -87,10 +87,10 @@ bin/%.o:		srcs/%.c | bin
 				@$(COMPILER) -c -o $@ $^ $(EXTRA_FLAGS) $(CFLAGS) $(INCLUDES) 2> $(ERROR_FILE) || (cat $(ERROR_FILE) && echo "$(RED)Compilation failed :0\nfailed file: \t\t$(YELLOW)$<$(NC)\n\n" && exit 1)
 
 $(LIBRARY):		$(SUBMODULE)
-				@make -C main-libs --silent
+				@make -C libft --silent
 
 $(SUBMODULE):
-				@git submodule update --init --recursive --remote --merge
+				@git submodule update --init --recursive --remote --rebase
 
 $(NAME): $(LIBRARY) $(OBJS)
 				@$(COMPILER) -o $(NAME) $(OBJS) $(LIB_FLAGS) $(EXTRA_FLAGS) $(CFLAGS)
@@ -103,7 +103,7 @@ clean:
 				@rm -f output*.log
 
 fclean:			clean
-				@make fclean -C main-libs --silent
+				@make fclean -C libft --silent
 				@rm -f $(NAME)
 
 history:		clean
