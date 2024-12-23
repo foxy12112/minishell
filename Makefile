@@ -6,7 +6,7 @@
 #    By: ldick <ldick@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/23 13:45:58 by ldick            ###   ########.fr        #
+#    Updated: 2024/12/23 13:49:05 by ldick            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,8 +90,7 @@ $(LIBRARY):		$(SUBMODULE)
 				@make -C libft --silent
 
 $(SUBMODULE):
-				@git submodule update --init --recursive --remote --rebase
-
+				@git submodule update --init --recursive
 $(NAME): $(LIBRARY) $(OBJS)
 				@$(COMPILER) -o $(NAME) $(OBJS) $(LIB_FLAGS) $(EXTRA_FLAGS) $(CFLAGS)
 				@echo "\t\t\t\t$(RED) compilation success :3"
