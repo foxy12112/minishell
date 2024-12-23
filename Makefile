@@ -6,7 +6,7 @@
 #    By: ldick <ldick@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/22 12:24:56 by ldick            ###   ########.fr        #
+#    Updated: 2024/12/23 12:03:33 by ldick            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,7 +90,7 @@ $(LIBRARY):		$(SUBMODULE)
 				@make -C main-libs --silent
 
 $(SUBMODULE):
-				@git submodule update --init --recursive --rebase
+				@git submodule update --init --recursive --remote --merge
 
 $(NAME): $(LIBRARY) $(OBJS)
 				@$(COMPILER) -o $(NAME) $(OBJS) $(LIB_FLAGS) $(EXTRA_FLAGS) $(CFLAGS)
