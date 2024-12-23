@@ -6,14 +6,14 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/23 13:27:51 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/23 14:02:36 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft.h"
+# include "libs.h"
 # include <fcntl.h>
 # include <limits.h>
 # include <stdio.h>

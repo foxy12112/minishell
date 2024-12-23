@@ -6,7 +6,7 @@
 #    By: ldick <ldick@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2024/12/23 13:49:05 by ldick            ###   ########.fr        #
+#    Updated: 2024/12/23 14:01:24 by ldick            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,9 +31,9 @@ NC			:= \033[0m
 #################################################################################################
 
 COMPILER	=	cc
-INCLUDES	=	-I includes -I libft
-SUBMODULE	=	ft_printf/Makefile
-LIB_FLAGS	=	-lreadline -lft -Llibft
+INCLUDES	=	-I includes -I main-libs
+SUBMODULE	=	main-libs/Makefile
+LIB_FLAGS	=	-lreadline -ls -Lmain-libs
 CFLAGS		=	-Wall -Werror -Wextra -g #-fsanitize=address
 EXTRA_FLAGS	=	
 ERROR_FILE	=	error.log
@@ -61,7 +61,7 @@ _SRCS			=	main.c tests.c $(BUILTINS) $(UTILS) $(REDIRECTS) $(PARSING) $(EXECUTIO
 SRCS			=	$(addprefix srcs/, $(_SRCS))
 
 OBJS			=	$(SRCS:srcs/%.c=bin/%.o)
-LIBRARY			=	libft/libft.a
+LIBRARY			=	main-libs/libs.a
 
 #################################################################################################
 #											Rules												#
@@ -87,10 +87,11 @@ bin/%.o:		srcs/%.c | bin
 				@$(COMPILER) -c -o $@ $^ $(EXTRA_FLAGS) $(CFLAGS) $(INCLUDES) 2> $(ERROR_FILE) || (cat $(ERROR_FILE) && echo "$(RED)Compilation failed :0\nfailed file: \t\t$(YELLOW)$<$(NC)\n\n" && exit 1)
 
 $(LIBRARY):		$(SUBMODULE)
-				@make -C libft --silent
+				@make -C main-libs --silent
 
 $(SUBMODULE):
 				@git submodule update --init --recursive
+
 $(NAME): $(LIBRARY) $(OBJS)
 				@$(COMPILER) -o $(NAME) $(OBJS) $(LIB_FLAGS) $(EXTRA_FLAGS) $(CFLAGS)
 				@echo "\t\t\t\t$(RED) compilation success :3"
@@ -102,7 +103,7 @@ clean:
 				@rm -f output*.log
 
 fclean:			clean
-				@make fclean -C libft --silent
+				@make fclean -C main-libs --silent
 				@rm -f $(NAME)
 
 history:		clean

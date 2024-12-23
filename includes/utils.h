@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:43:34 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/17 09:55:13 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/23 14:36:26 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,3 +48,4 @@ char		*join_arof_ars(char **array, int start);
 
 
 void		setup_signals(void);
+char		*ft_strncpy(char *dst, const char *src, size_t len);
