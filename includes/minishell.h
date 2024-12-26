@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/23 14:02:36 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/26 17:18:54 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@
 # include "libs.h"
 # include <fcntl.h>
 # include <limits.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <readline/history.h>
-# include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 
 # define CTRL_D "\033[A\033[2Kwaiting for input:exit\n"
 
@@ -90,7 +90,7 @@ typedef struct s_shell_data
 	t_var_pipe_list			*pipe_list;
 	bool					heredoc_launched;
 	int						fd;
-	int						last_exit;
+	int						last_exit_code;
 }							t_shell_data;
 
 // Import Files
@@ -130,6 +130,13 @@ void						init_history(void);
 void						add_permanent_history(char *str);
 int							disable_control_echo(t_shell_data *shell);
 int							restore_control_echo(t_shell_data *shell);
+void						insert_word(char *original, char *word, int pos,
+								char *result);
+char						*replace_var_expanded(t_shell_data *shell,
+								char *var, char *input, int i);
+char						*ft_expand_variables(t_shell_data *shell,
+								char *input);
+int							unclosed_quotes(char *input);
 
 // void						test_multi_redirect(t_shell_data *shell);
 #endif

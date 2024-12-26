@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/21 12:34:06 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/26 15:17:47 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	main(int argc, char **argv)
 	// char *test;
 	(void)argv;
 	(void)argc;
+
 	// atexit(leaks);
 	shell = (t_shell_data *)malloc(sizeof(t_shell_data));
 	if (!shell)
@@ -104,11 +105,11 @@ int	main(int argc, char **argv)
 	// process_pipe_list(shell->pipe_list);
 	// printf("\nPipes Count: %d\n\n", shell->pipes_count);
 	// print_pipe_list(shell->pipe_list);
-	execute_script(shell);
 	free_env_list(shell->env);
 	free_env_list(shell->variables);
 	free_var_pipe_list(shell->pipe_list);
 	free(shell);
+	// system("leaks minishell");
 	return (0);
 }
 

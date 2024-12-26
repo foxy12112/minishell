@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/17 09:13:19 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/26 17:43:14 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	**remove_quotes_from_array(char **array)
 	return (new_array);
 }
 
-void	cell_launch(char **args)
+void	cell_launch(t_shell_data *shell, char **args)
 {
 	char	**parsed_args;
 	pid_t	pid;
@@ -82,6 +82,8 @@ void	cell_launch(char **args)
 	else
 	{
 		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			shell->last_exit_code = WEXITSTATUS(status);
 	}
 	free_string_array(parsed_args);
 }

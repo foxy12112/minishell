@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 03:17:18 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/18 11:58:55 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/26 17:19:22 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,6 @@ int	initialize_shell(t_shell_data *shell)
 	shell->pipes_count = 0;
 	shell->heredoc_launched = false;
 	shell->pipe_list = NULL;
+	shell->last_exit_code = 0;
 	return (0);
 }

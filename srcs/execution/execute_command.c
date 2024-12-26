@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:53 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/17 09:25:37 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/26 17:24:47 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	launch_single_command(t_shell_data *shell, char **command)
 	}
 	else
 	{
-		cell_launch(command);
+		cell_launch(shell, command);
 		return (0);
 	}
 	return (0);
