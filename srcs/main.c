@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/26 15:17:47 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/27 15:45:07 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int	main(int argc, char **argv)
 	// print_variables_list(shell->variables);
 	// parse_readline(shell,"cat << EOF");
 	// printf("%s\n", retrieve_variable(shell, "USER"));
+	disable_control_echo(shell);
 	display(shell);
 	// parse_readline(shell, "echo hi > output.txt | echo bye");
 	// process_pipe_list(shell->pipe_list);

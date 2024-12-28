@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/26 15:23:55 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/28 16:11:37 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,23 +49,23 @@ void	add_permanent_history(char *str)
 	close(fd);
 }
 
-// static void	print_two_d(char **array)
-// {
-// 	int	i;
+void	print_two_d(char **array)
+{
+	int	i;
 
-// 	i = 0;
-// 	while (array[i])
-// 	{
-// 		printf("%s\n", array[i]);
-// 		i++;
-// 	}
-// }
+	i = 0;
+	while (array[i])
+	{
+		printf("%s\n", array[i]);
+		i++;
+	}
+}
 
 void	display(t_shell_data *shell)
 {
 	char	*input;
+	char	*expanded;
 
-	disable_control_echo(shell);
 	setup_signals();
 	while (1)
 	{
@@ -86,10 +86,9 @@ void	display(t_shell_data *shell)
 			printf("unclosed quotes present\n");
 			continue ;
 		}
-		input = ft_expand_variables(shell, input);
-		parse_readline(shell, input);
+		expanded = ft_expand_variables(shell, input);
+		parse_readline(shell, expanded);
 		execute_script(shell);
-		free(input);
 	}
 	if (input)
 		free(input);

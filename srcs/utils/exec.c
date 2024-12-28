@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/26 17:43:14 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/27 14:02:24 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	cell_launch(t_shell_data *shell, char **args)
 	int		status;
 
 	pid = ft_fork();
+	status = 0;
 	parsed_args = remove_quotes_from_array(args);
 	if (pid == 0)
 	{

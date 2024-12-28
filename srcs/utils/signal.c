@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 15:50:23 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/19 16:09:22 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/27 16:19:55 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,11 @@ int	disable_control_echo(t_shell_data *shell)
 {
 	struct termios	terminal;
 
-	if (tcgetattr(STDIN_FILENO, &terminal) != 0)
-		return (EXIT_FAILURE);
-	if (tcgetattr(STDIN_FILENO, &shell->terminal_settings->original) != 0)
-		return (EXIT_FAILURE);
+
+	tcgetattr(STDIN_FILENO, &terminal);
+	tcgetattr(STDIN_FILENO, &shell->terminal_settings->original);
 	terminal.c_lflag &= ~ECHOCTL;
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &terminal) != 0)
-		return (EXIT_FAILURE);
+	tcsetattr(STDIN_FILENO, TCSANOW, &terminal);
 	return (EXIT_SUCCESS);
 }
 

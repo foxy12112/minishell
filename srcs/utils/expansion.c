@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 12:05:10 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/26 17:29:55 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/28 20:09:41 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,87 +34,67 @@ int	unclosed_quotes(char *input)
 	return (false);
 }
 
-void	insert_word(char *original, char *word, int pos, char *result)
+static bool	has_posible_variables(char *input)
 {
-	int	origin_len;
-	int	word_len;
+	int	i;
 
-	origin_len = ft_strlen(original);
-	if (word == NULL)
-		word = "";
-	word_len = ft_strlen(word);
-	ft_strncpy(result, original, pos);
-	result[pos] = '\0';
-	ft_strcat(result, word);
-	result[pos + word_len] = '\0';
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] == '$')
+			return (true);
+		i++;
+	}
+	return (false);
 }
 
-// static int	var_double_quotes(const char *str, int dollar_pos)
-// {
-// 	int	i;
-// 	int	double_quote_count;
-// 	int	single_quote_count;
-
-// 	i = 0;
-// 	double_quote_count = 0;
-// 	single_quote_count = 0;
-// 	while (i < dollar_pos)
-// 	{
-// 		if (str[i] == '"' && single_quote_count % 2 == 0)
-// 			double_quote_count++;
-// 		else if (str[i] == '\'' && double_quote_count % 2 == 0)
-// 			single_quote_count++;
-// 		i++;
-// 	}
-// 	return (double_quote_count % 2 == 1);
-// }
-
-char	*replace_var_expanded(t_shell_data *shell, char *var, char *input,
-		int i)
+char	*get_variable_value(t_shell_data *shell, char *var)
 {
-	char	*expanded;
-
-	expanded = malloc((sizeof(char) * ft_strlen(input)
-				+ ft_strlen(retrieve_variable(shell, var))));
-	// if (!var_double_quotes(input, i))
-	// 	return (expanded);
 	if (ft_strcmp(var, "$?") == 0)
-		insert_word(input, ft_itoa(shell->last_exit_code), i, expanded); //TODO
-	else
-		insert_word(input, retrieve_variable(shell, var), i, expanded);
-	return (expanded);
+		return (ft_itoa(shell->last_exit_code));
+	return (retrieve_variable(shell, var));
+}
+
+char	*expand_variable(t_shell_data *shell, char *input, int start, int end)
+{
+	char	var[7000];
+	char	*expanded;
+	char	*result;
+
+	ft_strncpy(var, input + start, end - start);
+	var[end - start] = '\0';
+	expanded = get_variable_value(shell, var);
+	result = malloc(ft_strlen(input) - (end - start) + ft_strlen(expanded) + 1);
+	ft_strncpy(result, input, start);
+	result[start] = '\0';
+	ft_strcat(result, expanded);
+	ft_strcat(result, input + end);
+	// expanded = NULL;
+	// printf("stopped here, wtf\n");
+	return (result);
 }
 
 char	*ft_expand_variables(t_shell_data *shell, char *input)
 {
-	int		i;
-	int		sing_quote;
-	char	var[7000];
-	int		j;
+	int		i = 0;
+	int		doub_quote = 0;
+	int		var_start;
+	// char	*expanded;
 
-	j = 0;
-	i = 0;
-	(void)shell;
-	sing_quote = 0;
+	if (has_posible_variables(input) == false)
+		return (input);
 	while (input[i])
 	{
-		if (input[i] == '\'')
-			sing_quote++;
-		if (input[i] == '$' && sing_quote % 2 == 0)
+		if (input[i] == '\"')
+			doub_quote = !doub_quote;
+		if (input[i] == '$')
 		{
-			while (!ft_is_whitespace(input[i]) && input[i] && input[i] != '"'
+			var_start = i;
+			while (input[i] && !ft_is_whitespace(input[i]) && input[i] != '\"'
 				&& input[i] != '\'')
-			{
-				var[j] = input[i];
 				i++;
-				j++;
-			}
-			var[j] = '\0';
-			j = 0;
-			printf("%s\n", var);
-			input = replace_var_expanded(shell, var, input, i - ft_strlen(var));
-			printf("%s\n", input);
-			ft_bzero(var, ft_strlen(var));
+			input = expand_variable(shell, input, var_start, i);
+			// i = ft_strlen(get_variable_value(shell, input + var_start)) - 1;
 		}
 		i++;
 	}
