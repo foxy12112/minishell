@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:05 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/27 13:57:18 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/30 13:35:36 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,34 @@ static bool	has_anything(char **command)
 	return (true);
 }
 
+static char	*true_quote_removal(char *str)
+{
+	char	*ret;
+	int		i;
+	int		j;
+	int		size;
+
+	i = 0;
+	j = 0;
+	size = ft_strlen_s(str, '\"') + 1;
+	ret = malloc(size + 1);
+	if (!ret)
+		return (NULL);
+	while (str[i])
+	{
+		if (str[i] == '"')
+		{
+			i++;
+			continue ;
+		}
+		ret[j] = str[i];
+		i++;
+		j++;
+	}
+	ret[j] = '\0';
+	return (ret);
+}
+
 int	parse_launch_echo(char **command)
 {
 	bool	has_n_option;
@@ -51,6 +79,7 @@ int	parse_launch_echo(char **command)
 		echo_string = join_arof_ars(command, 2);
 	else
 		echo_string = join_arof_ars(command, 1);
+	echo_string = true_quote_removal(echo_string);
 	ft_echo(echo_string, STDOUT_FILENO, has_n_option);
 	return (0);
 }

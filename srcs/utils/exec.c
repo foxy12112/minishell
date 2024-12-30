@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/27 14:02:24 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/30 18:29:36 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,19 @@ pid_t	ft_fork(void)
 	return (pid);
 }
 
-void	ft_execvp(const char *file, char *const argv[])
-{
-	if (!file || !argv)
-	{
-		printf("Execvp: invalid arguments\n");
-		exit(EXIT_FAILURE);
-	}
-	if (execvp(file, argv) == -1)
-	{
-		printf("Ececvp failed\n");
-		exit(EXIT_FAILURE);
-	}
-}
+// void	ft_execvp(const char *file, char *const argv[])
+// {
+// 	if (!file || !argv)
+// 	{
+// 		printf("Execvp: invalid arguments\n");
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	if (execvp(file, argv) == -1)
+// 	{
+// 		printf("Ececvp failed\n");
+// 		exit(EXIT_FAILURE);
+// 	}//fuck u
+// }
 
 char	**remove_quotes_from_array(char **array)
 {
@@ -67,24 +67,40 @@ char	**remove_quotes_from_array(char **array)
 	return (new_array);
 }
 
+static char	*find_cmd(char **path, char *cmd)
+{
+	char	*tmp;
+	char	*ret;
+
+	while (*path)
+	{
+		tmp = ft_strjoin(*path, "/");
+		ret = ft_strjoin(tmp, cmd);
+		free(tmp);
+		if (access(ret, 0) == 0)
+			return (ret);
+		free(ret);
+		path++;
+	}
+	return (NULL);
+}
+
 void	cell_launch(t_shell_data *shell, char **args)
 {
 	char	**parsed_args;
 	pid_t	pid;
 	int		status;
+	char	*command;
 
 	pid = ft_fork();
 	status = 0;
 	parsed_args = remove_quotes_from_array(args);
+	command = find_cmd(shell->exec_env, parsed_args[0]);
 	if (pid == 0)
 	{
-		ft_execvp(parsed_args[0], parsed_args);
+		execve(command, parsed_args, NULL);
 	}
-	else
-	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			shell->last_exit_code = WEXITSTATUS(status);
-	}
+	waitpid(pid, &status, 0);
+	shell->last_exit_code = WEXITSTATUS(status);
 	free_string_array(parsed_args);
 }

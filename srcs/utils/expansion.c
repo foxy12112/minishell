@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 12:05:10 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/28 20:09:41 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/30 16:52:42 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,31 +70,47 @@ char	*expand_variable(t_shell_data *shell, char *input, int start, int end)
 	ft_strcat(result, expanded);
 	ft_strcat(result, input + end);
 	// expanded = NULL;
-	// printf("stopped here, wtf\n");
 	return (result);
+}
+
+static int	var_counter(char *input)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (input[i])
+	{
+		if (input[i] == '$')
+			count++;
+		i++;
+	}
+	return (count);
 }
 
 char	*ft_expand_variables(t_shell_data *shell, char *input)
 {
-	int		i = 0;
-	int		doub_quote = 0;
+	int		i;
 	int		var_start;
-	// char	*expanded;
+	int		pos_var;
 
+	pos_var = var_counter(input);
+	i = 0;
+	var_start = 0;
 	if (has_posible_variables(input) == false)
 		return (input);
-	while (input[i])
+	while (input[i] && pos_var > 0)
 	{
-		if (input[i] == '\"')
-			doub_quote = !doub_quote;
-		if (input[i] == '$')
+		if (!input[i])
+			break ;
+		if (input[i] == '$' && input[i + 1])
 		{
 			var_start = i;
-			while (input[i] && !ft_is_whitespace(input[i]) && input[i] != '\"'
-				&& input[i] != '\'')
+			while (input[i] && !ft_is_whitespace(input[i]) && input[i] != '\"' && input[i] != '\'')
 				i++;
 			input = expand_variable(shell, input, var_start, i);
-			// i = ft_strlen(get_variable_value(shell, input + var_start)) - 1;
+			pos_var--;
 		}
 		i++;
 	}

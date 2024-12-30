@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/27 15:45:07 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/30 18:16:56 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 void	leaks(void)
 {
 	system("leaks minishell");
+}
+
+static char	**init_exec_env(void)
+{
+	char	**env;
+
+	env = ft_split(getenv("PATH"), ':');
+	return (env);
 }
 
 void	print_redirects(t_redirects *redirect)
@@ -97,6 +105,8 @@ int	main(int argc, char **argv)
 		return (1);
 	initialize_shell(shell);
 	init_history();
+	shell->exec_env = init_exec_env();
+	print_two_d(shell->exec_env);
 	// print_variables_list(shell->variables);
 	// parse_readline(shell,"cat << EOF");
 	// printf("%s\n", retrieve_variable(shell, "USER"));
