@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 12:05:10 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/30 16:52:42 by ldick            ###   ########.fr       */
+/*   Updated: 2024/12/31 14:53:59 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ static bool	has_posible_variables(char *input)
 
 char	*get_variable_value(t_shell_data *shell, char *var)
 {
-	if (ft_strcmp(var, "$?") == 0)
+	printf("--%d--\n",ft_strncmp(var, "$?", 2));
+	if (ft_strncmp(var, "$?", 2) == 0)
 		return (ft_itoa(shell->last_exit_code));
 	return (retrieve_variable(shell, var));
 }
