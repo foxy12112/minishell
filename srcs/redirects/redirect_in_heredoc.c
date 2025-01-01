@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_in_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:03:07 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/16 12:10:13 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/01 15:12:48 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*parse_heredoc(t_shell_data *shell, char *str)
 {
 	char	*line;
 
-	line = parse_string(shell, str);
+	line = ft_expand_variables(shell, str);
 	return (line);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/31 16:35:42 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/01 14:52:34 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	cell_launch(t_shell_data *shell, char **args)
 	}
 	free(command);
 	waitpid(pid, &status, WUNTRACED);
-	printf("%d\n", WEXITSTATUS(status));
+	// printf("--%d--a\n", status);
 	if (WIFEXITED(status))
 		shell->last_exit_code = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
