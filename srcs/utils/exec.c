@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/01 14:52:34 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/03 17:34:01 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,24 +93,38 @@ void	cell_launch(t_shell_data *shell, char **args)
 	char	*command;
 
 	pid = ft_fork();
-	status = 0;
-	parsed_args = remove_quotes_from_array(args);
-	command = find_cmd(shell->exec_env, parsed_args[0]);
-	if (pid == 0)
-	{
-		execve(command, parsed_args, NULL);
-	}
-	else if (pid < 0)
+	if (pid < 0)
 	{
 		printf("failed\n");
 		exit(1);
 	}
-	free(command);
+	status = 0;
+	parsed_args = remove_quotes_from_array(args);
+	command = find_cmd(shell->exec_env, parsed_args[0]);
+	if (!command)
+	{
+		printf("command not found: %s\n", parsed_args[0]);
+		free_string_array(parsed_args);
+		exit(127);
+	}
+	// printf("%s\n", command);
+	// print_two_d(parsed_args);
+	if (pid == 0)
+	{
+		printf("%s\n", command);
+		if (execve(command, parsed_args, shell->enviroment) == -1)
+			{
+				free(command);
+				free_string_array(parsed_args);
+				exit(69);
+			}
+	}
 	waitpid(pid, &status, WUNTRACED);
-	// printf("--%d--a\n", status);
-	if (WIFEXITED(status))
-		shell->last_exit_code = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		shell->last_exit_code = 128 + WTERMSIG(status);
+	// if (WIFEXITED(status))
+	// 	shell->last_exit_code = WEXITSTATUS(status);
+	// else if (WIFSIGNALED(status))
+	// 	shell->last_exit_code = 128 + WTERMSIG(status);
 	free_string_array(parsed_args);
+	free(command);
+	// printf("--%d--a\n", status);
 }

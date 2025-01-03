@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/31 14:51:03 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/03 17:59:37 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	print_pipe_list(t_var_pipe_list *pipe_list)
 
 // EDGE CASES NEEDED TO BE HANDLES
 // EXIT STATUS AND ERROR HANDLING NEEDED
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **env)
 {
 	t_shell_data	*shell;
 
@@ -104,6 +104,7 @@ int	main(int argc, char **argv)
 	if (!shell)
 		return (1);
 	initialize_shell(shell);
+	shell->enviroment = env;
 	init_history();
 	shell->exec_env = init_exec_env();
 	// print_two_d(shell->exec_env);

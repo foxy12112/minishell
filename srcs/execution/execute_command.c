@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:53 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/01 14:49:43 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/03 11:45:32 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	execute_single_cmd(t_shell_data *shell, t_var_cmd *cmd)
 		else
 		{
 			launch_single_command(shell, cmd->command);
-			break ;
+			// break ;
 		}
 		cmd = cmd->next;
 	}

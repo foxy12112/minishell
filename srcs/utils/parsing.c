@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/01 15:17:14 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/03 17:59:35 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,9 @@ void	display(t_shell_data *shell)
 		}
 		expanded = ft_expand_variables(shell, input);
 		parse_readline(shell, expanded);
-		execute_script(shell);
+		execute_script(shell); 
+		// free(expanded);
+		// free(input);
 	}
 	if (input)
 		free(input);

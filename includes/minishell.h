@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2024/12/30 18:05:16 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/03 12:38:40 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_shell_data
 {
 	t_env_list				*env;
 	char					**exec_env;
+	char					**enviroment;
 	t_env_list				*variables;
 	t_term_settings			*terminal_settings;
 	int						pipes_count;
@@ -101,7 +102,6 @@ typedef struct s_shell_data
 # include "redirects.h"
 # include "utils.h"
 
-int							main(int argc, char **argv);
 int							utils(void);
 void						print_arofars(char **str);
 // test.c
