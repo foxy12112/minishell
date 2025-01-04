@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/03 17:59:35 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/04 17:38:32 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,16 @@ void	print_two_d(char **array)
 	}
 }
 
+static void cleanup(t_shell_data *shell)
+{
+	// shell->env = initialize_env();
+	// shell->variables = initialize_env();
+	shell->pipes_count = 0;
+	shell->heredoc_launched = false;
+	shell->pipe_list = NULL;
+	shell->last_exit_code = 0;
+}
+
 void	display(t_shell_data *shell)
 {
 	char	*input;
@@ -90,6 +100,7 @@ void	display(t_shell_data *shell)
 		parse_readline(shell, expanded);
 		execute_script(shell); 
 		// free(expanded);
+		cleanup(shell);
 		// free(input);
 	}
 	if (input)

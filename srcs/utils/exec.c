@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/03 17:34:01 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/04 17:37:17 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,46 @@ static char	*find_cmd(char **path, char *cmd)
 	return (NULL);
 }
 
-void	cell_launch(t_shell_data *shell, char **args)
+// static void	wait_for_process(pid_t pid)
+// {
+// 	int	status;
+
+// 	status = 0;
+// 	waitpid(pid, &status, WUNTRACED);
+// 	while (!WIFEXITED(status) && !WIFSIGNALED(status))
+// 	{
+// 		waitpid(pid, &status, WUNTRACED);
+// 	}
+// }
+
+// struct err_data
+// {
+// 	void *data;
+// 	void (*cleanup_func)(void*);
+// }
+
+// void ft_error(err_data* _erddata, char* _errstr, int _ret)
+// {
+// 	static void *data;
+// 	static void (*err_func)(void *);
+	
+// 	if (_err_data)
+// 	{
+// 		data = _er
+// 		return;
+// 	}
+
+// 	exit(_ret):
+// }
+
+int	cell_launch(t_shell_data *shell, char **args)
 {
 	char	**parsed_args;
 	pid_t	pid;
 	int		status;
 	char	*command;
 
-	pid = ft_fork();
+	pid = fork();
 	if (pid < 0)
 	{
 		printf("failed\n");
@@ -103,28 +135,35 @@ void	cell_launch(t_shell_data *shell, char **args)
 	command = find_cmd(shell->exec_env, parsed_args[0]);
 	if (!command)
 	{
-		printf("command not found: %s\n", parsed_args[0]);
+		printf("\ncommand not found: %s\n", parsed_args[0]);
 		free_string_array(parsed_args);
-		exit(127);
+		free_string_array(args);
+		return(127);
 	}
 	// printf("%s\n", command);
 	// print_two_d(parsed_args);
 	if (pid == 0)
 	{
-		printf("%s\n", command);
+		// printf("%s\n", command);
 		if (execve(command, parsed_args, shell->enviroment) == -1)
 			{
 				free(command);
 				free_string_array(parsed_args);
+				free_string_array(args);
 				exit(69);
 			}
 	}
 	waitpid(pid, &status, WUNTRACED);
+	// wait_for_process(pid);
+	// waitpid(pidm )
 	// if (WIFEXITED(status))
 	// 	shell->last_exit_code = WEXITSTATUS(status);
 	// else if (WIFSIGNALED(status))
 	// 	shell->last_exit_code = 128 + WTERMSIG(status);
+	// kill(pid, SIGKILL);
+	free_string_array(args);
 	free_string_array(parsed_args);
 	free(command);
+	return(EXIT_SUCCESS);
 	// printf("--%d--a\n", status);
 }
