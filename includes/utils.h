@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:43:34 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/04 17:36:43 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/05 13:23:30 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void		free_var_pipe_list(t_var_pipe_list *head);
 char		**free_all(char **parentarray, int arrayindex);
 // pipe.c
 void		pipe_multiple_commands(t_shell_data *shell,
-				t_var_pipe_list *pipe_list, int cmd_count);
+				t_var_pipe_list *pipe_list);
 // ft_split_whitespace.c
 char		**ft_split_whitespace(char const *s);
 // ft_split_by_first_equal.c

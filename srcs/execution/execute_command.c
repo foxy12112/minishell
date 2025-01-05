@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:53 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/04 14:11:29 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/05 16:57:02 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	execute_single_cmd(t_shell_data *shell, t_var_cmd *cmd)
 		else
 		{
 			launch_single_command(shell, cmd->command);
-			// break ;
+			break ;
 		}
 		cmd = cmd->next;
 	}
@@ -54,7 +54,7 @@ int	execute_script(t_shell_data *shell)
 {
 	if (shell->pipes_count > 0)
 	{
-		pipe_multiple_commands(shell, shell->pipe_list, shell->pipes_count);
+		pipe_multiple_commands(shell, shell->pipe_list);
 		return (0);
 	}
 	else

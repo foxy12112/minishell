@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redirects.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:21 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/16 12:28:06 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/05 16:52:20 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
 
 int	setup_redirects(t_shell_data *shell, t_redirects *redirects)
 {
