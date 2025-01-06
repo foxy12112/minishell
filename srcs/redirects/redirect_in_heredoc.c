@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_in_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:03:07 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/01 15:12:48 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/05 14:54:46 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	redirect_input_heredoc(t_shell_data *shell, const char *delimiter)
 		parsed_line = parse_heredoc(shell, line);
 		ft_putstr_fd(parsed_line, pipe_fd[1]);
 		ft_putchar_fd('\n', pipe_fd[1]);
-		free(line);
+		// free(line);
 		free(parsed_line);
 	}
 	close(pipe_fd[1]);

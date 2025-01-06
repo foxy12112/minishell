@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/04 17:37:17 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/06 19:28:16 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ int	cell_launch(t_shell_data *shell, char **args)
 				free(command);
 				free_string_array(parsed_args);
 				free_string_array(args);
+				shell->last_exit_code = 69;
 				exit(69);
 			}
 	}

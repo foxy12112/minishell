@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:53 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/04 14:11:29 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/06 19:04:42 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	launch_single_command(t_shell_data *shell, char **command)
 	}
 	else
 	{
-		cell_launch(shell, command);
+		shell->last_exit_code = cell_launch(shell, command);
 		return (0);
 	}
 	return (0);

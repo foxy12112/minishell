@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 02:20:43 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/21 17:57:17 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/06 01:20:36 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,25 @@ void	add_to_variables_list(t_env_list **head, char **key_value)
 	}
 }
 
-void	print_variables_list(t_env_list *variables)
+int	print_variables_list(t_env_list *variables)
 {
 	t_env_list	*current;
+	int			exit_code;
 
+	exit_code = 0;
 	if (!variables)
 	{
 		printf("List is empty.\n");
-		return ;
+		return (1);
 	}
 	current = variables->next;
 	while (current != NULL)
 	{
-		printf("declare -x %s=%s\n", current->key, current->value);
+		if (printf("declare -x %s=%s\n", current->key, current->value) < 0)
+			return (1);
 		current = current->next;
 	}
+	return (exit_code);
 }
 
 t_env_list	*initialize_env(void)

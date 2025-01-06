@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:17 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/16 12:31:10 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/06 01:21:57 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,10 @@ void	sort_env_list(t_env_list *head)
 int	ft_export(t_shell_data *shell, char **variables)
 {
 	int	i;
+	int	exit_code;
 
 	i = 0;
+	exit_code = 0;
 	while (variables[i])
 	{
 		i++;
@@ -64,18 +66,20 @@ int	ft_export(t_shell_data *shell, char **variables)
 	if (i < 2)
 	{
 		sort_env_list(shell->variables);
-		print_variables_list(shell->variables);
+		exit_code = print_variables_list(shell->variables);
 	}
 	else
 	{
-		add_variables(shell, variables);
+		exit_code = add_variables(shell, variables);
 		sort_env_list(shell->variables);
 	}
-	return (0);
+	return (exit_code);
 }
 
 int	parse_launch_export(t_shell_data *shell, char **command)
 {
-	ft_export(shell, command);
-	return (0);
+	int	exit_code;
+
+	exit_code = ft_export(shell, command);
+	return (exit_code);
 }

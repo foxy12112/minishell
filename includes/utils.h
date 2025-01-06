@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:43:34 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/04 17:36:43 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/06 18:38:17 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 // env_init.c
 t_env_list	*initialize_env(void);
 void		add_to_variables_list(t_env_list **head, char **key_value);
-void		print_env_list(t_env_list *variables);
-void		print_variables_list(t_env_list *variables);
+int			print_env_list(t_env_list *variables);
+int			print_variables_list(t_env_list *variables);
 int			add_variables(t_shell_data *shell, char **variables);
 int			initialize_shell(t_shell_data *shell);
 // exec.c
@@ -45,7 +45,6 @@ char		ft_is_whitespace(char c);
 char		*ft_trim_whitespaces(char *str);
 char		*ft_strtoupper(char *str);
 char		*join_arof_ars(char **array, int start);
-
 
 void		setup_signals(void);
 char		*ft_strncpy(char *dst, const char *src, size_t len);

@@ -6,40 +6,51 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:09 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/16 12:32:11 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/06 01:16:55 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	print_env_list(t_env_list *variables)
+int	print_env_list(t_env_list *variables)
 {
 	t_env_list	*current;
 
 	if (!variables)
 	{
 		printf("List is empty.\n");
-		return ;
+		return (1);
 	}
 	current = variables->next;
 	while (current != NULL)
 	{
-		printf("%s=%s\n", current->key, current->value);
+		if (!current->key || !current->value)
+		{
+			printf("Invalid entry in the list.\n");
+			return (1);
+		}
+		if (printf("%s=%s\n", current->key, current->value) < 0)
+			return (1);
 		current = current->next;
 	}
+	return (0);
 }
 
 int	ft_env(t_shell_data *shell)
 {
-	print_env_list(shell->env);
-	return (0);
+	int	exit_code;
+
+	exit_code = print_env_list(shell->env);
+	return (exit_code);
 }
 
 int	parse_launch_env(t_shell_data *shell, char **command)
 {
 	int	args_count;
+	int	exit_code;
 
 	args_count = 0;
+	exit_code = 0;
 	while (command[args_count])
 		args_count++;
 	if (args_count > 1)
@@ -47,6 +58,6 @@ int	parse_launch_env(t_shell_data *shell, char **command)
 		perror("Too many arguments");
 		return (1);
 	}
-	ft_env(shell);
-	return (0);
+	exit_code = ft_env(shell);
+	return (exit_code);
 }

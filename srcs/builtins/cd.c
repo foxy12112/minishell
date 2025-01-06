@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:18:21 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/16 12:30:08 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/05 18:54:17 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ int	fd_cd(t_shell_data *shell, char *path)
 
 	old_pwd = getcwd(NULL, 0);
 	if (chdir(path) != 0)
-		return (perror("cd failed"), -1);
+		return (perror("cd failed"), 1);
 	path = getcwd(NULL, 0);
 	if (!path)
-		return (perror("cd failed"), -1);
+		return (perror("cd failed"), 1);
 	change_pwd_env(&shell->variables, "OLD_PWD", old_pwd);
 	change_pwd_env(&shell->variables, "PWD", path);
 	change_pwd_env(&shell->env, "OLD_PWD", old_pwd);
@@ -53,9 +53,11 @@ int	fd_cd(t_shell_data *shell, char *path)
 int	parse_launch_cd(t_shell_data *shell, char **command)
 {
 	int		args_count;
+	int		exit_code;
 	char	*parsed_path;
 
 	args_count = 0;
+	exit_code = 0;
 	while (command[args_count])
 		args_count++;
 	if (args_count > 2)
@@ -68,7 +70,7 @@ int	parse_launch_cd(t_shell_data *shell, char **command)
 		parsed_path = remove_quotes(command[1]);
 	else
 		parsed_path = ft_strdup(command[1]);
-	fd_cd(shell, parsed_path);
+	exit_code = fd_cd(shell, parsed_path);
 	free(parsed_path);
-	return (0);
+	return (exit_code);
 }

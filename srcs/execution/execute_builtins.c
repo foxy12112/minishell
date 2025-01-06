@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:08 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/21 12:41:41 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/06 01:24:03 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,19 @@ int	select_launch_builtin(t_shell_data *shell, char **command)
 	if (!command_toupper)
 		return (1);
 	if (ft_strcmp(command_toupper, "ECHO") == 0)
-		parse_launch_echo(command);
+		shell->last_exit_code = parse_launch_echo(command);
 	else if (ft_strcmp(command_toupper, "CD") == 0)
-		parse_launch_cd(shell, command);
+		shell->last_exit_code = parse_launch_cd(shell, command);
 	else if (ft_strcmp(command_toupper, "ENV") == 0)
-		parse_launch_env(shell, command);
+		shell->last_exit_code = parse_launch_env(shell, command);
 	else if (ft_strcmp(command_toupper, "EXPORT") == 0)
-		parse_launch_export(shell, command);
+		shell->last_exit_code = parse_launch_export(shell, command);
 	else if (ft_strcmp(command_toupper, "PWD") == 0)
-		parse_launch_pwd(shell, command);
+		shell->last_exit_code = parse_launch_pwd(shell, command);
 	else if (ft_strcmp(command_toupper, "UNSET") == 0)
-		parse_launch_unset(shell, command);
+		shell->last_exit_code = parse_launch_unset(shell, command);
 	else if (ft_strcmp(command_toupper, "EXIT") == 0)
-		ft_exit(shell);
+		shell->last_exit_code = ft_exit(shell);
 	if (command_toupper)
 		free(command_toupper);
 	return (0);
