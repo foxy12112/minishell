@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/03 12:38:40 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/05 16:40:17 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,12 @@ typedef struct s_var_pipe_list
 	struct s_var_pipe_list	*next;
 	struct s_var_pipe_list	*prev;
 }							t_var_pipe_list;
+
+// typedef struct s_errdata
+// {
+// 	void	*alloc_data;
+// 	void	(*teardown_func)(void *);
+// }							t_errdata
 
 typedef struct s_shell_data
 {

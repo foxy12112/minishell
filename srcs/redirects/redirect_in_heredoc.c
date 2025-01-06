@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:03:07 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/05 14:54:46 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/06 19:33:26 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,17 @@ char	*parse_heredoc(t_shell_data *shell, char *str)
 {
 	char	*line;
 
-	line = ft_expand_variables(shell, str);
+	(void)shell;
+	line = str;
 	return (line);
 }
+
+// static void	sigint_handle(void)
+// {
+// 	rl_on_new_line();
+// 	rl_replace_line("", 0);
+// 	rl_redisplay();
+// }
 
 void	redirect_input_heredoc(t_shell_data *shell, const char *delimiter)
 {
@@ -27,7 +35,7 @@ void	redirect_input_heredoc(t_shell_data *shell, const char *delimiter)
 	char	*parsed_line;
 
 	if (pipe(pipe_fd) == -1)
-		return (perror("pipe failed"), exit(EXIT_FAILURE));
+		return (perror("pipe failed"));
 	while (1)
 	{
 		line = readline("> ");
@@ -39,12 +47,13 @@ void	redirect_input_heredoc(t_shell_data *shell, const char *delimiter)
 		parsed_line = parse_heredoc(shell, line);
 		ft_putstr_fd(parsed_line, pipe_fd[1]);
 		ft_putchar_fd('\n', pipe_fd[1]);
-		// free(line);
-		free(parsed_line);
+		free(line);
+		// free(parsed_line);
 	}
+	rl_redisplay();
 	close(pipe_fd[1]);
 	if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
-		return (perror("dup2 failed"), exit(EXIT_FAILURE));
+		return (perror("dup2 failed"));
 	shell->heredoc_launched = true;
 	close(pipe_fd[0]);
 }

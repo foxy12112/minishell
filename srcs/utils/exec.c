@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/06 19:28:16 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/06 19:31:25 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	**remove_quotes_from_array(char **array)
 	return (new_array);
 }
 
-static char	*find_cmd(char **path, char *cmd)
+char	*find_cmd(char **path, char *cmd)
 {
 	char	*tmp;
 	char	*ret;
@@ -114,6 +114,25 @@ static char	*find_cmd(char **path, char *cmd)
 // 		return;
 // 	}
 
+// void	ft_error(t_errdata *_data, const char *_msg, int _rtrn)
+// {
+// 	static void	*allocated_data;
+// 	static void	(*err_function)(void *_allocated_data);
+
+// 	if (_data)
+// 	{
+// 		allocated_data = _data->alloc_data;
+// 		err_function = _data->teardown_func;
+// 		return ;
+// 	}
+// 	if (!allocated_data)
+// 		return ;
+// 	if (_msg)
+// 		write(2, _msg, ft_strlen(_msg));
+// 	err_function(allocated_data);
+// 	exit(_rtrn);
+// }
+
 // 	exit(_ret):
 // }
 
@@ -128,7 +147,7 @@ int	cell_launch(t_shell_data *shell, char **args)
 	if (pid < 0)
 	{
 		printf("failed\n");
-		exit(1);
+		return(1);
 	}
 	status = 0;
 	parsed_args = remove_quotes_from_array(args);
@@ -151,7 +170,7 @@ int	cell_launch(t_shell_data *shell, char **args)
 				free_string_array(parsed_args);
 				free_string_array(args);
 				shell->last_exit_code = 69;
-				exit(69);
+				return(69);
 			}
 	}
 	waitpid(pid, &status, WUNTRACED);

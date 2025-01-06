@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:05 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/30 13:35:36 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/05 16:43:57 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static char	*true_quote_removal(char *str)
 		return (NULL);
 	while (str[i])
 	{
+		if (str[i] == '"' && !str[i + 1])
+			break ;
 		if (str[i] == '"')
 		{
 			i++;

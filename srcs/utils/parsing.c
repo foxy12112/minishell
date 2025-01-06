@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/05 14:53:22 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/06 19:32:00 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,21 @@ static void cleanup(t_shell_data *shell)
 	shell->last_exit_code = 0;
 }
 
+static int	check_command(t_shell_data *shell)
+{
+	char	*command;
+
+	command = find_cmd(shell->exec_env, remove_quotes_from_array(shell->pipe_list->cmd->command)[0]);
+	if (!command)
+	{
+		printf("\ncommand: %s : not found\n", shell->pipe_list->cmd->command[0]);
+		free(command);
+		return (1);
+	}
+	free (command);
+	return (0);
+}
+
 void	display(t_shell_data *shell)
 {
 	char	*input;
@@ -98,6 +113,11 @@ void	display(t_shell_data *shell)
 		}
 		expanded = ft_expand_variables(shell, input);
 		parse_readline(shell, expanded);
+		if (check_command(shell))
+		{
+			cleanup(shell);
+			continue;
+		}
 		execute_script(shell); 
 		// free(expanded);
 		cleanup(shell);
