@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 12:05:10 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/01 15:10:45 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/06 16:20:08 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,16 @@ char	*expand_variable(t_shell_data *shell, char *input, int start, int end)
 	ft_strncpy(var, input + start, end - start);
 	var[end - start] = '\0';
 	expanded = get_variable_value(shell, var);
+	// if (expanded == NULL)
+	// 	return(NULL);
 	result = malloc(ft_strlen(input) - (end - start) + ft_strlen(expanded) + 1);
 	ft_strncpy(result, input, start);
 	result[start] = '\0';
-	ft_strcat(result, expanded);
-	ft_strcat(result, input + end);
+	if (expanded)
+	{
+		ft_strcat(result, expanded);
+		ft_strcat(result, input + end);
+	}
 	// expanded = NULL;
 	return (result);
 }
@@ -113,6 +118,8 @@ char	*ft_expand_variables(t_shell_data *shell, char *input)
 			input = expand_variable(shell, input, var_start, i);
 			pos_var--;
 		}
+		if (!pos_var)
+			return (input);
 		i++;
 	}
 	return (input);

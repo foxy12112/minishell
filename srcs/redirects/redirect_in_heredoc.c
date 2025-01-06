@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:03:07 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/05 16:59:17 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/06 10:10:24 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	redirect_input_heredoc(t_shell_data *shell, const char *delimiter)
 		line = readline("> ");
 		if (!line || ft_strcmp(line, delimiter) == 0)
 		{
-			free(line);
+			// free(line);
 			break ;
 		}
 		parsed_line = parse_heredoc(shell, line);
@@ -50,7 +50,6 @@ void	redirect_input_heredoc(t_shell_data *shell, const char *delimiter)
 		free(line);
 		// free(parsed_line);
 	}
-	rl_redisplay();
 	close(pipe_fd[1]);
 	if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
 		return (perror("dup2 failed"));

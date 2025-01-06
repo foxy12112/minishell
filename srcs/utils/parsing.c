@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/05 16:12:30 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/06 16:35:01 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,28 +61,31 @@ void	print_two_d(char **array)
 	}
 }
 
-static void cleanup(t_shell_data *shell)
-{
-	// shell->env = initialize_env();
-	// shell->variables = initialize_env();
-	shell->pipes_count = 0;
-	shell->heredoc_launched = false;
-	shell->pipe_list = NULL;
-	shell->last_exit_code = 0;
-}
+// static void cleanup(t_shell_data *shell)
+// {
+// 	// shell->env = initialize_env();
+// 	// shell->variables = initialize_env();
+// 	shell->pipes_count = 0;
+// 	shell->heredoc_launched = false;
+// 	shell->pipe_list = NULL;
+// }
 
 static int	check_command(t_shell_data *shell)
 {
 	char	*command;
 
-	command = find_cmd(shell->exec_env, remove_quotes_from_array(shell->pipe_list->cmd->command)[0]);
-	if (!command)
+	command = find_cmd(shell->exec_env,
+			remove_quotes_from_array(shell->pipe_list->cmd->command)[0]);
+	if (!access(command, 0)
+		&& command_is_builtin(remove_quotes_from_array
+			(shell->pipe_list->cmd->command)[0]) == NULL)
 	{
-		printf("\ncommand: %s : not found\n", shell->pipe_list->cmd->command[0]);
+		printf("\ncommand: %s : not found\n",
+			shell->pipe_list->cmd->command[0]);
 		free(command);
 		return (1);
 	}
-	free (command);
+	free(command);
 	return (0);
 }
 
@@ -115,12 +118,12 @@ void	display(t_shell_data *shell)
 		parse_readline(shell, expanded);
 		if (check_command(shell))
 		{
-			cleanup(shell);
-			continue;
+			// cleanup(shell);
+			continue ;
 		}
-		execute_script(shell); 
+		execute_script(shell);
 		// free(expanded);
-		cleanup(shell);
+		// cleanup(shell);
 		// free(input);
 	}
 	if (input)

@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 02:20:43 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/21 17:57:17 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/06 15:54:43 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	print_variables_list(t_env_list *variables)
 	current = variables->next;
 	while (current != NULL)
 	{
-		printf("declare -x %s=%s\n", current->key, current->value);
+		printf("%s=%s\n", current->key, current->value);
 		current = current->next;
 	}
 }
