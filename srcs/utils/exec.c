@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/06 19:31:25 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/07 04:55:57 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	**remove_quotes_from_array(char **array)
 
 	i = 0;
 	size = 0;
-	while (array[size] != NULL)
+	while (array[size])
 		size++;
 	new_array = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!new_array)
