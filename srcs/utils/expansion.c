@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 12:05:10 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/06 16:20:08 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/07 11:40:39 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ char	*expand_variable(t_shell_data *shell, char *input, int start, int end)
 	ft_strncpy(var, input + start, end - start);
 	var[end - start] = '\0';
 	expanded = get_variable_value(shell, var);
+	printf("%s--%lu\n", var, ft_strlen(var));
+	printf("%s\t--itoa exit\n", ft_itoa(shell->last_exit_code));
+	printf("%d\t-exit\n", shell->last_exit_code);
+	printf("%s\t--expanded\n", expanded);
+	// printf("expanded = %s\n", expanded);
 	// if (expanded == NULL)
 	// 	return(NULL);
 	result = malloc(ft_strlen(input) - (end - start) + ft_strlen(expanded) + 1);

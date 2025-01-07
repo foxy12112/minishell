@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:17 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/06 01:21:57 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/07 05:36:07 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	ft_export(t_shell_data *shell, char **variables)
 	}
 	else
 	{
+		printf("trying to add variables\n");
 		exit_code = add_variables(shell, variables);
 		sort_env_list(shell->variables);
 	}

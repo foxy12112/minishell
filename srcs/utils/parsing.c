@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/07 05:00:01 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/07 11:41:48 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,23 +69,22 @@ static void cleanup(t_shell_data *shell)
 	shell->pipes_count = 0;
 	shell->heredoc_launched = false;
 	shell->pipe_list = NULL;
-	shell->last_exit_code = 0;
 }
 
-// static int	check_command(t_shell_data *shell)
-// {
-// 	char	*command;
+static int	check_command(t_shell_data *shell)
+{
+	char	*command;
 
-// 	command = find_cmd(shell->exec_env, remove_quotes_from_array(shell->pipe_list->cmd->command)[0]);
-// 	if (!command)
-// 	{
-// 		printf("\ncommand: %s : not found\n", shell->pipe_list->cmd->command[0]);
-// 		free(command);
-// 		return (1);
-// 	}
-// 	free (command);
-// 	return (0);
-// }
+	command = find_cmd(shell->exec_env, true_quote_removal_from_array(shell->pipe_list->cmd->command)[0]);
+	if (!command && command_is_builtin(shell->pipe_list->cmd->command[0]) == NULL)
+	{
+		printf("\ncommand: %s : not found\n", shell->pipe_list->cmd->command[0]);
+		free(command);
+		return (127);
+	}
+	free (command);
+	return (0);
+}
 // 	command = find_cmd(shell->exec_env,
 // 			remove_quotes_from_array(shell->pipe_list->cmd->command)[0]);
 // 	if (!access(command, 0)
@@ -128,20 +127,21 @@ void	display(t_shell_data *shell)
 		}
 		expanded = ft_expand_variables(shell, input);
 		parse_readline(shell, expanded);
-		// if (check_command(shell) && !command_is_builtin(shell->pipe_list->cmd->command[0]))
-		// {
-		// 	cleanup(shell);
-		// 	continue;
-		// }
-		// execute_script(shell); 
+		if (check_command(shell))
+		{
+			shell->last_exit_code = 127;
+			cleanup(shell);
+			continue;
+		}
+		execute_script(shell); 
 		// if (check_command(shell))
 		// {
-		// 	// cleanup(shell);
+		// 	cleanup(shell);
 		// 	continue ;
 		// }
-		execute_script(shell);
+		// execute_script(shell);
 		// free(expanded);
-		// cleanup(shell);
+		cleanup(shell);
 		// free(input);
 	}
 	if (input)

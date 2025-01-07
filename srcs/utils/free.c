@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 05:08:24 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/16 18:18:04 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/07 09:12:05 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	free_string_array(char **str)
 	i = 0;
 	while (str[i])
 	{
+		if (!str[i])
+			break ;
 		free(str[i]);
 		i++;
 	}
