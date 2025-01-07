@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/07 11:41:48 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/07 14:15:46 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void cleanup(t_shell_data *shell)
 {
 	// shell->env = initialize_env();
 	// shell->variables = initialize_env();
-	redirect_to_terminal(shell);
+	redirect_to_terminal();
 	shell->pipes_count = 0;
 	shell->heredoc_launched = false;
 	shell->pipe_list = NULL;
