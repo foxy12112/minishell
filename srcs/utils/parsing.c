@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/06 16:35:01 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/06 17:10:51 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ static int	check_command(t_shell_data *shell)
 	char	*command;
 
 	command = find_cmd(shell->exec_env,
-			remove_quotes_from_array(shell->pipe_list->cmd->command)[0]);
+			true_quote_removal_from_array(shell->pipe_list->cmd->command)[0]);
 	if (!access(command, 0)
-		&& command_is_builtin(remove_quotes_from_array
+		&& command_is_builtin(true_quote_removal_from_array
 			(shell->pipe_list->cmd->command)[0]) == NULL)
 	{
 		printf("\ncommand: %s : not found\n",

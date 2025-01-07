@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:18:21 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/16 12:30:08 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/06 17:10:51 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	parse_launch_cd(t_shell_data *shell, char **command)
 	}
 	if (string_in_doublequotes(command[1])
 		|| string_in_singlequotes(command[1]))
-		parsed_path = remove_quotes(command[1]);
+		parsed_path = true_quote_removal(command[1]);
 	else
 		parsed_path = ft_strdup(command[1]);
 	fd_cd(shell, parsed_path);

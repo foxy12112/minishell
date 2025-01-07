@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:43:34 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/05 13:23:30 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/06 17:10:51 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int			initialize_shell(t_shell_data *shell);
 // exec.c
 pid_t		ft_fork(void);
 int			cell_launch(t_shell_data *shell, char **args);
-char		**remove_quotes_from_array(char **array);
+char		**true_quote_removal_from_array(char **array);
 // variables.c
 void		sort_env_list(t_env_list *head);
 char		*retrieve_variable(t_shell_data *shell, char *key);
