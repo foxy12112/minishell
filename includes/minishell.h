@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/05 16:40:17 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/06 17:09:46 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ char						*replace_var_expanded(t_shell_data *shell,
 char						*ft_expand_variables(t_shell_data *shell,
 								char *input);
 int							unclosed_quotes(char *input);
+char						*true_quote_removal(char *str);
 
 // void						test_multi_redirect(t_shell_data *shell);
 #endif

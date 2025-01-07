@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/07 04:55:57 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/07 04:58:29 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ pid_t	ft_fork(void)
 // 	}//fuck u
 // }
 
-char	**remove_quotes_from_array(char **array)
+char	**true_quote_removal_from_array(char **array)
 {
 	int		i;
 	int		size;
@@ -56,7 +56,7 @@ char	**remove_quotes_from_array(char **array)
 	{
 		if (string_in_doublequotes(array[i])
 			|| string_in_singlequotes(array[i]))
-			new_array[i] = remove_quotes(array[i]);
+			new_array[i] = true_quote_removal(array[i]);
 		else
 			new_array[i] = ft_strdup(array[i]);
 		if (!new_array[i])
@@ -150,7 +150,7 @@ int	cell_launch(t_shell_data *shell, char **args)
 		return(1);
 	}
 	status = 0;
-	parsed_args = remove_quotes_from_array(args);
+	parsed_args = true_quote_removal_from_array(args);
 	command = find_cmd(shell->exec_env, parsed_args[0]);
 	if (!command)
 	{

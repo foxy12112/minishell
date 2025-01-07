@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variable_parse.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 03:32:40 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/16 12:36:27 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/06 17:10:51 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*parse_variable(t_shell_data *shell, char *variable)
 	if (!check_key(key_value[0]) || !check_value(key_value[1]))
 		return (free_string_array(key_value), perror("Invalid KeyValue\n"),
 			NULL);
-	var_with_no_quotes = remove_quotes(key_value[1]);
+	var_with_no_quotes = true_quote_removal(key_value[1]);
 	if (string_in_doublequotes(key_value[1]))
 		value = parse_value(shell, var_with_no_quotes);
 	else if (string_in_singlequotes(key_value[1]))
@@ -95,7 +95,7 @@ char	*parse_string(t_shell_data *shell, char *string)
 	char	*var_with_no_quotes;
 	char	*value;
 
-	var_with_no_quotes = remove_quotes(string);
+	var_with_no_quotes = true_quote_removal(string);
 	if (string_in_doublequotes(string))
 		value = parse_value(shell, var_with_no_quotes);
 	else if (string_in_singlequotes(string))

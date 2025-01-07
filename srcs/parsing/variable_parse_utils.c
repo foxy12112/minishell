@@ -3,39 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   variable_parse_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 08:33:41 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/16 12:10:04 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/06 17:11:12 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*remove_quotes(char *value)
-{
-	char	*parsed;
-	int		size;
-	int		i;
-	int		j;
+// char	*true_quote_removal(char *value)
+// {
+// 	char	*parsed;
+// 	int		size;
+// 	int		i;
+// 	int		j;
 
-	i = 1;
-	j = 0;
-	size = ft_strlen(value);
-	if (size == 2)
-		return (ft_strdup(""));
-	parsed = (char *)malloc(sizeof(char) * (size - 1));
-	if (!parsed)
-		return (NULL);
-	while (value[i + 1])
-	{
-		parsed[j] = value[i];
-		i++;
-		j++;
-	}
-	parsed[j] = '\0';
-	return (parsed);
-}
+// 	i = 1;
+// 	j = 0;
+// 	size = ft_strlen(value);
+// 	if (size == 2)
+// 		return (ft_strdup(""));
+// 	parsed = (char *)malloc(sizeof(char) * (size - 1));
+// 	if (!parsed)
+// 		return (NULL);
+// 	while (value[i + 1])
+// 	{
+// 		parsed[j] = value[i];
+// 		i++;
+// 		j++;
+// 	}
+// 	parsed[j] = '\0';
+// 	return (parsed);
+// }
 
 bool	string_in_singlequotes(char *value)
 {
