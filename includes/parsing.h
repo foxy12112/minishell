@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:29:32 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/16 13:47:40 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/06 17:10:51 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void			add_redirect_to_cmd_node(t_var_cmd *cmd_node,
 t_redirects		*create_redirect_node(char *redirect);
 
 // variable_parse_utils.c
-char			*remove_quotes(char *value);
+char			*true_quote_removal(char *value);
 bool			string_in_singlequotes(char *value);
 bool			string_in_doublequotes(char *value);
 bool			check_key(char *key);

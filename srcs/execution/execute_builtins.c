@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:08 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/07 04:49:56 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/07 13:06:53 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@ int	select_launch_builtin(t_shell_data *shell, char **command)
 	if (!command_toupper)
 		return (1);
 	if (ft_strcmp(command_toupper, "ECHO") == 0)
-		shell->last_exit_code = parse_launch_echo(command);
+		return(parse_launch_echo(command));
 	else if (ft_strcmp(command_toupper, "CD") == 0)
-		shell->last_exit_code = parse_launch_cd(shell, command);
+		return(parse_launch_cd(shell, command));
 	else if (ft_strcmp(command_toupper, "ENV") == 0)
-		shell->last_exit_code = parse_launch_env(shell, command);
+		return(parse_launch_env(shell, command));
 	else if (ft_strcmp(command_toupper, "EXPORT") == 0)
-		shell->last_exit_code = parse_launch_export(shell, command);
+		return(parse_launch_export(shell, command));
 	else if (ft_strcmp(command_toupper, "PWD") == 0)
-		shell->last_exit_code = parse_launch_pwd(shell, command);
+		return(parse_launch_pwd(shell, command));
 	else if (ft_strcmp(command_toupper, "UNSET") == 0)
-		shell->last_exit_code = parse_launch_unset(shell, command);
+		return(parse_launch_unset(shell, command));
 	else if (ft_strcmp(command_toupper, "EXIT") == 0)
 		ft_exit(shell);
 	if (command_toupper)

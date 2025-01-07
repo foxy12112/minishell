@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:05 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/05 16:43:57 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/06 17:09:33 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static bool	has_anything(char **command)
 	return (true);
 }
 
-static char	*true_quote_removal(char *str)
+char	*true_quote_removal(char *str)
 {
 	char	*ret;
 	int		i;

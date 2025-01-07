@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/06 19:31:25 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/07 11:25:44 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ pid_t	ft_fork(void)
 // 	}//fuck u
 // }
 
-char	**remove_quotes_from_array(char **array)
+char	**true_quote_removal_from_array(char **array)
 {
 	int		i;
 	int		size;
@@ -47,7 +47,7 @@ char	**remove_quotes_from_array(char **array)
 
 	i = 0;
 	size = 0;
-	while (array[size] != NULL)
+	while (array[size])
 		size++;
 	new_array = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!new_array)
@@ -56,7 +56,7 @@ char	**remove_quotes_from_array(char **array)
 	{
 		if (string_in_doublequotes(array[i])
 			|| string_in_singlequotes(array[i]))
-			new_array[i] = remove_quotes(array[i]);
+			new_array[i] = true_quote_removal(array[i]);
 		else
 			new_array[i] = ft_strdup(array[i]);
 		if (!new_array[i])
@@ -150,7 +150,7 @@ int	cell_launch(t_shell_data *shell, char **args)
 		return(1);
 	}
 	status = 0;
-	parsed_args = remove_quotes_from_array(args);
+	parsed_args = true_quote_removal_from_array(args);
 	command = find_cmd(shell->exec_env, parsed_args[0]);
 	if (!command)
 	{
@@ -176,14 +176,14 @@ int	cell_launch(t_shell_data *shell, char **args)
 	waitpid(pid, &status, WUNTRACED);
 	// wait_for_process(pid);
 	// waitpid(pidm )
-	// if (WIFEXITED(status))
-	// 	shell->last_exit_code = WEXITSTATUS(status);
-	// else if (WIFSIGNALED(status))
-	// 	shell->last_exit_code = 128 + WTERMSIG(status);
-	// kill(pid, SIGKILL);
 	free_string_array(args);
 	free_string_array(parsed_args);
 	free(command);
-	return(EXIT_SUCCESS);
 	// printf("--%d--a\n", status);
+	// printf("--%d--a\n", WEXITSTATUS(status));
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	else if (WIFSIGNALED(status))
+		return(128 + WTERMSIG(status));
+	return(EXIT_SUCCESS);
 }

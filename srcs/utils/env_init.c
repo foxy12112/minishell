@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 02:20:43 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/06 01:20:36 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/07 14:24:16 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,7 @@ int	print_variables_list(t_env_list *variables)
 	current = variables->next;
 	while (current != NULL)
 	{
-		if (printf("declare -x %s=%s\n", current->key, current->value) < 0)
-			return (1);
+		printf("dexlare -x %s=%s\n", current->key, current->value);
 		current = current->next;
 	}
 	return (exit_code);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_to_terminal.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 05:12:16 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/07 05:12:25 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/07 14:13:07 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int redirect_to_terminal(t_shell_data *shell)
+int redirect_to_terminal(void)
 {
     int fd;
 
@@ -20,7 +20,6 @@ int redirect_to_terminal(t_shell_data *shell)
     if (fd < 0)
     {
         perror("open");
-        shell->last_exit_code = 1;
         return (1);
     }
 
@@ -28,11 +27,9 @@ int redirect_to_terminal(t_shell_data *shell)
     {
         perror("dup2");
         close(fd);
-        shell->last_exit_code = 1;
         return (1);
     }
 
     close(fd);
-    shell->last_exit_code = 0;
     return (0);
 }
