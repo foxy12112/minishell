@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 04:07:36 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/06 19:26:41 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/07 05:07:18 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,3 +41,4 @@ int	redirect_output(t_shell_data *shell, const char *filename)
 	shell->last_exit_code = 0;
 	return (0);
 }
+

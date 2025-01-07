@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:08 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/06 01:24:03 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/07 04:49:56 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 char	*command_is_builtin(char *command)
 {
 	char	*command_toupper;
-
 	command_toupper = ft_strtoupper(command);
 	if (!command_toupper)
 		return (NULL);
@@ -57,7 +56,7 @@ int	select_launch_builtin(t_shell_data *shell, char **command)
 	else if (ft_strcmp(command_toupper, "UNSET") == 0)
 		shell->last_exit_code = parse_launch_unset(shell, command);
 	else if (ft_strcmp(command_toupper, "EXIT") == 0)
-		shell->last_exit_code = ft_exit(shell);
+		ft_exit(shell);
 	if (command_toupper)
 		free(command_toupper);
 	return (0);

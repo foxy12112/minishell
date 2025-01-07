@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:21:55 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/19 13:45:10 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/07 04:53:01 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	print_pipe_list(t_var_pipe_list *pipe_list);
 // cd.c
 int		fd_cd(t_shell_data *shell, char *path);
 int		parse_launch_cd(t_shell_data *shell, char **command);
@@ -32,4 +33,4 @@ int		parse_launch_pwd(t_shell_data *shell, char **command);
 int		ft_unset(t_shell_data *shell, char *variables);
 int		parse_launch_unset(t_shell_data *shell, char **command);
 // exit.c
-int		ft_exit(t_shell_data *shell);
+void		ft_exit(t_shell_data *shell);
