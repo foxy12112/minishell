@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/06 17:09:46 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/09 15:51:25 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_shell_data
 	t_env_list				*variables;
 	t_term_settings			*terminal_settings;
 	int						pipes_count;
+	t_redirects				*redirect;
 	t_var_pipe_list			*pipe_list;
 	bool					heredoc_launched;
 	int						fd;
@@ -145,6 +146,7 @@ char						*ft_expand_variables(t_shell_data *shell,
 								char *input);
 int							unclosed_quotes(char *input);
 char						*true_quote_removal(char *str);
+
 
 // void						test_multi_redirect(t_shell_data *shell);
 #endif

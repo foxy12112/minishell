@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/07 14:15:46 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/09 16:04:17 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,10 @@ void	display(t_shell_data *shell)
 	setup_signals();
 	while (1)
 	{
-		input = readline("waiting for input:");
-		if (input == NULL)
+		input = readline("waiting for input: ");
+		if (shell->heredoc_launched == true)
+			input = readline("waiting for input: ");
+		else if (input == NULL)
 		{
 			printf("%s", CTRL_D);
 			break ;
@@ -133,7 +135,7 @@ void	display(t_shell_data *shell)
 			cleanup(shell);
 			continue;
 		}
-		execute_script(shell); 
+		execute_script(shell, expanded); 
 		// if (check_command(shell))
 		// {
 		// 	cleanup(shell);

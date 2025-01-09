@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:53 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/07 14:44:40 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/09 16:03:48 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ int	launch_single_command(t_shell_data *shell, char **command)
 	return (0);
 }
 
-int	execute_single_cmd(t_shell_data *shell, t_var_cmd *cmd)
+int	execute_single_cmd(t_shell_data *shell, t_var_cmd *cmd, char *line)
 {
 	while (cmd)
 	{
 		if (cmd->redirect_count > 0)
 		{
-			setup_redirects(shell, cmd->redirects);
+			setup_redirects(shell, cmd->redirects, line);
 			launch_single_command(shell, cmd->command);
 		}
 		else
@@ -49,7 +49,7 @@ int	execute_single_cmd(t_shell_data *shell, t_var_cmd *cmd)
 	return (0);
 }
 
-int	execute_script(t_shell_data *shell)
+int	execute_script(t_shell_data *shell, char *line)
 {
 	if (shell->pipes_count > 0)
 	{
@@ -58,7 +58,7 @@ int	execute_script(t_shell_data *shell)
 	}
 	else
 	{
-		execute_single_cmd(shell, shell->pipe_list->cmd);
+		execute_single_cmd(shell, shell->pipe_list->cmd, line);
 	}
 	return (0);
 }

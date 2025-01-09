@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 01:20:11 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/05 13:22:49 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/09 16:31:19 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	create_child_processes(t_shell_data *shell, int *pipe_fd,
 		devnull = open("/dev/null", O_WRONLY);
 		dup2(devnull, STDERR_FILENO);
 		close(devnull);
-		execute_single_cmd(shell, current->cmd);
+		execute_single_cmd(shell, current->cmd, "line");
 		exit(0);
 	}
 	else
