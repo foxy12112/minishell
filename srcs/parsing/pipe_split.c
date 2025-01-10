@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 04:29:58 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/01 15:14:58 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/10 06:17:47 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	add_to_pipelist(t_shell_data *shell, char *command)
 	new_node = (t_var_pipe_list *)malloc(sizeof(t_var_pipe_list));
 	if (!new_node)
 		return (-1);
-	new_node->cmd = parse_command(command);
+	new_node->cmd = parse_command(shell, command);
 	if (!new_node->cmd)
 		return (free(new_node), (-1));
 	new_node->next = NULL;

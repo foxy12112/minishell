@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/07 04:53:12 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/10 01:09:19 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	print_arofars(char **str)
 		i++;
 	}
 }
+
 void	print_commands(t_var_cmd *cmd)
 {
 	while (cmd)

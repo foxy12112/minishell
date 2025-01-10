@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ldick <ldick@student.42.fr>                +#+  +:+       +#+         #
+#    By: macbook <macbook@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2025/01/07 11:08:43 by ldick            ###   ########.fr        #
+#    Updated: 2025/01/10 03:16:43 by macbook          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,13 +45,13 @@ ERROR_FILE	=	error.log
 _EXECUTION		=	execute_builtins.c execute_command.c execute_redirects.c
 EXECUTION		=	$(addprefix execution/, $(_EXECUTION))
 
-_PARSING		=	variable_parse.c variable_value_get.c variable_parse_utils.c redirect_parse.c redirect_parse_utils.c cmd_parse.c pipe_split.c quotes_utils.c
+_PARSING		=	crazytest.c variable_parse.c variable_value_get.c variable_parse_utils.c redirect_parse.c redirect_parse_utils.c cmd_parse.c pipe_split.c quotes_utils.c
 PARSING			=	$(addprefix parsing/, $(_PARSING))
 
 _REDIRECTS		=	redirect_in.c redirect_out.c redirect_out_append.c redirect_in_heredoc.c redirect_to_terminal.c
 REDIRECTS		=	$(addprefix redirects/, $(_REDIRECTS))
 
-_UTILS			=	expansion.c env_init.c free.c utils.c intialize.c variables.c exec.c parsing.c pipe.c ft_split_byfirstequal.c ft_split_whitespaces.c ft_split_quotes.c signal.c
+_UTILS			=	ft_split_multidelimiters.c expansion.c env_init.c free.c utils.c intialize.c variables.c exec.c parsing.c pipe.c ft_split_byfirstequal.c ft_split_whitespaces.c ft_split_quotes.c signal.c
 UTILS			=	$(addprefix utils/, $(_UTILS))
 
 _BUILTINS		=	cd.c echo.c env.c exit.c export.c pwd.c unset.c

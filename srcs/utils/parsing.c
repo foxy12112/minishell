@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/07 19:15:23 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/10 18:54:17 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	print_two_d(char **array)
 	}
 }
 
-static void cleanup(t_shell_data *shell)
+static void	cleanup(t_shell_data *shell)
 {
 	// shell->env = initialize_env();
 	// shell->variables = initialize_env();
@@ -75,14 +75,17 @@ static int	check_command(t_shell_data *shell)
 {
 	char	*command;
 
-	command = find_cmd(shell->exec_env, true_quote_removal_from_array(shell->pipe_list->cmd->command)[0]);
-	if (!command && command_is_builtin(shell->pipe_list->cmd->command[0]) == NULL)
+	command = find_cmd(shell->exec_env,
+			true_quote_removal_from_array(shell->pipe_list->cmd->command)[0]);
+	if (!command
+		&& command_is_builtin(shell->pipe_list->cmd->command[0]) == NULL)
 	{
-		printf("\ncommand: %s : not found\n", shell->pipe_list->cmd->command[0]);
+		printf("\ncommand: %s : not found\n",
+			shell->pipe_list->cmd->command[0]);
 		free(command);
 		return (127);
 	}
-	free (command);
+	free(command);
 	return (0);
 }
 
@@ -104,21 +107,27 @@ void	display(t_shell_data *shell)
 			continue ;
 		// if (ft_strncmp(input, "exit", 5) == 0)
 		// 	break ;
+		// printf("Res: %d\n", check_quotes(input));
 		add_permanent_history(input);
 		add_history(input);
-		if (unclosed_quotes(input))
+		if (!unclosed_quotes(input))
 		{
 			printf("unclosed quotes present\n");
 			continue ;
 		}
-		expanded = ft_expand_variables(shell, input);
+		// expanded = ft_expand_variables(shell, input);
+		expanded = input;
+		// printf("%s\n", expanded);
+		// printf("Quote Type: %d\n", check_quote_type(input));
 		parse_readline(shell, expanded);
-		if (!command_is_builtin(shell->pipe_list->cmd->command[0]) && check_command(shell))
+		if (!command_is_builtin(shell->pipe_list->cmd->command[0])
+			&& check_command(shell))
 		{
 			cleanup(shell);
-			continue;
+			continue ;
 		}
-		execute_script(shell); 
+		// print_pipe_list(shell->pipe_list);
+		execute_script(shell);
 		// free(expanded);
 		cleanup(shell);
 		// free(input);

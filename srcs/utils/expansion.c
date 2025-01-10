@@ -3,35 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 12:05:10 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/07 14:14:24 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/09 08:58:36 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	unclosed_quotes(char *input)
+void	set_quotes(char *arr, bool *in_single_quotes, bool *in_double_quotes)
 {
-	int	i;
-	int	sing;
-	int	doub;
+	if (arr == NULL || *arr == '\0')
+		return ;
+	if (arr[0] == '\'' && !*in_double_quotes)
+	{
+		*in_single_quotes = !*in_single_quotes;
+	}
+	if (arr[0] == '\"' && !*in_single_quotes)
+	{
+		*in_double_quotes = !*in_double_quotes;
+	}
+}
 
+bool	unclosed_quotes(char *input)
+{
+	bool	in_single_quote;
+	bool	in_double_quote;
+	int		i;
+
+	in_single_quote = false;
+	in_double_quote = false;
 	i = 0;
-	sing = 0;
-	doub = 0;
 	while (input[i])
 	{
-		if (input[i] == '\'')
-			sing++;
-		if (input[i] == '\"')
-			doub++;
+		set_quotes(&input[i], &in_single_quote, &in_double_quote);
 		i++;
 	}
-	if (sing % 2 != 0 || doub % 2 != 0)
-		return (true);
-	return (false);
+	if (in_single_quote)
+	{
+		return (false);
+	}
+	if (in_double_quote)
+	{
+		return (false);
+	}
+	return (true);
 }
 
 static bool	has_posible_variables(char *input)
@@ -116,7 +133,10 @@ char	*ft_expand_variables(t_shell_data *shell, char *input)
 			var_start = i;
 			while (input[i] && !ft_is_whitespace(input[i]) && input[i] != '\"' && input[i] != '\'')
 				i++;
+			// printf("Var_start: %d\n", var_start);
+			// printf("Index: %d\n", i);
 			input = expand_variable(shell, input, var_start, i);
+			// printf("Input: %s\n", input);
 			pos_var--;
 		}
 		if (!pos_var)

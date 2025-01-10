@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/06 17:09:46 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/10 17:51:00 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "libs.h"
 # include <fcntl.h>
 # include <limits.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
@@ -24,8 +26,6 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
-# include <readline/history.h>
-# include <readline/readline.h>
 
 # define CTRL_D "\033[A\033[2Kwaiting for input:exit\n"
 
@@ -141,9 +141,12 @@ void						insert_word(char *original, char *word, int pos,
 								char *result);
 char						*replace_var_expanded(t_shell_data *shell,
 								char *var, char *input, int i);
+// expansion.c
 char						*ft_expand_variables(t_shell_data *shell,
 								char *input);
-int							unclosed_quotes(char *input);
+bool						unclosed_quotes(char *input);
+char						*get_variable_value(t_shell_data *shell, char *var);
+//
 char						*true_quote_removal(char *str);
 
 // void						test_multi_redirect(t_shell_data *shell);
