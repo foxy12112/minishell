@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/07 11:25:44 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/11 05:58:44 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int	cell_launch(t_shell_data *shell, char **args)
 	command = find_cmd(shell->exec_env, parsed_args[0]);
 	if (!command)
 	{
-		printf("\ncommand not found: %s\n", parsed_args[0]);
+		// printf("\ncommand not found: %s\n", parsed_args[0]);
 		free_string_array(parsed_args);
 		free_string_array(args);
 		return(127);

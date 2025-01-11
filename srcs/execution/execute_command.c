@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:53 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/11 04:04:22 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/11 06:08:20 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	execute_single_cmd(t_shell_data *shell, t_var_cmd *cmd)
 		if (cmd->redirect_count > 0)
 		{
 			setup_redirects(shell, cmd->redirects);
-			// launch_single_command(shell, cmd->command);
-			if(shell->heredoc_launched == false)
-				launch_single_command(shell, cmd->command);
+			launch_single_command(shell, cmd->command);
+			if(shell->heredoc_launched)
+				restore_stdin(shell);
 		}
 		else
 		{
@@ -55,7 +55,7 @@ int	execute_script(t_shell_data *shell)
 {
 	if (shell->pipes_count > 0)
 	{
-		pipe_multiple_commands(shell, shell->pipe_list);
+		pipe_multiple_commands(shell, shell->pipe_list, shell->pipes_count);
 		return (0);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/11 03:22:53 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/11 06:20:40 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void	display(t_shell_data *shell)
 		}
 		expanded = input;
 		parse_readline(shell, expanded);
+		process_pipe_list(shell->pipe_list);
 		if (!command_is_builtin(shell->pipe_list->cmd->command[0])
 			&& check_command(shell))
 		{

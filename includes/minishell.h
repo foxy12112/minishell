@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/10 22:19:42 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/11 04:39:36 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include <termios.h>
-# include <unistd.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <termios.h>
+# include <unistd.h>
 
 # define CTRL_D "\033[A\033[2Kwaiting for input:exit\n"
 
@@ -99,6 +99,7 @@ typedef struct s_shell_data
 	bool					heredoc_launched;
 	int						fd;
 	int						last_exit_code;
+	int						saved_stdin;
 }							t_shell_data;
 
 // Import Files
@@ -149,6 +150,6 @@ char						*get_variable_value(t_shell_data *shell, char *var);
 //
 char						*true_quote_removal(char *str);
 
-int	main(int argc, char **argv, char **env);
+int							main(int argc, char **argv, char **env);
 // void						test_multi_redirect(t_shell_data *shell);
 #endif

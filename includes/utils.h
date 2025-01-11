@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:43:34 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/07 04:59:23 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/11 04:13:45 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void		free_string_array(char **str);
 void		free_var_pipe_list(t_var_pipe_list *head);
 char		**free_all(char **parentarray, int arrayindex);
 // pipe.c
-void		pipe_multiple_commands(t_shell_data *shell,
-				t_var_pipe_list *pipe_list);
+void	pipe_multiple_commands(t_shell_data *shell, t_var_pipe_list *pipe_list,
+		int cmd_count);
 // ft_split_whitespace.c
 char		**ft_split_whitespace(char const *s);
 // ft_split_by_first_equal.c
