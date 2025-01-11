@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redirects.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/05 16:52:20 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/11 04:02:02 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	setup_redirects(t_shell_data *shell, t_redirects *redirects)
 			redirect_output(shell, redirects->filename);
 		else if (redirects->redirect_type == OP_APPEND_OUT)
 			redirect_output_append(shell, redirects->filename);
-		else if (redirects->redirect_type == OP_HEREDOC)
+		else if (redirects->redirect_type == OP_HEREDOC &&  shell->heredoc_launched == false)
 			redirect_input_heredoc(shell, redirects->delimiter);
-		else
+		else if(shell->heredoc_launched == false)
 		{
 			perror("WRONG REDIRECT COMMAND");
 			return (1);

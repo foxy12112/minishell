@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 04:23:30 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/10 18:55:58 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/10 20:29:16 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char	**get_simple_cmd(t_shell_data *shell, char *command, int *i)
 	cmd_array = ft_split_quotes(cmd_parsed, ' ');
 	free(cmd);
 	free(cmd_parsed);
+	(void)shell;
 	expand_arguments_in_ar(shell, cmd_array);
 	return (cmd_array);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/10 17:51:00 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/10 22:19:42 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include "libs.h"
 # include <fcntl.h>
 # include <limits.h>
-# include <readline/history.h>
-# include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
@@ -26,6 +24,8 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 
 # define CTRL_D "\033[A\033[2Kwaiting for input:exit\n"
 
@@ -149,5 +149,6 @@ char						*get_variable_value(t_shell_data *shell, char *var);
 //
 char						*true_quote_removal(char *str);
 
+int	main(int argc, char **argv, char **env);
 // void						test_multi_redirect(t_shell_data *shell);
 #endif
