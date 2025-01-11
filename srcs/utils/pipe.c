@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 01:20:11 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/11 05:38:53 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/11 23:12:00 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,9 @@ void	pipe_multiple_commands(t_shell_data *shell, t_var_pipe_list *pipe_list,
 		{
 			create_pipes(pipe_fd);
 		}
+		send_heredoc(shell, pipe_list->cmd);
 		create_child_processes(shell, pipe_fd, current, &input_fd);
+		input_fd = check_fd_heredoc(shell, pipe_fd, pipe_list->cmd);
 		current = current->next;
 	}
 	current = pipe_list;

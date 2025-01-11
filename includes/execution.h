@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:25:20 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/10 23:33:07 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/11 19:30:17 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 char	*command_is_builtin(char *command);
 int		select_launch_builtin(t_shell_data *shell, char **command);
 // execute_redirects.c
-int		setup_redirects(t_shell_data *shell, t_redirects *redirects);
+int	setup_redirects(t_shell_data *shell, t_var_cmd *cmd, t_redirects *redirects);
 // execute_command.c
 int		execute_script(t_shell_data *shell);
 int	launch_single_command(t_shell_data *shell, char **command);

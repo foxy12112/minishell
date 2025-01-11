@@ -6,14 +6,14 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/11 05:41:21 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/11 20:21:09 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 
-int	setup_redirects(t_shell_data *shell, t_redirects *redirects)
+int	setup_redirects(t_shell_data *shell, t_var_cmd *cmd, t_redirects *redirects)
 {
 	while (redirects)
 	{
@@ -23,8 +23,12 @@ int	setup_redirects(t_shell_data *shell, t_redirects *redirects)
 			redirect_output(shell, redirects->filename);
 		else if (redirects->redirect_type == OP_APPEND_OUT)
 			redirect_output_append(shell, redirects->filename);
+		// else if (redirects->redirect_type == OP_HEREDOC)
+		// 	redirect_input_heredoc(shell, redirects->delimiter);
 		else if (redirects->redirect_type == OP_HEREDOC)
-			redirect_input_heredoc(shell, redirects->delimiter);
+		{
+			handle_infile(shell, cmd->hd_file_name);
+		}
 		else
 		{
 			perror("WRONG REDIRECT COMMAND");

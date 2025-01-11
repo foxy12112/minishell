@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/11 06:20:40 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/11 21:01:35 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	print_two_d(char **array)
 	}
 }
 
-static void	cleanup(t_shell_data *shell)
+void	cleanup(t_shell_data *shell)
 {
 	// shell->env = initialize_env();
 	// shell->variables = initialize_env();
@@ -127,5 +127,6 @@ void	display(t_shell_data *shell)
 	}
 	if (input)
 		free(input);
+	
 	restore_control_echo(shell);
 }

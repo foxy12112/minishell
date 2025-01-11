@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 04:23:30 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/10 20:29:16 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/11 17:16:14 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_var_cmd	*parse_command(t_shell_data *shell, char *command)
 	cmd_node->command = get_simple_cmd(shell, command, &i);
 	cmd_node->redirect_count = 0;
 	cmd_node->redirects = NULL;
+	cmd_node->hd_file_name = NULL;
 	parse_redirects(cmd_node, command, &i);
 	cmd_node->next = NULL;
 	cmd_node->prev = NULL;
