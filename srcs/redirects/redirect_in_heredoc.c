@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:03:07 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/09 16:47:32 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/10 11:37:13 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,30 +30,27 @@ char	*parse_heredoc(t_shell_data *shell, char *str)
 
 
 
-static char	*save_heredoc(char *line, char *delimiter)
+static char	*save_heredoc(char *delimiter)
 {
 	char	*tmp;
-	char	*temp;
+	char	*line;
 
-	temp = malloc(sizeof(line));
 	line = ft_strdup("");
 	while(1)
 	{
 		tmp = readline("heredoc> ");
 		if (!ft_strncmp(delimiter, tmp, ft_strlen(delimiter)) || tmp == NULL)
 			break ;
-		line = ft_strcat(line, tmp);
-		printf("%c\n", line[ft_strlen(line)]);
-		line[ft_strlen(line)] = '\n';
-		temp = malloc(sizeof(line));
-		temp = line;
-		line = malloc(sizeof(temp));
-		line = temp;
+		line = ft_strjoin(line, tmp);
+		printf("%s\n", line);
+		// line[ft_strlen(line)] = '\n';
+		free (tmp);
 	}
-	line[ft_strlen(line)] = '\0';
+	// line[ft_strlen(line)] = '\0';
 	free (tmp);
 	return (line);
 }
+
 
 // void	redirect_input_heredoc(t_shell_data *shell, const char *delimiter)
 // {
@@ -87,22 +84,23 @@ static char	*save_heredoc(char *line, char *delimiter)
 // 	close(pipe_fd[0]);
 // }
 
-void	redirect_input_heredoc(t_shell_data *shell, char *delmiter, char *line)
+void	redirect_input_heredoc(t_shell_data *shell, char *delmiter)
 {
 	int		pipe_fd[2];
 	char	*ret;
 
 	(void)shell;
+	sigignore(SIGTERM);
 	if (pipe(pipe_fd) == -1)
 		return ;
-	printf("%s--%s\n", line, delmiter);
-	ret = save_heredoc(line, delmiter);
-	printf("%s", ret);
+	ret = save_heredoc(delmiter);
+	printf("%s\n", ret);
 	add_history(ret);
 	add_permanent_history(ret);
 	close(pipe_fd[1]);
 	if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
 		return (perror("dup2 failed"));
 	free(ret);
+	shell->heredoc_launched = true;
 	close(pipe_fd[0]);
 }

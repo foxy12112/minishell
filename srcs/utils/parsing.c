@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/09 16:04:17 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/11 11:18:15 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ static void cleanup(t_shell_data *shell)
 	// shell->variables = initialize_env();
 	redirect_to_terminal();
 	shell->pipes_count = 0;
-	shell->heredoc_launched = false;
 	shell->pipe_list = NULL;
 }
 
@@ -109,17 +108,13 @@ void	display(t_shell_data *shell)
 	while (1)
 	{
 		input = readline("waiting for input: ");
-		if (shell->heredoc_launched == true)
-			input = readline("waiting for input: ");
-		else if (input == NULL)
+		if (input == NULL)
 		{
 			printf("%s", CTRL_D);
 			break ;
 		}
 		if (*input == '\0')
 			continue ;
-		// if (ft_strncmp(input, "exit", 5) == 0)
-		// 	break ;
 		add_permanent_history(input);
 		add_history(input);
 		if (unclosed_quotes(input))
@@ -135,7 +130,7 @@ void	display(t_shell_data *shell)
 			cleanup(shell);
 			continue;
 		}
-		execute_script(shell, expanded); 
+		execute_script(shell); 
 		// if (check_command(shell))
 		// {
 		// 	cleanup(shell);
@@ -148,6 +143,5 @@ void	display(t_shell_data *shell)
 	}
 	if (input)
 		free(input);
-	restore_control_echo(shell);
 	// rl_clear_history();
 }
