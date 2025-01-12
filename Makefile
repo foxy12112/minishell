@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+         #
+#    By: macbook <macbook@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2025/01/11 16:59:46 by auplisas         ###   ########.fr        #
+#    Updated: 2025/01/12 15:45:46 by macbook          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ ERROR_FILE	=	error.log
 _EXECUTION		=	execute_builtins.c execute_command.c execute_redirects.c
 EXECUTION		=	$(addprefix execution/, $(_EXECUTION))
 
-_PARSING		=	crazytest.c variable_parse.c variable_value_get.c variable_parse_utils.c redirect_parse.c redirect_parse_utils.c cmd_parse.c pipe_split.c quotes_utils.c
+_PARSING		=	parse_errors.c crazytest.c variable_parse.c variable_value_get.c variable_parse_utils.c redirect_parse.c redirect_parse_utils.c cmd_parse.c pipe_split.c quotes_utils.c
 PARSING			=	$(addprefix parsing/, $(_PARSING))
 
 _REDIRECTS		=	heredoctest.c redirect_in.c redirect_out.c redirect_out_append.c redirect_in_heredoc.c redirect_to_terminal.c
