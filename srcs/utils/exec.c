@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/07 11:25:44 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/12 11:48:46 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,9 @@ char	*find_cmd(char **path, char *cmd)
 		free(ret);
 		path++;
 	}
+	if (!*path)
+		if (access(cmd, 0) == 0)
+			return (ft_strdup(cmd));
 	return (NULL);
 }
 
