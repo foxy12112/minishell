@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 01:20:11 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/11 23:12:00 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/12 06:42:39 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ void	pipe_multiple_commands(t_shell_data *shell, t_var_pipe_list *pipe_list,
 		{
 			create_pipes(pipe_fd);
 		}
-		send_heredoc(shell, pipe_list->cmd);
+		send_heredoc(shell, current->cmd);
 		create_child_processes(shell, pipe_fd, current, &input_fd);
-		input_fd = check_fd_heredoc(shell, pipe_fd, pipe_list->cmd);
+		input_fd = check_fd_heredoc(shell, pipe_fd, current->cmd);
 		current = current->next;
 	}
 	current = pipe_list;

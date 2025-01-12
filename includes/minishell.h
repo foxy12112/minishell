@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/11 23:15:40 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/12 06:09:26 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,4 +157,5 @@ int	send_heredoc(t_shell_data *shell, t_var_cmd *cmd);
 void	cleanup(t_shell_data *shell);
 int	handle_infile(t_shell_data *shell, char *file);
 int	check_fd_heredoc(t_shell_data *shell, int end[2], t_var_cmd *cmd);
+void	print_redirects(t_redirects *redirect);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:53 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/11 20:58:05 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/12 06:41:07 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ int	execute_single_cmd(t_shell_data *shell, t_var_cmd *cmd)
 		}
 		cmd = cmd->next;
 	}
-			exit(0);
-
+	exit(0);
 	// return (0);
 }
 
@@ -73,7 +72,9 @@ int	execute_script(t_shell_data *shell)
 			execute_single_cmd(shell, shell->pipe_list->cmd);
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
+		{
 			shell->last_exit_code = WEXITSTATUS(status);
+		}
 	}
 	return (0);
 }

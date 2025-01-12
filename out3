@@ -1,0 +1,14 @@
+Makefile
+bin
+build
+error.log
+helead
+includes
+main-libs
+minishell
+out
+out1
+out3
+output.txt
+srcs
+testprogram

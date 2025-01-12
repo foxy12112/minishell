@@ -1,11 +1,1 @@
-Makefile
-bin
-build
-error.log
-helead
-includes
-main-libs
-minishell
-output.txt
-srcs
-testprogram
+hi

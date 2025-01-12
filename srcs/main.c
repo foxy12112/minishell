@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/10 22:42:08 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/12 06:56:22 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static char	**init_exec_env(void)
 
 void	print_redirects(t_redirects *redirect)
 {
+	printf("Printing Redirects:\n");
 	while (redirect)
 	{
 		printf("\tRedirect Type: %d\n", redirect->redirect_type);
@@ -59,7 +60,6 @@ void	print_commands(t_var_cmd *cmd)
 		printf("Redirect Count: %d\n", cmd->redirect_count);
 		if (cmd->redirects)
 		{
-			printf("Redirects:\n");
 			print_redirects(cmd->redirects);
 		}
 		cmd = cmd->next;

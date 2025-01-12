@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 00:56:03 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/07 06:21:21 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/12 05:29:02 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,6 @@ void	ft_exit(t_shell_data *shell)
 		ft_putchar_fd('\n', STDIN_FILENO);
 	// }
 	clear_shell_data(shell);
+	return ;
+	// exit(1);
 }
