@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   crazytest.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 10:02:13 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/10 19:00:06 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/13 06:29:04 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ void	remove_extra_quotes(char ***arr)
 	i = 0;
 	while ((*arr)[i] != NULL)
 	{
-		splited_args = ft_split_multidelimiter((*arr)[i], &is_delimiter);
+		splited_args = ft_split_delimiters((*arr)[i], &is_delimiter);
+		//splited_args = ft_split_multidelimiter((*arr)[i], &is_delimiter1);
 		remove_quotes(splited_args);
 		(*arr)[i] = arofars_join(splited_args);
 		i++;
@@ -126,7 +127,8 @@ char	**expand_arguments_in_ar(t_shell_data *shell, char **arr)
 		arr_size++;
 	while (arr[i])
 	{
-		splited_args = ft_split_multidelimiter(arr[i], &is_delimiter);
+		splited_args = ft_split_delimiters(arr[i], &is_delimiter);
+		//splited_args = ft_split_multidelimiter(arr[i], &is_delimiter1);
 		expand_single_arg(shell, splited_args);
 		free(arr[i]);
 		arr[i] = arofars_join(splited_args);

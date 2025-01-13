@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/13 02:49:45 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/13 07:19:55 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	display(t_shell_data *shell)
 			cleanup(shell);
 			continue ;
 		}
-		// print_pipe_list(shell->pipe_list);
+		//print_pipe_list(shell->pipe_list);
 		execute_script(shell);
 		cleanup(shell);
 	}

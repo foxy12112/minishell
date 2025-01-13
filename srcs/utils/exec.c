@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/13 02:23:39 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/13 06:23:17 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,8 @@ int	cell_launch(t_shell_data *shell, char **args)
 	// wait_for_process(pid);
 	// waitpid(pidm )
 	free_string_array(args);
-	free_string_array(parsed_args);
-	// free(command);
+	// free_string_array(parsed_args);
+	free(command);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))

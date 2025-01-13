@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 03:16:19 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/13 04:51:54 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/13 06:41:17 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,17 @@ static t_split_state	*ft_init_split_state(const char *str)
 	return (state);
 }
 
-bool	is_delimiter(char c)
+bool	is_delimiter1(char c)
 {
 	return (!ft_isalnum(c) && c != '_' && c != '*');
+}
+
+bool	is_delimiter(char c)
+{
+	if(c == '"' || c == '\'')
+		return (true);
+	return (false);
+	// return (!ft_isalnum(c) && c != '_' && c != '*');
 }
 
 char	**ft_split_multidelimiter(const char *str, bool(delim)(char c))

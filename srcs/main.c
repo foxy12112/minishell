@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/13 04:53:25 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/13 07:11:29 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ void	leaks(void)
 	system("leaks minishell");
 }
 
-// static char	**init_exec_env(void)
-// {
-// 	char	**env;
+static char	**init_exec_env(void)
+{
+	char	**env;
 
-// 	env = ft_split(getenv("PATH"), ':');
-// 	return (env);
-// }
+	env = ft_split(getenv("PATH"), ':');
+	return (env);
+}
 
 void	print_redirects(t_redirects *redirect)
 {
@@ -48,6 +48,7 @@ void	print_arofars(char **str)
 		printf("[%s]", str[i]);
 		i++;
 	}
+	printf("\n");
 }
 
 void	print_commands(t_var_cmd *cmd)
@@ -85,31 +86,62 @@ void	print_pipe_list(t_var_pipe_list *pipe_list)
 
 int	main(int argc, char **argv, char **env)
 {
-	char test[] = "\"\'\"\'$USER\'\"\'\"";
-	char **res;
-	
-	res = ft_split_delimiters(test, &is_delimiter);
-	print_arofars(res);
-	// t_shell_data	*shell;
+	t_shell_data	*shell;
 
 	(void)argv;
 	(void)argc;
-	(void)env;
-	// // atexit(leaks);
-	// shell = (t_shell_data *)malloc(sizeof(t_shell_data));
-	// if (!shell)
-	// 	return (1);
-	// initialize_shell(shell, env);
-	// shell->enviroment = env;
-	// init_history();
-	// shell->exec_env = init_exec_env();
-	// disable_control_echo(shell);
-	// display(shell);
-	// free_env_list(shell->env);
-	// free_env_list(shell->variables);
-	// free_var_pipe_list(shell->pipe_list);
-	// free(shell);
-	// // system("leaks minishell");
-	// return (shell->last_exit_code);
-	return (0);
+
+	// atexit(leaks);
+	shell = (t_shell_data *)malloc(sizeof(t_shell_data));
+	if (!shell)
+		return (1);
+	initialize_shell(shell, env);
+	shell->enviroment = env;
+	init_history();
+	shell->exec_env = init_exec_env();
+	disable_control_echo(shell);
+	display(shell);
+	free_env_list(shell->env);
+	free_env_list(shell->variables);
+	free_var_pipe_list(shell->pipe_list);
+	free(shell);
+	// system("leaks minishell");
+	return (shell->last_exit_code);
 }
+
+// int	main(int argc, char **argv, char **env)
+// {
+// 	// char test[] = "\"\'\"\'$USER\'\"\'\"";
+// 	// char test2[] = "\"$USER\'$USER\'\"";
+// 	char test3[] = "\"\"$?\"\"";
+// 	char **resothers;
+// 	char **resmine;
+	
+// 	resothers = ft_split_multidelimiter(test3, &is_delimiter1);
+// 	resmine = ft_split_delimiters(test3, &is_delimiter);
+// 	print_arofars(resothers);
+// 	printf("\n----\n");
+// 	print_arofars(resmine);
+// 	// t_shell_data	*shell;
+
+// 	(void)argv;
+// 	(void)argc;
+// 	(void)env;
+// 	// // atexit(leaks);
+// 	// shell = (t_shell_data *)malloc(sizeof(t_shell_data));
+// 	// if (!shell)
+// 	// 	return (1);
+// 	// initialize_shell(shell, env);
+// 	// shell->enviroment = env;
+// 	// init_history();
+// 	// shell->exec_env = init_exec_env();
+// 	// disable_control_echo(shell);
+// 	// display(shell);
+// 	// free_env_list(shell->env);
+// 	// free_env_list(shell->variables);
+// 	// free_var_pipe_list(shell->pipe_list);
+// 	// free(shell);
+// 	// // system("leaks minishell");
+// 	// return (shell->last_exit_code);
+// 	return (0);
+// }
