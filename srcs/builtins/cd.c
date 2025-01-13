@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:18:21 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/07 04:59:25 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/13 03:52:15 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,14 @@ int	fd_cd(t_shell_data *shell, char *path)
 
 	old_pwd = getcwd(NULL, 0);
 	if (chdir(path) != 0)
-		return (perror("cd failed"), 1);
+	{
+		return (ft_putstr_fd("minishell: ", STDERR_FILENO), ft_putstr_fd(path, STDERR_FILENO), perror(" "), 2);
+	}
 	path = getcwd(NULL, 0);
 	if (!path)
-		return (perror("cd failed"), 1);
+	{
+		return (ft_putstr_fd("minishell: ", STDERR_FILENO), ft_putstr_fd(path, STDERR_FILENO), perror(" "), 2);
+	}
 	change_pwd_env(&shell->variables, "OLD_PWD", old_pwd);
 	change_pwd_env(&shell->variables, "PWD", path);
 	change_pwd_env(&shell->env, "OLD_PWD", old_pwd);
@@ -60,11 +64,11 @@ int	parse_launch_cd(t_shell_data *shell, char **command)
 	exit_code = 0;
 	while (command[args_count])
 		args_count++;
-	if (args_count > 2)
-	{
-		perror("Too many arguments");
-		return (1);
-	}
+	// if (args_count > 2)
+	// {
+	// 	perror("Too many arguments");
+	// 	return (1);
+	// }
 	if (string_in_doublequotes(command[1])
 		|| string_in_singlequotes(command[1]))
 		parsed_path = true_quote_removal(command[1]);

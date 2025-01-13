@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/11 05:58:44 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/13 02:23:39 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,6 @@ pid_t	ft_fork(void)
 	}
 	return (pid);
 }
-
-// void	ft_execvp(const char *file, char *const argv[])
-// {
-// 	if (!file || !argv)
-// 	{
-// 		printf("Execvp: invalid arguments\n");
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	if (execvp(file, argv) == -1)
-// 	{
-// 		printf("Ececvp failed\n");
-// 		exit(EXIT_FAILURE);
-// 	}//fuck u
-// }
 
 char	**true_quote_removal_from_array(char **array)
 {
@@ -82,72 +68,23 @@ char	*find_cmd(char **path, char *cmd)
 		free(ret);
 		path++;
 	}
+	if (access(cmd, 0) == 0)
+		return (cmd);
 	return (NULL);
 }
 
-// static void	wait_for_process(pid_t pid)
-// {
-// 	int	status;
-
-// 	status = 0;
-// 	waitpid(pid, &status, WUNTRACED);
-// 	while (!WIFEXITED(status) && !WIFSIGNALED(status))
-// 	{
-// 		waitpid(pid, &status, WUNTRACED);
-// 	}
-// }
-
-// struct err_data
-// {
-// 	void *data;
-// 	void (*cleanup_func)(void*);
-// }
-
-// void ft_error(err_data* _erddata, char* _errstr, int _ret)
-// {
-// 	static void *data;
-// 	static void (*err_func)(void *);
-	
-// 	if (_err_data)
-// 	{
-// 		data = _er
-// 		return;
-// 	}
-
-// void	ft_error(t_errdata *_data, const char *_msg, int _rtrn)
-// {
-// 	static void	*allocated_data;
-// 	static void	(*err_function)(void *_allocated_data);
-
-// 	if (_data)
-// 	{
-// 		allocated_data = _data->alloc_data;
-// 		err_function = _data->teardown_func;
-// 		return ;
-// 	}
-// 	if (!allocated_data)
-// 		return ;
-// 	if (_msg)
-// 		write(2, _msg, ft_strlen(_msg));
-// 	err_function(allocated_data);
-// 	exit(_rtrn);
-// }
-
-// 	exit(_ret):
-// }
-
 int	cell_launch(t_shell_data *shell, char **args)
 {
-	char	**parsed_args;
-	pid_t	pid;
-	int		status;
-	char	*command;
+	char **parsed_args;
+	pid_t pid;
+	int status;
+	char *command;
 
 	pid = fork();
 	if (pid < 0)
 	{
 		printf("failed\n");
-		return(1);
+		return (1);
 	}
 	status = 0;
 	parsed_args = true_quote_removal_from_array(args);
@@ -157,7 +94,7 @@ int	cell_launch(t_shell_data *shell, char **args)
 		// printf("\ncommand not found: %s\n", parsed_args[0]);
 		free_string_array(parsed_args);
 		free_string_array(args);
-		return(127);
+		return (127);
 	}
 	// printf("%s\n", command);
 	// print_two_d(parsed_args);
@@ -165,25 +102,23 @@ int	cell_launch(t_shell_data *shell, char **args)
 	{
 		// printf("%s\n", command);
 		if (execve(command, parsed_args, shell->enviroment) == -1)
-			{
-				free(command);
-				free_string_array(parsed_args);
-				free_string_array(args);
-				shell->last_exit_code = 69;
-				return(69);
-			}
+		{
+			free(command);
+			free_string_array(parsed_args);
+			free_string_array(args);
+			shell->last_exit_code = 69;
+			return (69);
+		}
 	}
 	waitpid(pid, &status, WUNTRACED);
 	// wait_for_process(pid);
 	// waitpid(pidm )
 	free_string_array(args);
 	free_string_array(parsed_args);
-	free(command);
-	// printf("--%d--a\n", status);
-	// printf("--%d--a\n", WEXITSTATUS(status));
+	// free(command);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
-		return(128 + WTERMSIG(status));
-	return(EXIT_SUCCESS);
+		return (128 + WTERMSIG(status));
+	return (EXIT_SUCCESS);
 }

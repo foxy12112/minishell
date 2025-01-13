@@ -6,19 +6,19 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:43:34 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/11 04:13:45 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/13 00:26:13 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // env_init.c
-t_env_list	*initialize_env(void);
+t_env_list	*initialize_env(char **env);
 void		add_to_variables_list(t_env_list **head, char **key_value);
 int			print_env_list(t_env_list *variables);
 int			print_variables_list(t_env_list *variables);
 int			add_variables(t_shell_data *shell, char **variables);
-int			initialize_shell(t_shell_data *shell);
+int			initialize_shell(t_shell_data *shell, char **env);
 // exec.c
 pid_t		ft_fork(void);
 int			cell_launch(t_shell_data *shell, char **args);

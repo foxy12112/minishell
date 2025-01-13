@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:21:55 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/07 04:53:01 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/13 03:13:28 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,4 @@ int		parse_launch_pwd(t_shell_data *shell, char **command);
 int		ft_unset(t_shell_data *shell, char *variables);
 int		parse_launch_unset(t_shell_data *shell, char **command);
 // exit.c
-void		ft_exit(t_shell_data *shell);
+int		ft_exit(t_shell_data *shell, char **command);

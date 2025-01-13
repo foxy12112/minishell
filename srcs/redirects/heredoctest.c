@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoctest.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:58:57 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/12 08:20:58 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/12 22:13:33 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,25 @@ int	create_heredoc(t_redirects *heredoc, t_shell_data *shell, char *file_name)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_heredoc(t_shell_data *shell, t_redirects *heredoc, char *file_name)
+void remove_char(char *str, char c) {
+    int i = 0, j = 0;
+    while (str[i] != '\0') {
+        if (str[i] != c) {
+            str[j] = str[i];
+            j++;
+        }
+        i++;
+    }
+    str[j] = '\0';
+}
+
+int	parse_and_create_heredoc(t_shell_data *shell, t_redirects *heredoc, char *file_name)
 {
 	int	sl;
 
 	sl = EXIT_SUCCESS;
+	remove_char(heredoc->delimiter, '\"');
+	remove_char(heredoc->delimiter, '\'');
 	sl = create_heredoc(heredoc, shell, file_name);
 	shell->heredoc_launched = true;
 	return (sl);
@@ -90,7 +104,7 @@ int	send_heredoc(t_shell_data *shell, t_var_cmd *cmd)
 			if (cmd->hd_file_name)
 				free(cmd->hd_file_name);
 			cmd->hd_file_name = generate_heredoc_filename();
-			sl = ft_heredoc(shell, cmd->redirects, cmd->hd_file_name);
+			sl = parse_and_create_heredoc(shell, cmd->redirects, cmd->hd_file_name);
 			if (sl)
 			{
 				return (cleanup(shell), 1);

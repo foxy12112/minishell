@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:29:32 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/10 18:56:03 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/13 04:52:34 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 char	**expand_arguments_in_ar(t_shell_data *shell, char **arr);
 char	**ft_split_multidelimiter(const char *str, bool(delim)(char c));
 bool	is_delimiter(char c);
-
+// char	**ft_split_delimiters(char const *s, bool(delim)(char c));
+char	**ft_split_delimiters(char const *s, char c);
 // cmd_parse.c
 char			**get_simple_cmd(t_shell_data *shell, char *command, int *i);
 t_var_cmd		*parse_command(t_shell_data *shell, char *command);

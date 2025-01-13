@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:05 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/06 17:09:33 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/12 21:23:45 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,34 +37,39 @@ static bool	has_anything(char **command)
 	return (true);
 }
 
+// char	*true_quote_removal(char *str)
+// {
+// 	char	*ret;
+// 	int		i;
+// 	int		j;
+// 	int		size;
+
+// 	i = 0;
+// 	j = 0;
+// 	size = ft_strlen_s(str, '\"') + 1;
+// 	ret = malloc(size + 1);
+// 	if (!ret)
+// 		return (NULL);
+// 	while (str[i])
+// 	{
+// 		if (str[i] == '"' && !str[i + 1])
+// 			break ;
+// 		if (str[i] == '"')
+// 		{
+// 			i++;
+// 			continue ;
+// 		}
+// 		ret[j] = str[i];
+// 		i++;
+// 		j++;
+// 	}
+// 	ret[j] = '\0';
+// 	return (ret);
+// }
+
 char	*true_quote_removal(char *str)
 {
-	char	*ret;
-	int		i;
-	int		j;
-	int		size;
-
-	i = 0;
-	j = 0;
-	size = ft_strlen_s(str, '\"') + 1;
-	ret = malloc(size + 1);
-	if (!ret)
-		return (NULL);
-	while (str[i])
-	{
-		if (str[i] == '"' && !str[i + 1])
-			break ;
-		if (str[i] == '"')
-		{
-			i++;
-			continue ;
-		}
-		ret[j] = str[i];
-		i++;
-		j++;
-	}
-	ret[j] = '\0';
-	return (ret);
+	return (str);
 }
 
 int	parse_launch_echo(char **command)

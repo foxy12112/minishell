@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_out.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 04:07:36 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/07 05:07:18 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/13 03:50:28 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ int	redirect_output(t_shell_data *shell, const char *filename)
 	if (fd < 0)
 	{
 		perror("open");
-		shell->last_exit_code = 1;	
+		shell->last_exit_code = EXIT_FAILURE;	
 		return (1);
 	}
 	if (dup2(fd, STDOUT_FILENO) < 0)
 	{
 		perror("dup2");
 		close(fd);
-		shell->last_exit_code = 1;
+		shell->last_exit_code = 2;
 		return (1);
 	}
 	close(fd);

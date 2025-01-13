@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 15:31:29 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/12 16:01:36 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/12 18:14:56 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ bool	check_redirects(t_redirects *redirect)
 		// printf("\tFilename: %s\n", redirect->filename);
 		// printf("\tDelimiter: %s\n", redirect->delimiter);
 		// printf("\n");
+		if(redirect->redirect_type == 0)
+		{
+			return (printf("minishell: syntax error near unexpected token \n"),
+				false);		
+		}
 		if (!redirect->filename && !redirect->delimiter)
 		{
 			return (printf("minishell: syntax error near unexpected token \n"),

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/12 15:45:23 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/13 03:26:32 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,6 @@ typedef struct s_var_pipe_list
 	struct s_var_pipe_list	*prev;
 }							t_var_pipe_list;
 
-// typedef struct s_errdata
-// {
-// 	void	*alloc_data;
-// 	void	(*teardown_func)(void *);
-// }							t_errdata
-
 typedef struct s_shell_data
 {
 	t_env_list				*env;
@@ -103,6 +97,11 @@ typedef struct s_shell_data
 	int						saved_stdin;
 }							t_shell_data;
 
+// typedef struct s_errdata
+// {
+// 	void	*alloc_data;
+// 	void	(*teardown_func)(void *);
+// }							t_errdata
 // Import Files
 # include "builtins.h"
 # include "execution.h"
@@ -153,10 +152,11 @@ char						*true_quote_removal(char *str);
 
 int							main(int argc, char **argv, char **env);
 // void						test_multi_redirect(t_shell_data *shell);
-int	send_heredoc(t_shell_data *shell, t_var_cmd *cmd);
-void	cleanup(t_shell_data *shell);
-int	handle_infile(t_shell_data *shell, char *file);
-int	check_fd_heredoc(t_shell_data *shell, int end[2], t_var_cmd *cmd);
-void	print_redirects(t_redirects *redirect);
-bool	check_for_parse_errors(t_var_pipe_list *pipe_list);
+int							send_heredoc(t_shell_data *shell, t_var_cmd *cmd);
+void						cleanup(t_shell_data *shell);
+int							handle_infile(t_shell_data *shell, char *file);
+int							check_fd_heredoc(t_shell_data *shell, int end[2],
+								t_var_cmd *cmd);
+void						print_redirects(t_redirects *redirect);
+bool						check_for_parse_errors(t_var_pipe_list *pipe_list);
 #endif

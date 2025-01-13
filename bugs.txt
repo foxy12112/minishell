@@ -10,3 +10,9 @@ So my tasks are:
 2.fix variable expansion if variable is inside single quotes
  -
 3.write separate function which is responsible for removing quotes which should be removed
+
+------------------------------------------------------------------------------
+1. change variable expansion code
+2. add variable expansion into heredoc
+3. edit heredoc functions
+4. fix exit problems - fixedooooo

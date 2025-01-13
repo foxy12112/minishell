@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:09 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/06 01:16:55 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/13 03:43:23 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,17 @@ int	ft_env(t_shell_data *shell)
 int	parse_launch_env(t_shell_data *shell, char **command)
 {
 	int	args_count;
-	int	exit_code;
 
 	args_count = 0;
-	exit_code = 0;
+	shell->last_exit_code = 0;
 	while (command[args_count])
 		args_count++;
 	if (args_count > 1)
 	{
 		perror("Too many arguments");
-		return (1);
+		shell->last_exit_code = 1;
+		return (shell->last_exit_code);
 	}
-	exit_code = ft_env(shell);
-	return (exit_code);
+	shell->last_exit_code = ft_env(shell);
+	return (shell->last_exit_code);
 }

@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 02:20:43 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/07 14:24:16 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/13 00:32:28 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-extern char	**environ;
 
 t_env_list	*create_env_node(char **key_value)
 {
@@ -77,14 +75,12 @@ int	print_variables_list(t_env_list *variables)
 	return (exit_code);
 }
 
-t_env_list	*initialize_env(void)
+t_env_list	*initialize_env(char **env)
 {
 	t_env_list	*variables;
-	char		**env;
 	char		**key_value;
 	int			i;
 
-	env = environ;
 	i = 0;
 	variables = NULL;
 	while (env[i])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:53 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/12 06:41:07 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/13 03:41:55 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ int	execute_single_cmd(t_shell_data *shell, t_var_cmd *cmd)
 		{
 			setup_redirects(shell, cmd, cmd->redirects);
 			launch_single_command(shell, cmd->command);
-			// if(shell->heredoc_launched)
-			// 	restore_stdin(shell);
 		}
 		else
 		{
@@ -49,7 +47,6 @@ int	execute_single_cmd(t_shell_data *shell, t_var_cmd *cmd)
 		cmd = cmd->next;
 	}
 	exit(0);
-	// return (0);
 }
 
 int	execute_script(t_shell_data *shell)
@@ -64,16 +61,21 @@ int	execute_script(t_shell_data *shell)
 	}
 	else
 	{
-		send_heredoc(shell, shell->pipe_list->cmd);
-		pid = fork();
-		if (pid < 0)
-			cleanup(shell);
-		if (pid == 0)
+		if (ft_strcmp(ft_strtoupper(shell->pipe_list->cmd->command[0]), "EXIT") == 0)
 			execute_single_cmd(shell, shell->pipe_list->cmd);
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
+		else
 		{
-			shell->last_exit_code = WEXITSTATUS(status);
+			send_heredoc(shell, shell->pipe_list->cmd);
+			pid = fork();
+			if (pid < 0)
+				cleanup(shell);
+			if (pid == 0)
+				execute_single_cmd(shell, shell->pipe_list->cmd);
+			waitpid(pid, &status, 0);
+			if (WIFEXITED(status))
+			{
+				shell->last_exit_code = WEXITSTATUS(status);
+			}
 		}
 	}
 	return (0);

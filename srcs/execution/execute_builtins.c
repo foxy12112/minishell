@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:08 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/07 13:06:53 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/13 03:13:58 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	select_launch_builtin(t_shell_data *shell, char **command)
 	else if (ft_strcmp(command_toupper, "UNSET") == 0)
 		return(parse_launch_unset(shell, command));
 	else if (ft_strcmp(command_toupper, "EXIT") == 0)
-		ft_exit(shell);
+		return (ft_exit(shell, command));
 	if (command_toupper)
 		free(command_toupper);
 	return (0);
