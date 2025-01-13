@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 02:20:43 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/13 07:03:56 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/13 07:54:06 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	print_variables_list(t_env_list *variables)
 	current = variables->next;
 	while (current != NULL)
 	{
-		printf("dexlare -x %s=%s\n", current->key, current->value);
+		printf("dexlare -x %s=\"%s\"\n", current->key, current->value);
 		current = current->next;
 	}
 	return (exit_code);
