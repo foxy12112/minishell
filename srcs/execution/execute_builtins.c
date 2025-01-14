@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:08 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/13 03:13:58 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/14 01:15:07 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ char	*command_is_builtin(char *command)
 	else
 		return (free(command_toupper), NULL);
 }
+
+// ft_strcmp(command_toupper, "/BIN/ECHO") == 0
 
 int	select_launch_builtin(t_shell_data *shell, char **command)
 {

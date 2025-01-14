@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 04:29:58 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/11 06:19:50 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/14 01:45:01 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	parse_readline(t_shell_data *shell, char *commands)
 	}
 	shell->pipes_count = count_pipe_list_length(shell->pipe_list) - 1;
 	free_string_array(pipe_splitted);
+	free(commands);
 	return (0);
 }
 

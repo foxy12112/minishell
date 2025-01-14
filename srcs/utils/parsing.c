@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/13 07:19:55 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/14 02:01:14 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	display(t_shell_data *shell)
 	setup_signals();
 	while (1)
 	{
+		// input = ft_strdup("exit");
 		if (isatty(fileno(stdin)))
 			input = readline("minishell:");
 		else
@@ -131,7 +132,7 @@ void	display(t_shell_data *shell)
 			cleanup(shell);
 			continue ;
 		}
-		//print_pipe_list(shell->pipe_list);
+		// print_pipe_list(shell->pipe_list);
 		execute_script(shell);
 		cleanup(shell);
 	}

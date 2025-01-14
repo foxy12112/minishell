@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/13 03:26:32 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/14 01:50:00 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,11 @@ typedef struct s_var_pipe_list
 typedef struct s_shell_data
 {
 	t_env_list				*env;
+	t_env_list				*variables;
 	char					**exec_env;
 	char					**enviroment;
-	t_env_list				*variables;
-	t_term_settings			*terminal_settings;
 	int						pipes_count;
+	t_term_settings			*terminal_settings;
 	t_var_pipe_list			*pipe_list;
 	bool					heredoc_launched;
 	int						fd;

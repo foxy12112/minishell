@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 04:23:30 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/13 01:39:20 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/14 02:29:11 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	**get_simple_cmd(t_shell_data *shell, char *command, int *i)
 	char	*cmd;
 	char	*cmd_parsed;
 	char	**cmd_array;
-
+	
 	while (command[*i])
 	{
 		if ((command[*i] == '>' || command[*i] == '<') && !quote_check(command,

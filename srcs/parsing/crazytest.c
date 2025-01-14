@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   crazytest.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 10:02:13 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/13 06:29:04 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/14 01:42:19 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,13 @@ void	expand_single_arg(t_shell_data *shell, char **args_ar)
 		if (args_ar[i][0] == '$' && !in_single_quotes)
 		{
 			expanded = get_variable_value(shell, args_ar[i]);
+			// printf("Expanded: %s\n", expanded);
 			free(args_ar[i]);
 			args_ar[i] = NULL;
-			args_ar[i] = ft_strdup(expanded);
+			if(expanded)
+				args_ar[i] = ft_strdup(expanded);
+			else
+				args_ar[i] = ft_strdup("");
 		}
 		i++;
 	}
@@ -108,7 +112,7 @@ void	remove_extra_quotes(char ***arr)
 	while ((*arr)[i] != NULL)
 	{
 		splited_args = ft_split_delimiters((*arr)[i], &is_delimiter);
-		//splited_args = ft_split_multidelimiter((*arr)[i], &is_delimiter1);
+		// splited_args = ft_split_multidelimiter((*arr)[i], &is_delimiter1);
 		remove_quotes(splited_args);
 		(*arr)[i] = arofars_join(splited_args);
 		i++;
@@ -129,6 +133,7 @@ char	**expand_arguments_in_ar(t_shell_data *shell, char **arr)
 	{
 		splited_args = ft_split_delimiters(arr[i], &is_delimiter);
 		//splited_args = ft_split_multidelimiter(arr[i], &is_delimiter1);
+		// print_arofars(splited_args);
 		expand_single_arg(shell, splited_args);
 		free(arr[i]);
 		arr[i] = arofars_join(splited_args);

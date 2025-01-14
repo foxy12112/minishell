@@ -6,19 +6,37 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:20 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/16 12:31:31 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/14 01:05:54 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_pwd(void)
+int	ft_pwd(int fd)
 {
-	char	cwd[PATH_MAX];
+	// int		i;
+	// char	cwd[PATH_MAX];
+	// i = 0;
+	// if (getcwd(cwd, sizeof(cwd)) != NULL)
+	// {
+	// 	while (cwd[i])
+	// 	{
+	// 		ft_putchar_fd(cwd[i], fd);
+	// 		i++;
+	// 	}
+	// }
+	// else
+	// 	perror("Pwd error");
+	// return (0);
 
+	char	cwd[PATH_MAX];
+	char	*directory;
+
+	(void)fd;
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
-		printf("%s\n", cwd);
+		directory = ft_strdup(cwd);
+		ft_echo(directory, STDOUT_FILENO, false);
 	}
 	else
 	{
@@ -29,17 +47,19 @@ int	ft_pwd(void)
 
 int	parse_launch_pwd(t_shell_data *shell, char **command)
 {
-	int	args_count;
+	// int	args_count;
 
-	args_count = 0;
-	(void)shell;
-	while (command[args_count])
-		args_count++;
-	if (args_count > 1)
-	{
-		perror("Too many arguments");
-		return (1);
-	}
-	ft_pwd();
+	// args_count = 0;
+	// while (command[args_count])
+	// 	args_count++;
+	// if (args_count > 1)
+	// {
+	// 	perror("Too many arguments");
+	// 	shell->last_exit_code = 1;
+	// 	return (1);
+	// }
+	(void)command;
+	shell->last_exit_code = ft_pwd(1);
 	return (0);
 }
+
