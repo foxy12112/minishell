@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 02:20:43 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/14 02:02:22 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/14 06:20:17 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,5 @@ t_env_list	*initialize_env(char **env)
 		free_string_array(key_value);
 		i++;
 	}
-	// free(env);
 	return (variables);
 }

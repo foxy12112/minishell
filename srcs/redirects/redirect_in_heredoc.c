@@ -3,173 +3,115 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_in_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:03:07 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/11 06:38:33 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/14 07:54:58 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*parse_heredoc(t_shell_data *shell, char *str)
+int	check_fd_heredoc(t_shell_data *shell, int pipe_fd[2], t_var_cmd *cmd)
 {
+	int	fd_in;
+
+	if (shell->heredoc_launched)
+	{
+		close(pipe_fd[0]);
+		fd_in = open(cmd->hd_file_name, O_RDONLY);
+	}
+	else
+		fd_in = pipe_fd[0];
+	return (fd_in);
+}
+
+int	create_heredoc(t_redirects *heredoc, t_shell_data *shell, char *file_name)
+{
+	int		fd;
 	char	*line;
 
 	(void)shell;
-	line = str;
-	return (line);
+	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	line = readline("> ");
+	while (1)
+	{
+		if (!line || ft_strcmp(line, heredoc->delimiter) == 0)
+		{
+			free(line);
+			break ;
+		}
+        line = expand_heredoc_line(shell, line);
+        line = remove_heredoc_quotes(line);
+		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
+		free(line);
+		line = readline("> ");
+	}
+	if (!line)
+		return (EXIT_FAILURE);
+	close(fd);
+	return (EXIT_SUCCESS);
 }
 
-// static void	sigint_handle(void)
-// {
-// 	rl_on_new_line();
-// 	rl_replace_line("", 0);
-// 	rl_redisplay();
-// }
-
-// void	redirect_input_heredoc(t_shell_data *shell, const char *delimiter)
-// {
-// 	int		pipe_fd[2];
-// 	char	*line;
-// 	char	*parsed_line;
-
-// 	if (pipe(pipe_fd) == -1)
-// 		return (perror("pipe failed"));
-// 	while (1)
-// 	{
-// 		line = readline("> ");
-// 		if (!line || ft_strcmp(line, delimiter) == 0)
-// 		{
-// 			free(line);
-// 			break ;
-// 		}
-// 		parsed_line = parse_heredoc(shell, line);
-// 		ft_putstr_fd(parsed_line, pipe_fd[1]);
-// 		ft_putchar_fd('\n', pipe_fd[1]);
-// 		free(line);
-// 	}
-// 	close(pipe_fd[1]);
-// 	if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
-// 		return (perror("dup2 failed"));
-// 	shell->heredoc_launched = true;
-// 	close(pipe_fd[0]);
-// }
-
-void restore_stdin(t_shell_data *shell)
+int	parse_and_create_heredoc(t_shell_data *shell, t_redirects *heredoc,
+		char *file_name)
 {
-    if (dup2(shell->saved_stdin, STDIN_FILENO) == -1)
-    {
-        perror("dup2 failed to restore stdin");
-    }
-    close(shell->saved_stdin);
+	int	exit_code;
+
+	exit_code = EXIT_SUCCESS;
+	remove_char(heredoc->delimiter, '\"');
+	remove_char(heredoc->delimiter, '\'');
+	exit_code = create_heredoc(heredoc, shell, file_name);
+	shell->heredoc_launched = true;
+	shell->last_exit_code = exit_code;
+	return (exit_code);
 }
 
-void redirect_input_heredoc(t_shell_data *shell, const char *delimiter)
+int	prepare_heredoc(t_shell_data *shell, t_var_cmd *cmd)
 {
-    int pipe_fd[2];
-    char *line;
-    char *parsed_line;
-    int saved_stdin;
+	t_redirects	*start;
 
-    saved_stdin = dup(STDIN_FILENO);
-    if (saved_stdin == -1)
-    {
-        perror("dup failed to save stdin");
-        return;
-    }
-
-    if (pipe(pipe_fd) == -1)
-    {
-        perror("pipe failed");
-        close(saved_stdin);
-        return;
-    }
-
-    while (1)
-    {
-        line = readline("> ");
-        if (!line || ft_strcmp(line, delimiter) == 0)
-        {
-            free(line);
-            break;
-        }
-        parsed_line = parse_heredoc(shell, line);
-        ft_putstr_fd(parsed_line, pipe_fd[1]);
-        ft_putchar_fd('\n', pipe_fd[1]);
-        free(line);
-    }
-
-    close(pipe_fd[1]);
-
-    if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
-    {
-        perror("dup2 failed to redirect stdin to pipe");
-        close(pipe_fd[0]);
-        close(saved_stdin);
-        return;
-    }
-    shell->heredoc_launched = true;
-    close(pipe_fd[0]);
-
-    shell->saved_stdin = saved_stdin;
-	
+	start = cmd->redirects;
+	shell->last_exit_code = EXIT_SUCCESS;
+	while (cmd->redirects)
+	{
+		if (cmd->redirects->redirect_type == OP_HEREDOC)
+		{
+			if (cmd->hd_file_name)
+				free(cmd->hd_file_name);
+			cmd->hd_file_name = generate_heredoc_file();
+			shell->last_exit_code = parse_and_create_heredoc(shell, cmd->redirects,
+					cmd->hd_file_name);
+			if (shell->last_exit_code)
+			{
+				return (cleanup(shell), 1);
+			}
+		}
+		cmd->redirects = cmd->redirects->next;
+	}
+	cmd->redirects = start;
+	return (EXIT_SUCCESS);
 }
 
-// void redirect_input_heredoc(t_shell_data *shell, const char *delimiter)
-// {
-//     int pipe_fd[2];
-//     char *line;
-//     char *parsed_line;
-//     int saved_stdin;
+int	redirect_heredoc_launch(t_shell_data *shell, char *file)
+{
+	int fd;
 
-//     saved_stdin = dup(STDIN_FILENO);
-//     if (saved_stdin == -1)
-//     {
-//         perror("dup failed to save stdin");
-//         return;
-//     }
-
-//     if (pipe(pipe_fd) == -1)
-//     {
-//         perror("pipe failed");
-//         close(saved_stdin);
-//         return;
-//     }
-
-//     while (1)
-//     {
-//         line = readline("> ");
-//         if (!line || ft_strcmp(line, delimiter) == 0)
-//         {
-//             free(line);
-//             break;
-//         }
-//         parsed_line = parse_heredoc(shell, line);
-//         ft_putstr_fd(parsed_line, pipe_fd[1]);
-//         ft_putchar_fd('\n', pipe_fd[1]);
-//         free(line);
-//     }
-
-//     close(pipe_fd[1]);
-
-//     if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
-//     {
-//         perror("dup2 failed to redirect stdin to pipe");
-//         close(pipe_fd[0]);
-//         close(saved_stdin);
-//         return;
-//     }
-
-//     // Execute the command that reads from the pipe (e.g., wc -l)
-//     char *args[] = {"wc", "-l", NULL};
-//     if (execvp(args[0], args) == -1)
-//     {
-//         perror("execvp failed to execute wc -l");
-//     }
-
-//     // Closing the pipe after execution and restoring stdin
-//     close(pipe_fd[0]);
-//     // restore_stdin(shell);
-//     shell->heredoc_launched = true;
-// }
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+	{
+		ft_putstr_fd("minishell: infile: No such file or directory\n",
+			STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
+	if (fd > 0 && dup2(fd, STDIN_FILENO) < 0)
+	{
+		ft_putstr_fd("minishell: pipe error\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
+	if (fd > 0)
+		close(fd);
+	(void)shell;
+	return (EXIT_SUCCESS);
+}

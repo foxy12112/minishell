@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 15:50:23 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/11 20:23:24 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/14 02:34:02 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,11 @@ int	disable_control_echo(t_shell_data *shell)
 	return (EXIT_SUCCESS);
 }
 
-int	restore_control_echo(t_shell_data *shell)
+int	restore_control_echo()
 {
 	struct termios	terminal;
 
 	// printf("WE GOT TO HERE: restore ocntrol echo\n");
-	(void) shell;
 	if (tcgetattr(STDIN_FILENO, &terminal) != 0)
 		return (EXIT_FAILURE);
 	terminal.c_lflag |= ECHOCTL;

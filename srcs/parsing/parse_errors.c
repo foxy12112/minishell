@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 15:31:29 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/12 18:14:56 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/14 05:57:42 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@ bool	check_redirects(t_redirects *redirect)
 {
 	while (redirect)
 	{
-		// printf("\tRedirect Type: %d\n", redirect->redirect_type);
-		// printf("\tFilename: %s\n", redirect->filename);
-		// printf("\tDelimiter: %s\n", redirect->delimiter);
-		// printf("\n");
 		if(redirect->redirect_type == 0)
 		{
 			return (printf("minishell: syntax error near unexpected token \n"),
@@ -45,10 +41,6 @@ bool	check_single_command(t_var_cmd *cmd)
 {
 	while (cmd)
 	{
-		// printf("Command:");
-		// print_arofars(cmd->command);
-		// printf("\n");
-		// printf("Redirect Count: %d\n", cmd->redirect_count);
 		if (cmd->redirects)
 		{
 			if (!check_redirects(cmd->redirects))

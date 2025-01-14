@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/14 02:01:14 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/14 08:27:14 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,6 @@ void	add_permanent_history(char *str)
 	close(fd);
 }
 
-void	print_two_d(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-	{
-		printf("%s\n", array[i]);
-		i++;
-	}
-}
-
 void	cleanup(t_shell_data *shell)
 {
 	// shell->env = initialize_env();
@@ -96,7 +84,6 @@ void	display(t_shell_data *shell)
 	setup_signals();
 	while (1)
 	{
-		// input = ft_strdup("exit");
 		if (isatty(fileno(stdin)))
 			input = readline("minishell:");
 		else
@@ -106,6 +93,7 @@ void	display(t_shell_data *shell)
 			input = ft_strtrim(line, "\n");
 			free(line);
 		}
+		// input = readline("minishell:");
 		if (input == NULL)
 		{
   			printf("%s", CTRL_D);
@@ -139,5 +127,5 @@ void	display(t_shell_data *shell)
 	if (input)
 		free(input);
 	
-	restore_control_echo(shell);
+	restore_control_echo();
 }

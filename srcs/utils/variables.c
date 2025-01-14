@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 17:17:23 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/13 17:01:36 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/14 06:16:28 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,11 @@ int	add_variables(t_shell_data *shell, char **variables)
 		i++;
 	}
 	return (0);
+}
+
+char	*get_variable_value(t_shell_data *shell, char *var)
+{
+	if (ft_strncmp(var, "$?", 2) == 0)
+		return (ft_itoa(shell->last_exit_code));
+	return (retrieve_variable(shell, var));
 }

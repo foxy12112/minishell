@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:53 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/14 01:37:43 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/14 07:43:24 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,41 +49,40 @@ int	execute_single_cmd(t_shell_data *shell, t_var_cmd *cmd)
 	return (0);
 }
 
-int	execute_script(t_shell_data *shell)
+int	execute_single_process_cmd(t_shell_data *shell)
 {
 	int	pid;
 	int	status;
 
+	prepare_heredoc(shell, shell->pipe_list->cmd);
+	pid = fork();
+	if (pid < 0)
+		cleanup(shell);
+	if (pid == 0)
+	{
+		execute_single_cmd(shell, shell->pipe_list->cmd);
+		exit(shell->last_exit_code);
+	}
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+	{
+		shell->last_exit_code = WEXITSTATUS(status);
+	}
+	return (0);
+}
+
+int	execute_script(t_shell_data *shell)
+{
 	if (shell->pipes_count > 0)
 	{
 		pipe_multiple_commands(shell, shell->pipe_list, shell->pipes_count);
-		return (0);
 	}
 	else
 	{
-		// printf("Res: %d\n",ft_strcmp(shell->pipe_list->cmd->command[0], "/bin/echo"));
-		// printf("Col: %s\n",shell->pipe_list->cmd->command[0]);
 		if (command_is_builtin(shell->pipe_list->cmd->command[0]))
-		{
 			execute_single_cmd(shell, shell->pipe_list->cmd);
-		}
 		else
-		{
-			send_heredoc(shell, shell->pipe_list->cmd);
-			pid = fork();
-			if (pid < 0)
-				cleanup(shell);
-			if (pid == 0)
-			{
-				execute_single_cmd(shell, shell->pipe_list->cmd);
-				exit(shell->last_exit_code);
-			}
-			waitpid(pid, &status, 0);
-			if (WIFEXITED(status))
-			{
-				shell->last_exit_code = WEXITSTATUS(status);
-			}
-		}
+			execute_single_process_cmd(shell);
 	}
 	return (0);
 }

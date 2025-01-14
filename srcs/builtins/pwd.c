@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:20 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/14 01:05:54 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/14 02:55:20 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	parse_launch_pwd(t_shell_data *shell, char **command)
 	// }
 	(void)command;
 	shell->last_exit_code = ft_pwd(1);
+	// redirect_to_terminal();
 	return (0);
 }
 

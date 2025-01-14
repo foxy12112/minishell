@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/14 01:24:09 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/14 05:22:53 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,40 +108,3 @@ int	main(int argc, char **argv, char **env)
 	// system("leaks minishell");
 	return (shell->last_exit_code);
 }
-
-// int	main(int argc, char **argv, char **env)
-// {
-// 	// char test[] = "\"\'\"\'$USER\'\"\'\"";
-// 	// char test2[] = "\"$USER\'$USER\'\"";
-// 	char test3[] = "\"\"$?\"\"";
-// 	char **resothers;
-// 	char **resmine;
-	
-// 	resothers = ft_split_multidelimiter(test3, &is_delimiter1);
-// 	resmine = ft_split_delimiters(test3, &is_delimiter);
-// 	print_arofars(resothers);
-// 	printf("\n----\n");
-// 	print_arofars(resmine);
-// 	// t_shell_data	*shell;
-
-// 	(void)argv;
-// 	(void)argc;
-// 	(void)env;
-// 	// // atexit(leaks);
-// 	// shell = (t_shell_data *)malloc(sizeof(t_shell_data));
-// 	// if (!shell)
-// 	// 	return (1);
-// 	// initialize_shell(shell, env);
-// 	// shell->enviroment = env;
-// 	// init_history();
-// 	// shell->exec_env = init_exec_env();
-// 	// disable_control_echo(shell);
-// 	// display(shell);
-// 	// free_env_list(shell->env);
-// 	// free_env_list(shell->variables);
-// 	// free_var_pipe_list(shell->pipe_list);
-// 	// free(shell);
-// 	// // system("leaks minishell");
-// 	// return (shell->last_exit_code);
-// 	return (0);
-// }

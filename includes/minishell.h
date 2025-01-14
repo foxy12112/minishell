@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/14 01:50:00 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/14 08:00:15 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,25 +111,6 @@ typedef struct s_shell_data
 
 int							utils(void);
 void						print_arofars(char **str);
-// test.c
-char						*test_get_variable(t_shell_data *shell, char *key);
-void						test_cd(t_shell_data *shell);
-void						test_export(t_shell_data *shell);
-void						test_echo(char *string, int fd);
-void						test_env(t_shell_data *shell);
-void						test_pwd(void);
-void						test_unset(t_shell_data *shell);
-int							test_redirect_output(t_shell_data *shell,
-								char *filename);
-void						test_redirect_input(t_shell_data *shell,
-								char *filename, char *command);
-int							test_redirect_append_output(t_shell_data *shell,
-								char *filename);
-void						test_redirect_in_heredoc(t_shell_data *shell);
-void						test_exec(char **command);
-void						launch_program(void);
-// void						test_pipes(void);
-
 // parsing
 
 void						display(t_shell_data *shell);
@@ -137,14 +118,12 @@ void						display(t_shell_data *shell);
 void						init_history(void);
 void						add_permanent_history(char *str);
 int							disable_control_echo(t_shell_data *shell);
-int							restore_control_echo(t_shell_data *shell);
+int							restore_control_echo(void);
 void						insert_word(char *original, char *word, int pos,
 								char *result);
 char						*replace_var_expanded(t_shell_data *shell,
 								char *var, char *input, int i);
 // expansion.c
-char						*ft_expand_variables(t_shell_data *shell,
-								char *input);
 bool						unclosed_quotes(char *input);
 char						*get_variable_value(t_shell_data *shell, char *var);
 //
@@ -152,9 +131,8 @@ char						*true_quote_removal(char *str);
 
 int							main(int argc, char **argv, char **env);
 // void						test_multi_redirect(t_shell_data *shell);
-int							send_heredoc(t_shell_data *shell, t_var_cmd *cmd);
+int							prepare_heredoc(t_shell_data *shell, t_var_cmd *cmd);
 void						cleanup(t_shell_data *shell);
-int							handle_infile(t_shell_data *shell, char *file);
 int							check_fd_heredoc(t_shell_data *shell, int end[2],
 								t_var_cmd *cmd);
 void						print_redirects(t_redirects *redirect);

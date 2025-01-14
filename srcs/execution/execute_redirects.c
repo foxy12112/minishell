@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:21 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/12 06:34:33 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/14 07:27:56 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,8 @@ int	setup_redirects(t_shell_data *shell, t_var_cmd *cmd, t_redirects *redirects)
 			redirect_output(shell, redirects->filename);
 		else if (redirects->redirect_type == OP_APPEND_OUT)
 			redirect_output_append(shell, redirects->filename);
-		// else if (redirects->redirect_type == OP_HEREDOC)
-		// 	redirect_input_heredoc(shell, redirects->delimiter);
 		else if (redirects->redirect_type == OP_HEREDOC && shell->heredoc_launched)
-		{
-			handle_infile(shell, cmd->hd_file_name);
-		}
+			redirect_heredoc_launch(shell, cmd->hd_file_name);
 		else if(shell->heredoc_launched)
 		{
 			perror("WRONG REDIRECT COMMAND");

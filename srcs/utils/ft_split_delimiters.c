@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_delimiters.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 04:39:27 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/13 06:36:56 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/14 05:25:00 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-bool	is_exit_code_delim(char *str, int idx)
-{
-	if (idx - 1 < 0)
-		return (false);
-	if ((str[idx] == '?' && str[idx - 1] == '$') || (str[idx] == '/' && str[idx
-			- 1] == '$'))
-		return (true);
-	return (false);
-}
 
 int countrows_delimiters(char const *src, bool delim(char c))
 {

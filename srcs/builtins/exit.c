@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 00:56:03 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/14 02:29:49 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/14 03:14:31 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	clear_shell_data(t_shell_data *shell)
 	free_var_pipe_list(shell->pipe_list);
 	free_env_list(shell->env);
 	free_env_list(shell->variables);
-	restore_control_echo(shell);
+	restore_control_echo();
 	free(shell);
 }
 

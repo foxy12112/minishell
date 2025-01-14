@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 04:29:58 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/14 01:45:01 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/14 08:09:59 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ int	parse_readline(t_shell_data *shell, char *commands)
 	return (0);
 }
 
-//This function is launched after everything is parsed
-//It iterates and sorts redirects as HEREDOC always needs to be launched first
 void	process_pipe_list(t_var_pipe_list *pipe_list)
 {
 	t_var_pipe_list	*current_pipe;

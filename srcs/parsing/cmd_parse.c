@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 04:23:30 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/14 02:29:11 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/14 03:32:18 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**get_simple_cmd(t_shell_data *shell, char *command, int *i)
 	free(cmd);
 	free(cmd_parsed);
 	(void)shell;
-	expand_arguments_in_ar(shell, cmd_array);
+	expand_command(shell, cmd_array);
 	return (cmd_array);
 }
 
