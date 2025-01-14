@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/11 11:18:15 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/14 14:53:24 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	add_permanent_history(char *str)
 	int		fd;
 	char	*file;
 
+	if (str == NULL)
+		return ;
 	file = ".git/permanent_history/history.log";
 	fd = open(file, O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (*str == '\0')
@@ -84,20 +86,6 @@ static int	check_command(t_shell_data *shell)
 	free (command);
 	return (0);
 }
-// 	command = find_cmd(shell->exec_env,
-// 			remove_quotes_from_array(shell->pipe_list->cmd->command)[0]);
-// 	if (!access(command, 0)
-// 		&& command_is_builtin(remove_quotes_from_array
-// 			(shell->pipe_list->cmd->command)[0]) == NULL)
-// 	{
-// 		printf("\ncommand: %s : not found\n",
-// 			shell->pipe_list->cmd->command[0]);
-// 		free(command);
-// 		return (1);
-// 	}
-// 	free(command);
-// 	return (0);
-// }
 
 void	display(t_shell_data *shell)
 {

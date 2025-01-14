@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:03:07 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/10 11:37:13 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/14 14:46:57 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,12 @@ char	*parse_heredoc(t_shell_data *shell, char *str)
 	return (line);
 }
 
-// static void	sigint_handle(void)
-// {
-// 	rl_on_new_line();
-// 	rl_replace_line("", 0);
-// 	rl_redisplay();
-// }
-
-
+static void	custom_handler(int signal)
+{
+	(void)signal;
+	printf("\n");
+	exit(130);
+}
 
 static char	*save_heredoc(char *delimiter)
 {
@@ -36,17 +34,17 @@ static char	*save_heredoc(char *delimiter)
 	char	*line;
 
 	line = ft_strdup("");
+	signal(SIGINT, custom_handler);
 	while(1)
 	{
 		tmp = readline("heredoc> ");
+		if (tmp == NULL)
+			return(NULL);
 		if (!ft_strncmp(delimiter, tmp, ft_strlen(delimiter)) || tmp == NULL)
 			break ;
 		line = ft_strjoin(line, tmp);
-		printf("%s\n", line);
-		// line[ft_strlen(line)] = '\n';
 		free (tmp);
 	}
-	// line[ft_strlen(line)] = '\0';
 	free (tmp);
 	return (line);
 }
@@ -90,7 +88,6 @@ void	redirect_input_heredoc(t_shell_data *shell, char *delmiter)
 	char	*ret;
 
 	(void)shell;
-	sigignore(SIGTERM);
 	if (pipe(pipe_fd) == -1)
 		return ;
 	ret = save_heredoc(delmiter);
