@@ -1,0 +1,10 @@
+errors found
+	--nothign works after command not found
+
+fixing
+	--adding custom signal handler for heredoc
+
+fixed
+
+	--fixed export dubling, not yet fully tested, no errors yet
+	

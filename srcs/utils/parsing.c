@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/07 05:12:43 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/14 13:24:35 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,20 +72,20 @@ static void cleanup(t_shell_data *shell)
 	shell->last_exit_code = 0;
 }
 
-// static int	check_command(t_shell_data *shell)
-// {
-// 	char	*command;
+static int	check_command(t_shell_data *shell)
+{
+	char	*command;
 
-// 	command = find_cmd(shell->exec_env, remove_quotes_from_array(shell->pipe_list->cmd->command)[0]);
-// 	if (!command)
-// 	{
-// 		printf("\ncommand: %s : not found\n", shell->pipe_list->cmd->command[0]);
-// 		free(command);
-// 		return (1);
-// 	}
-// 	free (command);
-// 	return (0);
-// }
+	command = find_cmd(shell->exec_env, remove_quotes_from_array(shell->pipe_list->cmd->command)[0]);
+	if (!command)
+	{
+		printf("\ncommand: %s : not found\n", shell->pipe_list->cmd->command[0]);
+		free(command);
+		return (1);
+	}
+	free (command);
+	return (0);
+}
 
 void	display(t_shell_data *shell)
 {
@@ -114,11 +114,11 @@ void	display(t_shell_data *shell)
 		}
 		expanded = ft_expand_variables(shell, input);
 		parse_readline(shell, expanded);
-		// if (check_command(shell) && !command_is_builtin(shell->pipe_list->cmd->command[0]))
-		// {
-		// 	cleanup(shell);
-		// 	continue;
-		// }
+		if (check_command(shell) && !command_is_builtin(shell->pipe_list->cmd->command[0]))
+		{
+			cleanup(shell);
+			continue;
+		}
 		execute_script(shell); 
 		// free(expanded);
 		cleanup(shell);
