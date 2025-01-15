@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 15:50:23 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/05 14:53:34 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/14 20:47:48 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ int	disable_control_echo(t_shell_data *shell)
 	return (EXIT_SUCCESS);
 }
 
-int	restore_control_echo(t_shell_data *shell)
+int	restore_control_echo()
 {
 	struct termios	terminal;
 
-	(void) shell;
+	// printf("WE GOT TO HERE: restore ocntrol echo\n");
 	if (tcgetattr(STDIN_FILENO, &terminal) != 0)
 		return (EXIT_FAILURE);
 	terminal.c_lflag |= ECHOCTL;
@@ -62,7 +62,8 @@ void	setup_signals(void)
 	sa.sa_flags = 0;
 	sigemptyset(&sigset);
 	sigaddset(&sigset, SIGINT);
-	sigignore(SIGQUIT);
+	// sigignore(SIGQUIT);
+	// signal(SIGQUIT, SIG_IGN);
 	sigaddset(&sigset, SIGTERM);
 	sa.sa_mask = sigset;
 	if (sigaction(SIGINT, &sa, NULL) == -1)

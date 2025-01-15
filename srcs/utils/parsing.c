@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/14 13:24:35 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/15 15:44:03 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,83 +49,93 @@ void	add_permanent_history(char *str)
 	close(fd);
 }
 
-void	print_two_d(char **array)
+void	cleanup(t_shell_data *shell)
 {
-	int	i;
-
-	i = 0;
-	while (array[i])
-	{
-		printf("%s\n", array[i]);
-		i++;
-	}
-}
-
-static void cleanup(t_shell_data *shell)
-{
-	// shell->env = initialize_env();
-	// shell->variables = initialize_env();
-	redirect_to_terminal(shell);
+	redirect_to_terminal();
+	// if(shell->heredoc_launched == false)
+	free_var_pipe_list(shell->pipe_list);
+	shell->pipe_list = NULL;
 	shell->pipes_count = 0;
 	shell->heredoc_launched = false;
 	shell->pipe_list = NULL;
-	shell->last_exit_code = 0;
 }
 
-static int	check_command(t_shell_data *shell)
+bool	check_command(t_shell_data *shell)
 {
 	char	*command;
+	char	**command_noquotes;
+	bool	found;
 
-	command = find_cmd(shell->exec_env, remove_quotes_from_array(shell->pipe_list->cmd->command)[0]);
+	found = true;
+	command_noquotes = true_quote_removal_from_array(shell->pipe_list->cmd->command);
+	command = find_cmd(shell->exec_env, command_noquotes[0]);
 	if (!command)
 	{
-		printf("\ncommand: %s : not found\n", shell->pipe_list->cmd->command[0]);
-		free(command);
-		return (1);
+		ft_putstr_fd("command: ", STDERR_FILENO);
+		ft_putstr_fd(shell->pipe_list->cmd->command[0], STDERR_FILENO);
+		ft_putstr_fd(": not found\n", STDERR_FILENO);
+		found = false;
 	}
-	free (command);
-	return (0);
+	free(command);
+	free_string_array(command_noquotes);
+	return (found);
 }
 
 void	display(t_shell_data *shell)
 {
-	char	*input;
-	char	*expanded;
+	char *input;
+	char *builtin_command_type;
 
 	setup_signals();
 	while (1)
 	{
-		input = readline("waiting for input:");
+		// shell->heredoc_launched = false;
+		if (isatty(fileno(stdin)))
+			input = readline("minishell:");
+		else
+		{
+			char *line;
+			line = get_next_line(fileno(stdin));
+			input = ft_strtrim(line, "\n");
+			free(line);
+		}
+		// input = ft_strdup("exit");
 		if (input == NULL)
 		{
-			printf("%s", CTRL_D);
+			ft_putstr_fd("minishell: exit: ", STDOUT_FILENO);
 			break ;
 		}
 		if (*input == '\0')
 			continue ;
-		// if (ft_strncmp(input, "exit", 5) == 0)
-		// 	break ;
 		add_permanent_history(input);
 		add_history(input);
-		if (unclosed_quotes(input))
+		if (!unclosed_quotes(input))
 		{
+			free(input);
 			printf("unclosed quotes present\n");
 			continue ;
 		}
-		expanded = ft_expand_variables(shell, input);
-		parse_readline(shell, expanded);
-		if (check_command(shell) && !command_is_builtin(shell->pipe_list->cmd->command[0]))
+		parse_readline(shell, input);
+		builtin_command_type = command_is_builtin(shell->pipe_list->cmd->command[0]);
+		if (!builtin_command_type && !check_command(shell))
 		{
 			cleanup(shell);
-			continue;
+			shell->last_exit_code = 127;
+			continue ;
 		}
-		execute_script(shell); 
-		// free(expanded);
+		if (builtin_command_type)
+			free(builtin_command_type);
+		if (!check_for_parse_errors(shell->pipe_list))
+		{
+			cleanup(shell);
+			continue ;
+		}
+		// print_pipe_list(shell->pipe_list);
+		execute_script(shell);
 		cleanup(shell);
-		// free(input);
 	}
 	if (input)
 		free(input);
-	restore_control_echo(shell);
-	// rl_clear_history();
+
+	restore_control_echo();
 }

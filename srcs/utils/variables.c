@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 17:17:23 by auplisas          #+#    #+#             */
-/*   Updated: 2024/12/21 17:55:37 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/14 06:16:28 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	add_variables(t_shell_data *shell, char **variables)
 	int		i;
 	char	**key_value;
 
-	i = 0;
+	i = 1;
 	while (variables[i])
 	{
 		key_value = ft_split_by_first_equal(variables[i]);
@@ -48,4 +48,11 @@ int	add_variables(t_shell_data *shell, char **variables)
 		i++;
 	}
 	return (0);
+}
+
+char	*get_variable_value(t_shell_data *shell, char *var)
+{
+	if (ft_strncmp(var, "$?", 2) == 0)
+		return (ft_itoa(shell->last_exit_code));
+	return (retrieve_variable(shell, var));
 }

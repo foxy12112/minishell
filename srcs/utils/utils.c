@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:26:29 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/23 14:31:40 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/14 05:01:51 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,32 @@ char	*join_arof_ars(char **array, int start)
 		}
 		i++;
 	}
+	return (result);
+}
+
+char	*join_subarrays(char **array)
+{
+	int total_length;
+	char *result;
+	char **temp;
+
+	total_length = 1;
+	if (array == NULL)
+		return (NULL);
+
+	temp = array;
+	while (*temp)
+		total_length += ft_strlen(*temp++);
+
+	result = (char *)malloc(total_length);
+	if (result == NULL)
+		return (NULL);
+
+	*result = '\0';
+
+	temp = array;
+	while (*temp)
+		ft_strlcat(result, *temp++, total_length);
+
 	return (result);
 }

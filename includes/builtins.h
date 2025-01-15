@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:21:55 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/07 04:53:01 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 14:35:23 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ void	print_pipe_list(t_var_pipe_list *pipe_list);
 int		fd_cd(t_shell_data *shell, char *path);
 int		parse_launch_cd(t_shell_data *shell, char **command);
 // echo.c
-int		ft_echo(char *args, int fd, bool n_option);
+int	ft_echo(char *args, int fd, bool n_option);
+// int		ft_echo(char *args, int fd, int n_index);
+int	ft_echo(char *args, int fd, bool n_option);
 int		parse_launch_echo(char **command);
 // env.c
 int		ft_env(t_shell_data *shell);
@@ -27,10 +29,12 @@ int		ft_export(t_shell_data *shell, char **variables);
 int		parse_launch_export(t_shell_data *shell, char **command);
 // pwd.c
 void	change_pwd_env(t_env_list **head, const char *key, const char *value);
-int		ft_pwd(void);
+int		ft_pwd(int fd);
 int		parse_launch_pwd(t_shell_data *shell, char **command);
 // unset.c
 int		ft_unset(t_shell_data *shell, char *variables);
 int		parse_launch_unset(t_shell_data *shell, char **command);
+bool	valid_key(const char *key);
 // exit.c
-void		ft_exit(t_shell_data *shell);
+int		ft_exit(t_shell_data *shell, char **command);
+void	clear_shell_data(t_shell_data *shell);

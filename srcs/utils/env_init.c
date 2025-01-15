@@ -6,13 +6,11 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 02:20:43 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/06 01:20:36 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 14:26:11 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-extern char	**environ;
 
 t_env_list	*create_env_node(char **key_value)
 {
@@ -65,27 +63,24 @@ int	print_variables_list(t_env_list *variables)
 	exit_code = 0;
 	if (!variables)
 	{
-		printf("List is empty.\n");
+		perror("List is empty.\n");
 		return (1);
 	}
 	current = variables->next;
 	while (current != NULL)
 	{
-		if (printf("declare -x %s=%s\n", current->key, current->value) < 0)
-			return (1);
+		printf("dexlare -x %s=\"%s\"\n", current->key, current->value);
 		current = current->next;
 	}
 	return (exit_code);
 }
 
-t_env_list	*initialize_env(void)
+t_env_list	*initialize_env(char **env)
 {
 	t_env_list	*variables;
-	char		**env;
 	char		**key_value;
 	int			i;
 
-	env = environ;
 	i = 0;
 	variables = NULL;
 	while (env[i])

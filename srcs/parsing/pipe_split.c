@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 04:29:58 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/01 15:14:58 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/14 08:09:59 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	add_to_pipelist(t_shell_data *shell, char *command)
 	new_node = (t_var_pipe_list *)malloc(sizeof(t_var_pipe_list));
 	if (!new_node)
 		return (-1);
-	new_node->cmd = parse_command(command);
+	new_node->cmd = parse_command(shell, command);
 	if (!new_node->cmd)
 		return (free(new_node), (-1));
 	new_node->next = NULL;
@@ -71,11 +71,10 @@ int	parse_readline(t_shell_data *shell, char *commands)
 	}
 	shell->pipes_count = count_pipe_list_length(shell->pipe_list) - 1;
 	free_string_array(pipe_splitted);
+	free(commands);
 	return (0);
 }
 
-//This function is launched after everything is parsed
-//It iterates and sorts redirects as HEREDOC always needs to be launched first
 void	process_pipe_list(t_var_pipe_list *pipe_list)
 {
 	t_var_pipe_list	*current_pipe;

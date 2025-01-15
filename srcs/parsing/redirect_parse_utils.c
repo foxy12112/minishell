@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 05:46:42 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/16 12:25:20 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/14 05:54:36 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,33 +91,3 @@ void	sort_redirects(t_redirects **redirects)
 		current = next;
 	}
 }
-
-// void	sort_redirects(t_redirects **redirects)
-// {
-// 	t_redirects	*current;
-// 	t_redirects	*head;
-// 	t_redirects	*next;
-
-// 	if (!redirects || !(*redirects))
-// 		return ;
-// 	current = *redirects;
-// 	head = *redirects;
-// 	while (current)
-// 	{
-// 		next = current->next;
-// 		if (current->redirect_type == OP_HEREDOC && current != head)
-// 		{
-// 			if (current->prev)
-// 				current->prev->next = current->next;
-// 			if (current->next)
-// 				current->next->prev = current->prev;
-// 			current->next = head;
-// 			if (head)
-// 				head->prev = current;
-// 			current->prev = NULL;
-// 			head = current;
-// 			*redirects = head;
-// 		}
-// 		current = next;
-// 	}
-// }

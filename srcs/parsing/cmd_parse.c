@@ -6,17 +6,18 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 04:23:30 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/16 13:57:20 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/14 23:26:54 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	**get_simple_cmd(char *command, int *i)
+char	**get_simple_cmd(t_shell_data *shell, char *command, int *i)
 {
 	char	*cmd;
 	char	*cmd_parsed;
 	char	**cmd_array;
+	char	**expanded_cmd_array;
 
 	while (command[*i])
 	{
@@ -32,10 +33,14 @@ char	**get_simple_cmd(char *command, int *i)
 	cmd_array = ft_split_quotes(cmd_parsed, ' ');
 	free(cmd);
 	free(cmd_parsed);
-	return (cmd_array);
+	(void)shell;
+	(void)expanded_cmd_array;
+	expanded_cmd_array = expand_command(shell, cmd_array);
+	free_string_array(cmd_array);
+	return (expanded_cmd_array);
 }
 
-t_var_cmd	*parse_command(char *command)
+t_var_cmd	*parse_command(t_shell_data *shell, char *command)
 {
 	t_var_cmd	*cmd_node;
 	int			i;
@@ -44,9 +49,10 @@ t_var_cmd	*parse_command(char *command)
 	cmd_node = (t_var_cmd *)malloc(sizeof(t_var_cmd));
 	if (!cmd_node)
 		return (NULL);
-	cmd_node->command = get_simple_cmd(command, &i);
+	cmd_node->command = get_simple_cmd(shell, command, &i);
 	cmd_node->redirect_count = 0;
 	cmd_node->redirects = NULL;
+	cmd_node->hd_file_name = NULL;
 	parse_redirects(cmd_node, command, &i);
 	cmd_node->next = NULL;
 	cmd_node->prev = NULL;

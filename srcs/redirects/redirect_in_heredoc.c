@@ -6,54 +6,141 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:03:07 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/06 19:33:26 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 14:33:15 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*parse_heredoc(t_shell_data *shell, char *str)
+// int	reset_heredoc_fd(t_shell_data *shell, int pipe_fd[2], t_var_cmd *cmd)
+// {
+// 	int	fd_in;
+
+// 	if (shell->heredoc_launched)
+// 	{
+// 		close(pipe_fd[0]);
+// 		fd_in = open(cmd->hd_file_name, O_RDONLY);
+// 	}
+// 	else
+// 		fd_in = pipe_fd[0];
+// 	return (fd_in);
+// }
+
+int	reset_heredoc_fd(t_shell_data *shell, int pipe_fd[2], t_var_cmd *cmd)
 {
+	int	fd_in;
+
+	if (shell->heredoc_launched)
+	{
+		close(pipe_fd[0]);
+		if (cmd->hd_file_name != NULL)
+		{
+			fd_in = open(cmd->hd_file_name, O_RDONLY);
+			if (fd_in == -1)
+			{
+				perror("Error opening heredoc file");
+				return (-1);
+			}
+		}
+		else
+		{
+			return (-1);
+		}
+	}
+	else
+	{
+		fd_in = pipe_fd[0];
+	}
+	return (fd_in);
+}
+
+int	create_heredoc(t_redirects *heredoc, t_shell_data *shell, char *file_name)
+{
+	int		fd;
 	char	*line;
 
 	(void)shell;
-	line = str;
-	return (line);
-}
-
-// static void	sigint_handle(void)
-// {
-// 	rl_on_new_line();
-// 	rl_replace_line("", 0);
-// 	rl_redisplay();
-// }
-
-void	redirect_input_heredoc(t_shell_data *shell, const char *delimiter)
-{
-	int		pipe_fd[2];
-	char	*line;
-	char	*parsed_line;
-
-	if (pipe(pipe_fd) == -1)
-		return (perror("pipe failed"));
+	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	line = readline("> ");
 	while (1)
 	{
-		line = readline("> ");
-		if (!line || ft_strcmp(line, delimiter) == 0)
+		if (!line || ft_strcmp(line, heredoc->delimiter) == 0)
 		{
 			free(line);
 			break ;
 		}
-		parsed_line = parse_heredoc(shell, line);
-		ft_putstr_fd(parsed_line, pipe_fd[1]);
-		ft_putchar_fd('\n', pipe_fd[1]);
+		line = expand_heredoc_line(shell, line);
+		line = remove_heredoc_quotes(line);
+		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
 		free(line);
-		// free(parsed_line);
+		line = readline("> ");
 	}
-	rl_redisplay();
-	close(pipe_fd[1]);
-	if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
-		return (perror("dup2 failed"));
+	if (!line)
+		return (0);
+	close(fd);
+	return (EXIT_SUCCESS);
+}
+
+int	parse_and_create_heredoc(t_shell_data *shell, t_redirects *heredoc,
+		char *file_name)
+{
+	int	exit_code;
+
+	exit_code = EXIT_SUCCESS;
+	remove_char(heredoc->delimiter, '\"');
+	remove_char(heredoc->delimiter, '\'');
+	exit_code = create_heredoc(heredoc, shell, file_name);
 	shell->heredoc_launched = true;
-	close(pipe_fd[0]);
+	shell->last_exit_code = exit_code;
+	return (exit_code);
+}
+
+int	prepare_heredoc(t_shell_data *shell, t_var_cmd *cmd)
+{
+	t_redirects	*start;
+
+	start = cmd->redirects;
+	shell->last_exit_code = EXIT_SUCCESS;
+	while (cmd->redirects)
+	{
+		if (cmd->redirects->redirect_type == OP_HEREDOC)
+		{
+			if (cmd->hd_file_name)
+				free(cmd->hd_file_name);
+			cmd->hd_file_name = generate_heredoc_file();
+			shell->last_exit_code = parse_and_create_heredoc(shell,
+					cmd->redirects, cmd->hd_file_name);
+			if (shell->last_exit_code)
+			{
+				return (cleanup(shell), 1);
+			}
+		}
+		cmd->redirects = cmd->redirects->next;
+	}
+	cmd->redirects = start;
+	return (EXIT_SUCCESS);
+}
+
+int	redirect_heredoc_launch(t_shell_data *shell, char *file)
+{
+	int fd;
+
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+	{
+		ft_putstr_fd("minishell: infile: No such file or directory\n",
+			STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
+	if (fd > 0 && dup2(fd, STDIN_FILENO) < 0)
+	{
+		ft_putstr_fd("minishell: pipe error\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
+	if (fd > 0)
+		close(fd);
+	(void)shell;
+	shell->heredoc_launched = true;
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/07 04:53:12 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 10:14:56 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,9 @@ void	leaks(void)
 	system("leaks minishell");
 }
 
-static char	**init_exec_env(void)
-{
-	char	**env;
-
-	env = ft_split(getenv("PATH"), ':');
-	return (env);
-}
-
 void	print_redirects(t_redirects *redirect)
 {
+	printf("Printing Redirects:\n");
 	while (redirect)
 	{
 		printf("\tRedirect Type: %d\n", redirect->redirect_type);
@@ -47,7 +40,9 @@ void	print_arofars(char **str)
 		printf("[%s]", str[i]);
 		i++;
 	}
+	printf("\n");
 }
+
 void	print_commands(t_var_cmd *cmd)
 {
 	while (cmd)
@@ -58,7 +53,6 @@ void	print_commands(t_var_cmd *cmd)
 		printf("Redirect Count: %d\n", cmd->redirect_count);
 		if (cmd->redirects)
 		{
-			printf("Redirects:\n");
 			print_redirects(cmd->redirects);
 		}
 		cmd = cmd->next;
@@ -82,83 +76,37 @@ void	print_pipe_list(t_var_pipe_list *pipe_list)
 	}
 }
 
-//VARIABLE EXPANSION NEEDS TO BE ADDED
-//RIGHT NOW ft_split_quotes inside get_simple_cmd checks only for " " but i think it needs to check for all whitespaces
-//!!!!ALSO VERY IMPORTANT TO CHECK FOR FAILIING WEIRD QUOTES IN THE BEGINNING OF PROGRAM, for example echo "'"hi' - should be handled somehow
+static char	**init_exec_env(void)
+{
+	char	**env;
 
-// WE NEEED TO ADD VARIABLE EXPANSION EITHER IN MAIN COMMAND OR IN EXPORT
-// ALSO IN HEREDOC IT NEEDS TO FIX VARIABLE EXPANSION INSIDE DOUBLE QUOTES
+	env = ft_split(getenv("PATH"), ':');
+	return (env);
+}
 
-// EDGE CASES NEEDED TO BE HANDLES
-// EXIT STATUS AND ERROR HANDLING NEEDED
 int	main(int argc, char **argv, char **env)
 {
 	t_shell_data	*shell;
+	int				exit_code;
 
-	// char *test;
 	(void)argv;
 	(void)argc;
-
+	(void)env;
 	// atexit(leaks);
 	shell = (t_shell_data *)malloc(sizeof(t_shell_data));
 	if (!shell)
 		return (1);
-	initialize_shell(shell);
+	initialize_shell(shell, env);
 	shell->enviroment = env;
 	init_history();
 	shell->exec_env = init_exec_env();
-	// print_two_d(shell->exec_env);
-	// print_variables_list(shell->variables);
-	// parse_readline(shell,"cat << EOF");
-	// printf("%s\n", retrieve_variable(shell, "USER"));
-	disable_control_echo(shell);
+	// disable_control_echo(shell);
 	display(shell);
-	// parse_readline(shell, "echo hi > output.txt | echo bye");
-	// process_pipe_list(shell->pipe_list);
-	// printf("\nPipes Count: %d\n\n", shell->pipes_count);
-	// print_pipe_list(shell->pipe_list);
-	free_env_list(shell->env);
-	free_env_list(shell->variables);
-	free_var_pipe_list(shell->pipe_list);
-	free(shell);
-	// system("leaks minishell");
-	return (0);
+	exit_code = shell->last_exit_code;
+	clear_shell_data(shell);
+	system("leaks minishell");
+	return (exit_code);
 }
 
-// parse_readline(shell, "cat << EOF > output.txt");
-/// parse_readline(shell, "cat << EOF > output.txt");
-// print_variables_list(shell->variables);
-// parse_readline(shell, "unset USER SHELLasd");
-// parse_readline(shell,"echo 'Hello World' > output.txt < EOF < test.txt > wow");
-// ft_putstr_fd("HIHIHI\n\n", 1);
-// printf("%s\n", test_get_variable(shell, "PWD"));
-// print_variables_list(shell->variables);
-// test = parse_string(shell, "&This is cool $'USER 'FROG");
-// printf("Var: %s\n", test);
-
-// VARIABLE TEST
-// printf("%s\n", test_get_variable(shell, "USER"));
-
-// BUILTIN TESTS
-// test_cd(shell);
-// test_export(shell);
-// test_echo();
-// test_env(shell);
-// test_pwd();
-// test_unset(shell);
-
-// EXEC FUNCTION TESTS
-// cell_launch(ft_split("cat test", ' '));
-// launch_program();
-
-// REDIRECT TESTS
-// (>) test_redirect_output(shell, "file.txt");
-// (<) test_redirect_input(shell, "file.txt", "cat");
-// (>>) test_redirect_append_output(shell, "file.txt");
-// (<<) test_redirect_in_heredoc(shell);
-
-// PIPE TESTS
-// test_pipes();
-
-// PARSING KEY VALUE
-// parse_variable(shell, "TEST=$USER,$HOME-IS-BEST");
+// char **dara = ft_split_delimiters("$USER$TESTNOTFOUND$HOME$WTF$PWD asd '");
+// print_arofars(dara);

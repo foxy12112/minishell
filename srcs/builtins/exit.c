@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 00:56:03 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/07 04:59:05 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 14:10:33 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,65 @@
 
 void	clear_shell_data(t_shell_data *shell)
 {
-	int	exit_code;
-
-	exit_code = shell->last_exit_code;
+	free_var_pipe_list(shell->pipe_list);
 	free_env_list(shell->env);
 	free_env_list(shell->variables);
-	free_var_pipe_list(shell->pipe_list);
-	restore_control_echo(shell);
+	free_string_array(shell->exec_env);
+	restore_control_echo();
 	free(shell);
-	exit(exit_code);
 }
 
-void	ft_exit(t_shell_data *shell)
+int	args_length(char **command)
 {
-	(void)shell;
-	if (isatty(STDIN_FILENO))
+	int	i;
+
+	i = 0;
+	while (command[i])
+		i++;
+	return (i);
+}
+
+bool	is_digits_only(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
 	{
-		ft_putstr_fd("exit", STDERR_FILENO);
-		ft_putchar_fd('\n', STDERR_FILENO);
+		if (str[i] < '0' || str[i] > '9')
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
+int	ft_exit(t_shell_data *shell, char **command)
+{
+	int	args_count;
+	int	exit_code;
+
+	args_count = args_length(command);
+	if (args_count > 2)
+	{
+		ft_putendl_fd("exit", STDERR_FILENO);
+		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
+		shell->last_exit_code = 255;
+		return (255);
+	}
+	else if (command[1] && !is_digits_only(command[1]))
+	{
+		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+		clear_shell_data(shell);
+		exit_code = 255;
+		exit(exit_code);
 	}
 	else
 	{
-		ft_putstr_fd("exit", STDIN_FILENO);
-		ft_putchar_fd('\n', STDIN_FILENO);
+		ft_putstr_fd("exit\n", STDIN_FILENO);
+		clear_shell_data(shell);
+		exit_code = 1;
+		exit(exit_code);
 	}
-	clear_shell_data(shell);
+	return (EXIT_SUCCESS);
 }

@@ -6,15 +6,24 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:29:32 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/16 13:47:40 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 06:24:19 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	**expand_command(t_shell_data *shell, char **arr);
+char	*join_subarrays(char **array);
+void	ft_toggle_quotes(char *arr, bool *in_single_quotes, bool *in_double_quotes);
+bool	is_delimiter(char c);
+void	expand_single_arg(t_shell_data *shell, char **args_ar);
+void	remove_quotes(char **args);
+char	*remove_heredoc_quotes(char *line);
+// char	**ft_split_delimiters(char const *s, bool(delim)(char c));
+char	**ft_split_delimiters(const char *s);
 // cmd_parse.c
-char			**get_simple_cmd(char *command, int *i);
-t_var_cmd		*parse_command(char *command);
+char			**get_simple_cmd(t_shell_data *shell, char *command, int *i);
+t_var_cmd		*parse_command(t_shell_data *shell, char *command);
 
 // pipe_split.c
 int				add_to_pipelist(t_shell_data *shell, char *command);
@@ -38,18 +47,10 @@ void			add_redirect_to_cmd_node(t_var_cmd *cmd_node,
 t_redirects		*create_redirect_node(char *redirect);
 
 // variable_parse_utils.c
-char			*remove_quotes(char *value);
+char			*true_quote_removal(char *value);
 bool			string_in_singlequotes(char *value);
 bool			string_in_doublequotes(char *value);
-bool			check_key(char *key);
-bool			contains_valid_chars(char *str);
 
 // variable_parse.c
-char			*parse_string(t_shell_data *shell, char *string);
-char			*join_key_value(char *key, char *value);
-char			*parse_variable(t_shell_data *shell, char *variable);
 
 // variable_value.get.c
-bool			check_if_surrounded_by_quotes(char *value, char *key,
-					int start);
-char			*parse_value(t_shell_data *shell, char *value);

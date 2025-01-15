@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:53 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/06 19:31:50 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 02:59:38 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,29 +37,62 @@ int	execute_single_cmd(t_shell_data *shell, t_var_cmd *cmd)
 	{
 		if (cmd->redirect_count > 0)
 		{
-			setup_redirects(shell, cmd->redirects);
+			setup_redirects(shell, cmd, cmd->redirects);
 			launch_single_command(shell, cmd->command);
 		}
 		else
 		{
 			launch_single_command(shell, cmd->command);
-			break ;
 		}
 		cmd = cmd->next;
 	}
 	return (0);
 }
 
+int	execute_single_process_cmd(t_shell_data *shell)
+{
+	int	pid;
+	int	status;
+
+	prepare_heredoc(shell, shell->pipe_list->cmd);
+	pid = fork();
+	status = 0;
+	if (pid < 0)
+		cleanup(shell);
+	if (pid == 0)
+	{
+		execute_single_cmd(shell, shell->pipe_list->cmd);
+		exit(shell->last_exit_code);
+	}
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+	{
+		shell->last_exit_code = WEXITSTATUS(status);
+	}
+	return (0);
+}
+
 int	execute_script(t_shell_data *shell)
 {
+	char	*builtin_command_type;
+
 	if (shell->pipes_count > 0)
 	{
-		pipe_multiple_commands(shell, shell->pipe_list);
-		return (0);
+		pipe_multiple_commands(shell, shell->pipe_list, shell->pipes_count);
 	}
 	else
 	{
-		execute_single_cmd(shell, shell->pipe_list->cmd);
+		builtin_command_type = command_is_builtin(shell->pipe_list->cmd->command[0]);
+		if (builtin_command_type)
+		{
+			free(builtin_command_type);
+			execute_single_cmd(shell, shell->pipe_list->cmd);
+		}
+		else
+		{
+			free(builtin_command_type);
+			execute_single_process_cmd(shell);
+		}
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:08 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/07 04:49:56 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/14 08:16:30 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char	*command_is_builtin(char *command)
 {
 	char	*command_toupper;
+
 	command_toupper = ft_strtoupper(command);
 	if (!command_toupper)
 		return (NULL);
@@ -36,6 +37,8 @@ char	*command_is_builtin(char *command)
 		return (free(command_toupper), NULL);
 }
 
+// ft_strcmp(command_toupper, "/BIN/ECHO") == 0
+
 int	select_launch_builtin(t_shell_data *shell, char **command)
 {
 	char	*command_toupper;
@@ -44,19 +47,22 @@ int	select_launch_builtin(t_shell_data *shell, char **command)
 	if (!command_toupper)
 		return (1);
 	if (ft_strcmp(command_toupper, "ECHO") == 0)
-		shell->last_exit_code = parse_launch_echo(command);
+		return (free(command_toupper), parse_launch_echo(command));
 	else if (ft_strcmp(command_toupper, "CD") == 0)
-		shell->last_exit_code = parse_launch_cd(shell, command);
+		return (free(command_toupper), parse_launch_cd(shell, command));
 	else if (ft_strcmp(command_toupper, "ENV") == 0)
-		shell->last_exit_code = parse_launch_env(shell, command);
+		return (free(command_toupper), parse_launch_env(shell, command));
 	else if (ft_strcmp(command_toupper, "EXPORT") == 0)
-		shell->last_exit_code = parse_launch_export(shell, command);
+		return (free(command_toupper), parse_launch_export(shell, command));
 	else if (ft_strcmp(command_toupper, "PWD") == 0)
-		shell->last_exit_code = parse_launch_pwd(shell, command);
+		return (free(command_toupper), parse_launch_pwd(shell, command));
 	else if (ft_strcmp(command_toupper, "UNSET") == 0)
-		shell->last_exit_code = parse_launch_unset(shell, command);
+		return (free(command_toupper), parse_launch_unset(shell, command));
 	else if (ft_strcmp(command_toupper, "EXIT") == 0)
-		ft_exit(shell);
+	{
+		free(command_toupper);
+		return (ft_exit(shell, command));
+	}
 	if (command_toupper)
 		free(command_toupper);
 	return (0);

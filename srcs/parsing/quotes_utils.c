@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 12:08:48 by macbook           #+#    #+#             */
-/*   Updated: 2024/12/16 12:12:09 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/14 06:12:55 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,34 @@ bool	quote_check(char *value, int start)
 	{
 		return (true);
 	}
+}
+
+bool	string_in_singlequotes(char *value)
+{
+	int	last_index;
+
+	last_index = ft_strlen(value) - 1;
+	if (value[0] == '\'')
+	{
+		if (value[last_index] == '\'')
+		{
+			return (true);
+		}
+	}
+	return (false);
+}
+
+bool	string_in_doublequotes(char *value)
+{
+	int	last_index;
+
+	last_index = ft_strlen(value) - 1;
+	if (value[0] == '\"')
+	{
+		if (value[last_index] == '\"')
+		{
+			return (true);
+		}
+	}
+	return (false);
 }
