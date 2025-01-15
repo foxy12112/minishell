@@ -3,21 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_out.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 04:07:36 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/13 03:50:28 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/15 05:16:39 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// Symbol (>)
-// As HEREDOC blocks redirect input in bash there is possibility for
-// same function in output but i am not sure
-// if there is such case just add this code below (void)shell;
-// if (shell->heredoc_launched)
-// return ;
 int	redirect_output(t_shell_data *shell, const char *filename)
 {
 	int	fd;

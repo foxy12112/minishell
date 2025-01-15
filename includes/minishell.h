@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/15 03:44:22 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 06:03:56 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ typedef struct s_shell_data
 	t_term_settings			*terminal_settings;
 	t_var_pipe_list			*pipe_list;
 	bool					heredoc_launched;
-	bool					inside_heredoc;
 	int						fd;
 	int						last_exit_code;
 	int						saved_stdin;
@@ -109,6 +108,8 @@ typedef struct s_shell_data
 # include "parsing.h"
 # include "redirects.h"
 # include "utils.h"
+
+bool	is_delimiter1(char c);
 
 int							utils(void);
 void						print_arofars(char **str);

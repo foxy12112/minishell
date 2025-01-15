@@ -6,25 +6,11 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:03:07 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/15 03:46:36 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 14:33:15 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	reset_heredoc_fd(t_shell_data *shell, int pipe_fd[2], t_var_cmd *cmd)
-{
-	int	fd_in;
-
-	if (shell->heredoc_launched)
-	{
-		close(pipe_fd[0]);
-		fd_in = open(cmd->hd_file_name, O_RDONLY);
-	}
-	else
-		fd_in = pipe_fd[0];
-	return (fd_in);
-}
 
 // int	reset_heredoc_fd(t_shell_data *shell, int pipe_fd[2], t_var_cmd *cmd)
 // {
@@ -33,26 +19,40 @@ int	reset_heredoc_fd(t_shell_data *shell, int pipe_fd[2], t_var_cmd *cmd)
 // 	if (shell->heredoc_launched)
 // 	{
 // 		close(pipe_fd[0]);
-// 		if (cmd->hd_file_name != NULL) // Check for NULL
-// 		{
-// 			fd_in = open(cmd->hd_file_name, O_RDONLY);
-// 			if (fd_in == -1)
-// 			{
-// 				perror("Error opening heredoc file");
-// 				return (-1); // Handle error properly
-// 			}
-// 		}
-// 		else
-// 		{
-// 			return (-1); // Handle error properly
-// 		}
+// 		fd_in = open(cmd->hd_file_name, O_RDONLY);
 // 	}
 // 	else
-// 	{
 // 		fd_in = pipe_fd[0];
-// 	}
 // 	return (fd_in);
 // }
+
+int	reset_heredoc_fd(t_shell_data *shell, int pipe_fd[2], t_var_cmd *cmd)
+{
+	int	fd_in;
+
+	if (shell->heredoc_launched)
+	{
+		close(pipe_fd[0]);
+		if (cmd->hd_file_name != NULL)
+		{
+			fd_in = open(cmd->hd_file_name, O_RDONLY);
+			if (fd_in == -1)
+			{
+				perror("Error opening heredoc file");
+				return (-1);
+			}
+		}
+		else
+		{
+			return (-1);
+		}
+	}
+	else
+	{
+		fd_in = pipe_fd[0];
+	}
+	return (fd_in);
+}
 
 int	create_heredoc(t_redirects *heredoc, t_shell_data *shell, char *file_name)
 {
@@ -77,7 +77,7 @@ int	create_heredoc(t_redirects *heredoc, t_shell_data *shell, char *file_name)
 		line = readline("> ");
 	}
 	if (!line)
-		return (EXIT_FAILURE);
+		return (0);
 	close(fd);
 	return (EXIT_SUCCESS);
 }
@@ -92,7 +92,6 @@ int	parse_and_create_heredoc(t_shell_data *shell, t_redirects *heredoc,
 	remove_char(heredoc->delimiter, '\'');
 	exit_code = create_heredoc(heredoc, shell, file_name);
 	shell->heredoc_launched = true;
-	// shell->inside_heredoc = false;
 	shell->last_exit_code = exit_code;
 	return (exit_code);
 }
@@ -142,5 +141,6 @@ int	redirect_heredoc_launch(t_shell_data *shell, char *file)
 	if (fd > 0)
 		close(fd);
 	(void)shell;
+	shell->heredoc_launched = true;
 	return (EXIT_SUCCESS);
 }

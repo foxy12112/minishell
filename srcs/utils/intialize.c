@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 03:17:18 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/15 03:45:15 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 06:16:44 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	initialize_shell(t_shell_data *shell, char **env)
 	shell->pipes_count = 0;
 	shell->saved_stdin = -1;
 	shell->heredoc_launched = false;
-	shell->inside_heredoc = false;
 	shell->pipe_list = NULL;
 	shell->last_exit_code = 0;
 	return (0);

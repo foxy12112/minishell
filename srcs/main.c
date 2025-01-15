@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/15 00:23:34 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 10:14:56 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,6 @@
 void	leaks(void)
 {
 	system("leaks minishell");
-}
-
-static char	**init_exec_env(void)
-{
-	char	**env;
-
-	env = ft_split(getenv("PATH"), ':');
-	return (env);
 }
 
 void	print_redirects(t_redirects *redirect)
@@ -84,14 +76,22 @@ void	print_pipe_list(t_var_pipe_list *pipe_list)
 	}
 }
 
+static char	**init_exec_env(void)
+{
+	char	**env;
+
+	env = ft_split(getenv("PATH"), ':');
+	return (env);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_shell_data	*shell;
-	int exit_code;
-	
+	int				exit_code;
+
 	(void)argv;
 	(void)argc;
-
+	(void)env;
 	// atexit(leaks);
 	shell = (t_shell_data *)malloc(sizeof(t_shell_data));
 	if (!shell)
@@ -104,6 +104,9 @@ int	main(int argc, char **argv, char **env)
 	display(shell);
 	exit_code = shell->last_exit_code;
 	clear_shell_data(shell);
-	// system("leaks minishell");
+	system("leaks minishell");
 	return (exit_code);
 }
+
+// char **dara = ft_split_delimiters("$USER$TESTNOTFOUND$HOME$WTF$PWD asd '");
+// print_arofars(dara);

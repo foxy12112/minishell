@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/15 03:42:55 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 11:17:25 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,36 +51,34 @@ void	add_permanent_history(char *str)
 
 void	cleanup(t_shell_data *shell)
 {
-	// shell->env = initialize_env();
-	// shell->variables = initialize_env();
 	redirect_to_terminal();
-	// free_var_pipe_list(shell->pipe_list);
+	// if(shell->heredoc_launched == false)
+	free_var_pipe_list(shell->pipe_list);
 	shell->pipe_list = NULL;
 	shell->pipes_count = 0;
 	shell->heredoc_launched = false;
 	shell->pipe_list = NULL;
 }
 
-static int	check_command(t_shell_data *shell)
+bool	check_command(t_shell_data *shell)
 {
 	char	*command;
 	char	**command_noquotes;
+	bool	found;
 
+	found = true;
 	command_noquotes = true_quote_removal_from_array(shell->pipe_list->cmd->command);
-	command = find_cmd(shell->exec_env,command_noquotes[0]);
-	if (!command
-		&& command_is_builtin(shell->pipe_list->cmd->command[0]) == NULL)
+	command = find_cmd(shell->exec_env, command_noquotes[0]);
+	if (!command)
 	{
 		ft_putstr_fd("command: ", STDERR_FILENO);
 		ft_putstr_fd(shell->pipe_list->cmd->command[0], STDERR_FILENO);
 		ft_putstr_fd(": not found\n", STDERR_FILENO);
-		free_string_array(command_noquotes);
-		free(command);
-		return (127);
+		found = false;
 	}
-	free_string_array(command_noquotes);
 	free(command);
-	return (0);
+	free_string_array(command_noquotes);
+	return (found);
 }
 
 void	display(t_shell_data *shell)
@@ -91,6 +89,7 @@ void	display(t_shell_data *shell)
 	setup_signals();
 	while (1)
 	{
+		// shell->heredoc_launched = false;
 		if (isatty(fileno(stdin)))
 			input = readline("minishell:");
 		else
@@ -103,7 +102,7 @@ void	display(t_shell_data *shell)
 		// input = ft_strdup("exit");
 		if (input == NULL)
 		{
-			printf("%s", CTRL_D);
+			ft_putstr_fd("minishell: exit: ", STDOUT_FILENO);
 			break ;
 		}
 		if (*input == '\0')
@@ -118,7 +117,7 @@ void	display(t_shell_data *shell)
 		}
 		parse_readline(shell, input);
 		builtin_command_type = command_is_builtin(shell->pipe_list->cmd->command[0]);
-		if (!builtin_command_type && check_command(shell))
+		if (!builtin_command_type && !check_command(shell))
 		{
 			cleanup(shell);
 			shell->last_exit_code = 127;

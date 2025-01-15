@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:29:32 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/14 22:20:35 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 06:24:19 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	expand_single_arg(t_shell_data *shell, char **args_ar);
 void	remove_quotes(char **args);
 char	*remove_heredoc_quotes(char *line);
 // char	**ft_split_delimiters(char const *s, bool(delim)(char c));
-char	**ft_split_delimiters(const char *s, bool(delim)(char c));
+char	**ft_split_delimiters(const char *s);
 // cmd_parse.c
 char			**get_simple_cmd(t_shell_data *shell, char *command, int *i);
 t_var_cmd		*parse_command(t_shell_data *shell, char *command);

@@ -6,30 +6,33 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 10:02:13 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/14 23:47:22 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 12:28:59 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-bool	is_delimiter(char c)
+void	handle_single_expansion(t_shell_data *shell, char **args_ar,
+		bool in_double_quotes, int i)
 {
-	if (c == '"' || c == '\'')
-		return (true);
-	if (c == ' ')
-		return (true);
-	return (false);
-}
+	char	*expanded;
 
-void	ft_toggle_quotes(char *arr, bool *in_single_quotes,
-		bool *in_double_quotes)
-{
-	if (arr == NULL || *arr == '\0')
-		return ;
-	if (arr[0] == '\'' && !*in_double_quotes)
-		*in_single_quotes = !*in_single_quotes;
-	if (arr[0] == '\"' && !*in_single_quotes)
-		*in_double_quotes = !*in_double_quotes;
+	expanded = get_variable_value(shell, args_ar[i]);
+	if (args_ar[i][1] == '\0' && (in_double_quotes || args_ar[i + 1] == NULL))
+	{
+		free(args_ar[i]);
+		args_ar[i] = NULL;
+		args_ar[i] = ft_strdup("$");
+	}
+	else
+	{
+		free(args_ar[i]);
+		args_ar[i] = NULL;
+		if (expanded)
+			args_ar[i] = ft_strdup(expanded);
+		else
+			args_ar[i] = ft_strdup("");
+	}
 }
 
 void	expand_single_arg(t_shell_data *shell, char **args_ar)
@@ -37,7 +40,6 @@ void	expand_single_arg(t_shell_data *shell, char **args_ar)
 	int		i;
 	bool	in_single_quotes;
 	bool	in_double_quotes;
-	char	*expanded;
 
 	in_single_quotes = false;
 	in_double_quotes = false;
@@ -47,13 +49,7 @@ void	expand_single_arg(t_shell_data *shell, char **args_ar)
 		ft_toggle_quotes(args_ar[i], &in_single_quotes, &in_double_quotes);
 		if (args_ar[i][0] == '$' && !in_single_quotes)
 		{
-			expanded = get_variable_value(shell, args_ar[i]);
-			free(args_ar[i]);
-			args_ar[i] = NULL;
-			if (expanded)
-				args_ar[i] = ft_strdup(expanded);
-			else
-				args_ar[i] = ft_strdup("");
+			handle_single_expansion(shell, args_ar, in_double_quotes, i);
 		}
 		i++;
 	}
@@ -84,27 +80,27 @@ void	remove_quotes(char **args)
 	}
 }
 
-char **remove_extra_quotes(char **array)
+char	**remove_extra_quotes(char **array)
 {
-    int i;
-    char **splitted_commands;
-	char **quote_removed_array;
-	
+	int		i;
+	char	**splitted_commands;
+	char	**quote_removed_array;
+
 	i = 0;
 	while (array[i])
 		i++;
-	quote_removed_array = (char **)malloc(sizeof(char *) * (i+1));
-	if(!quote_removed_array)
+	quote_removed_array = (char **)malloc(sizeof(char *) * (i + 1));
+	if (!quote_removed_array)
 		return (NULL);
 	i = 0;
-    while (array[i] != NULL)
-    {
-        splitted_commands = ft_split_delimiters(array[i], &is_delimiter);
-        remove_quotes(splitted_commands);
-        quote_removed_array[i] = join_subarrays(splitted_commands);
+	while (array[i] != NULL)
+	{
+		splitted_commands = ft_split_delimiters(array[i]);
+		remove_quotes(splitted_commands);
+		quote_removed_array[i] = join_subarrays(splitted_commands);
 		free_string_array(splitted_commands);
-        i++;
-    }
+		i++;
+	}
 	quote_removed_array[i] = NULL;
 	return (quote_removed_array);
 }
@@ -121,13 +117,14 @@ char	**expand_command(t_shell_data *shell, char **commands_array)
 	arr_length = 0;
 	while (commands_array[arr_length])
 		arr_length++;
-	expanded_commands = (char **)malloc(sizeof(char *) * (arr_length+1));
-	if(!expanded_commands)
+	expanded_commands = (char **)malloc(sizeof(char *) * (arr_length + 1));
+	if (!expanded_commands)
 		return (NULL);
 	while (commands_array[i])
 	{
-		splitted_commands = ft_split_delimiters(commands_array[i], &is_delimiter);
+		splitted_commands = ft_split_delimiters(commands_array[i]);
 		expand_single_arg(shell, splitted_commands);
+		// print_arofars(splitted_commands);
 		expanded_commands[i] = join_subarrays(splitted_commands);
 		free_string_array(splitted_commands);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/15 02:35:41 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 11:20:56 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ char	*find_cmd(char **path, char *cmd)
 		ret = ft_strjoin(tmp, cmd);
 		free(tmp);
 		if (access(ret, 0) == 0)
+		{
 			return (ret);
+		}
 		free(ret);
 		path++;
 	}
@@ -72,6 +74,9 @@ char	*find_cmd(char **path, char *cmd)
 		return (cmd);
 	return (NULL);
 }
+
+// echo $"42"$
+// echo "this is $HOME and we will"
 
 int	cell_launch(t_shell_data *shell, char **args)
 {
@@ -109,9 +114,9 @@ int	cell_launch(t_shell_data *shell, char **args)
 	waitpid(pid, &status, WUNTRACED);
 	// wait_for_process(pid);
 	// waitpid(pidm )
+	free(command);
 	free_string_array(args);
 	free_string_array(parsed_args);
-	free(command);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
