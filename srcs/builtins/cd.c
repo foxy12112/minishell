@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:18:21 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/13 18:08:04 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 02:41:31 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,7 @@ int	parse_launch_cd(t_shell_data *shell, char **command)
 	}
 
 	exit_code = fd_cd(shell, path);
+	if(path)
+		free(path);
 	return (exit_code);
 }

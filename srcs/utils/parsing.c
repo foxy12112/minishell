@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/14 08:27:14 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 03:42:55 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	cleanup(t_shell_data *shell)
 	// shell->env = initialize_env();
 	// shell->variables = initialize_env();
 	redirect_to_terminal();
+	// free_var_pipe_list(shell->pipe_list);
+	shell->pipe_list = NULL;
 	shell->pipes_count = 0;
 	shell->heredoc_launched = false;
 	shell->pipe_list = NULL;
@@ -62,24 +64,29 @@ void	cleanup(t_shell_data *shell)
 static int	check_command(t_shell_data *shell)
 {
 	char	*command;
+	char	**command_noquotes;
 
-	command = find_cmd(shell->exec_env,
-			true_quote_removal_from_array(shell->pipe_list->cmd->command)[0]);
+	command_noquotes = true_quote_removal_from_array(shell->pipe_list->cmd->command);
+	command = find_cmd(shell->exec_env,command_noquotes[0]);
 	if (!command
 		&& command_is_builtin(shell->pipe_list->cmd->command[0]) == NULL)
 	{
-		printf("\ncommand: %s : not found\n",
-			shell->pipe_list->cmd->command[0]);
+		ft_putstr_fd("command: ", STDERR_FILENO);
+		ft_putstr_fd(shell->pipe_list->cmd->command[0], STDERR_FILENO);
+		ft_putstr_fd(": not found\n", STDERR_FILENO);
+		free_string_array(command_noquotes);
 		free(command);
 		return (127);
 	}
+	free_string_array(command_noquotes);
 	free(command);
 	return (0);
 }
 
 void	display(t_shell_data *shell)
 {
-	char	*input;
+	char *input;
+	char *builtin_command_type;
 
 	setup_signals();
 	while (1)
@@ -93,10 +100,10 @@ void	display(t_shell_data *shell)
 			input = ft_strtrim(line, "\n");
 			free(line);
 		}
-		// input = readline("minishell:");
+		// input = ft_strdup("exit");
 		if (input == NULL)
 		{
-  			printf("%s", CTRL_D);
+			printf("%s", CTRL_D);
 			break ;
 		}
 		if (*input == '\0')
@@ -105,17 +112,21 @@ void	display(t_shell_data *shell)
 		add_history(input);
 		if (!unclosed_quotes(input))
 		{
+			free(input);
 			printf("unclosed quotes present\n");
 			continue ;
 		}
 		parse_readline(shell, input);
-		if (!command_is_builtin(shell->pipe_list->cmd->command[0])
-			&& check_command(shell))
+		builtin_command_type = command_is_builtin(shell->pipe_list->cmd->command[0]);
+		if (!builtin_command_type && check_command(shell))
 		{
 			cleanup(shell);
+			shell->last_exit_code = 127;
 			continue ;
 		}
-    	if (!check_for_parse_errors(shell->pipe_list))
+		if (builtin_command_type)
+			free(builtin_command_type);
+		if (!check_for_parse_errors(shell->pipe_list))
 		{
 			cleanup(shell);
 			continue ;
@@ -126,6 +137,6 @@ void	display(t_shell_data *shell)
 	}
 	if (input)
 		free(input);
-	
+
 	restore_control_echo();
 }

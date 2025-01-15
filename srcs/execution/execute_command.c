@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:53 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/14 07:43:24 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 02:59:38 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	execute_single_process_cmd(t_shell_data *shell)
 
 	prepare_heredoc(shell, shell->pipe_list->cmd);
 	pid = fork();
+	status = 0;
 	if (pid < 0)
 		cleanup(shell);
 	if (pid == 0)
@@ -73,16 +74,25 @@ int	execute_single_process_cmd(t_shell_data *shell)
 
 int	execute_script(t_shell_data *shell)
 {
+	char	*builtin_command_type;
+
 	if (shell->pipes_count > 0)
 	{
 		pipe_multiple_commands(shell, shell->pipe_list, shell->pipes_count);
 	}
 	else
 	{
-		if (command_is_builtin(shell->pipe_list->cmd->command[0]))
+		builtin_command_type = command_is_builtin(shell->pipe_list->cmd->command[0]);
+		if (builtin_command_type)
+		{
+			free(builtin_command_type);
 			execute_single_cmd(shell, shell->pipe_list->cmd);
+		}
 		else
+		{
+			free(builtin_command_type);
 			execute_single_process_cmd(shell);
+		}
 	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 05:08:24 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/07 09:12:05 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/15 01:56:36 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,12 @@ void	free_commands(t_var_cmd *cmd)
 	while (cmd)
 	{
 		temp = cmd;
-		free_string_array(cmd->command);
+		if(cmd->command)
+			free_string_array(cmd->command);
+		if(cmd->hd_file_name)
+			free(cmd->hd_file_name);
 		if (cmd->redirects)
-		{
 			free_redirects(cmd->redirects);
-		}
 		cmd = cmd->next;
 		free(temp);
 	}

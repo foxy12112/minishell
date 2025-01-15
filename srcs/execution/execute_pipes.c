@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 01:20:11 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/14 07:43:27 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 03:33:00 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	pipe_multiple_commands(t_shell_data *shell, t_var_pipe_list *pipe_list,
 		}
 		prepare_heredoc(shell, current->cmd);
 		create_child_processes(shell, pipe_fd, current, &input_fd);
-		input_fd = check_fd_heredoc(shell, pipe_fd, current->cmd);
+		input_fd = reset_heredoc_fd(shell, pipe_fd, current->cmd);
 		current = current->next;
 	}
 	current = pipe_list;

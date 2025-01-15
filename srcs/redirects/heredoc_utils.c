@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:58:57 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/14 07:50:01 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/14 21:06:11 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ char	*expand_heredoc_line(t_shell_data *shell, char *line)
 
 	splitted_line = ft_split_delimiters(line, &is_delimiter);
 	expand_single_arg(shell, splitted_line);
-	free(line);
 	expanded_line = join_subarrays(splitted_line);
+	free(line);
+	free_string_array(splitted_line);
 	return (expanded_line);
 }
 
@@ -33,6 +34,7 @@ char	*remove_heredoc_quotes(char *line)
 	remove_quotes(splitted_line);
 	unquoted_line = join_subarrays(splitted_line);
 	free(line);
+	free_string_array(splitted_line);
 	return (unquoted_line);
 }
 

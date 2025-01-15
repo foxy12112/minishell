@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/14 06:27:14 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 02:35:41 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	cell_launch(t_shell_data *shell, char **args)
 	// wait_for_process(pid);
 	// waitpid(pidm )
 	free_string_array(args);
-	// free_string_array(parsed_args);
+	free_string_array(parsed_args);
 	free(command);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));

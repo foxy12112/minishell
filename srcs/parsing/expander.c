@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 10:02:13 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/14 16:04:16 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/14 23:47:22 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 bool	is_delimiter(char c)
 {
 	if (c == '"' || c == '\'')
+		return (true);
+	if (c == ' ')
 		return (true);
 	return (false);
 }
@@ -82,42 +84,36 @@ void	remove_quotes(char **args)
 	}
 }
 
-// void	remove_extra_quotes(char ***arr)
-// {
-// 	int		i;
-// 	char	**splited_args;
-
-// 	i = 0;
-// 	while ((*arr)[i] != NULL)
-// 	{
-// 		splited_args = ft_split_delimiters((*arr)[i], &is_delimiter);
-// 		remove_quotes(splited_args);
-// 		(*arr)[i] = join_subarrays(splited_args);
-// 		i++;
-// 	}
-// }
-
-void remove_extra_quotes(char ***arr)
+char **remove_extra_quotes(char **array)
 {
     int i;
     char **splitted_commands;
-    char **array;
-
-    array = *arr;
-    i = 0;
+	char **quote_removed_array;
+	
+	i = 0;
+	while (array[i])
+		i++;
+	quote_removed_array = (char **)malloc(sizeof(char *) * (i+1));
+	if(!quote_removed_array)
+		return (NULL);
+	i = 0;
     while (array[i] != NULL)
     {
         splitted_commands = ft_split_delimiters(array[i], &is_delimiter);
         remove_quotes(splitted_commands);
-        array[i] = join_subarrays(splitted_commands);
+        quote_removed_array[i] = join_subarrays(splitted_commands);
 		free_string_array(splitted_commands);
         i++;
     }
+	quote_removed_array[i] = NULL;
+	return (quote_removed_array);
 }
 
 char	**expand_command(t_shell_data *shell, char **commands_array)
 {
 	char **splitted_commands;
+	char **expanded_commands;
+	char **parsed_commands;
 	int arr_length;
 	int i;
 
@@ -125,15 +121,19 @@ char	**expand_command(t_shell_data *shell, char **commands_array)
 	arr_length = 0;
 	while (commands_array[arr_length])
 		arr_length++;
+	expanded_commands = (char **)malloc(sizeof(char *) * (arr_length+1));
+	if(!expanded_commands)
+		return (NULL);
 	while (commands_array[i])
 	{
 		splitted_commands = ft_split_delimiters(commands_array[i], &is_delimiter);
 		expand_single_arg(shell, splitted_commands);
-		free(commands_array[i]);
-		commands_array[i] = join_subarrays(splitted_commands);
+		expanded_commands[i] = join_subarrays(splitted_commands);
 		free_string_array(splitted_commands);
 		i++;
 	}
-	remove_extra_quotes(&commands_array);
-	return (commands_array);
+	expanded_commands[i] = NULL;
+	parsed_commands = remove_extra_quotes(expanded_commands);
+	free_string_array(expanded_commands);
+	return (parsed_commands);
 }

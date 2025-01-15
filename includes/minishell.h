@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/14 08:00:15 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 03:44:22 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct s_shell_data
 	t_term_settings			*terminal_settings;
 	t_var_pipe_list			*pipe_list;
 	bool					heredoc_launched;
+	bool					inside_heredoc;
 	int						fd;
 	int						last_exit_code;
 	int						saved_stdin;
@@ -131,9 +132,10 @@ char						*true_quote_removal(char *str);
 
 int							main(int argc, char **argv, char **env);
 // void						test_multi_redirect(t_shell_data *shell);
-int							prepare_heredoc(t_shell_data *shell, t_var_cmd *cmd);
+int							prepare_heredoc(t_shell_data *shell,
+								t_var_cmd *cmd);
 void						cleanup(t_shell_data *shell);
-int							check_fd_heredoc(t_shell_data *shell, int end[2],
+int							reset_heredoc_fd(t_shell_data *shell, int end[2],
 								t_var_cmd *cmd);
 void						print_redirects(t_redirects *redirect);
 bool						check_for_parse_errors(t_var_pipe_list *pipe_list);

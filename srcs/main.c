@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/14 05:22:53 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 00:23:34 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ void	print_pipe_list(t_var_pipe_list *pipe_list)
 int	main(int argc, char **argv, char **env)
 {
 	t_shell_data	*shell;
-
+	int exit_code;
+	
 	(void)argv;
 	(void)argc;
 
@@ -99,12 +100,10 @@ int	main(int argc, char **argv, char **env)
 	shell->enviroment = env;
 	init_history();
 	shell->exec_env = init_exec_env();
-	disable_control_echo(shell);
+	// disable_control_echo(shell);
 	display(shell);
-	free_env_list(shell->env);
-	free_env_list(shell->variables);
-	free_var_pipe_list(shell->pipe_list);
-	free(shell);
+	exit_code = shell->last_exit_code;
+	clear_shell_data(shell);
 	// system("leaks minishell");
-	return (shell->last_exit_code);
+	return (exit_code);
 }

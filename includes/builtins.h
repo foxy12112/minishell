@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:21:55 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/13 21:18:41 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/15 00:23:11 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,3 +35,4 @@ int		parse_launch_unset(t_shell_data *shell, char **command);
 bool	valid_key(const char *key);
 // exit.c
 int		ft_exit(t_shell_data *shell, char **command);
+void	clear_shell_data(t_shell_data *shell);
