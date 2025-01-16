@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:05 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/15 15:03:16 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 10:59:16 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,19 @@ int	ft_echo2(char *args, int fd, bool n_option)
 	int	i;
 
 	i = 0;
-	while (args[i])
+	if (args)
 	{
-		ft_putchar_fd(args[i], fd);
-		i++;
+		while (args[i])
+		{
+			ft_putchar_fd(args[i], fd);
+			i++;
+		}
+		if (!n_option)
+		{
+			ft_putchar_fd('\n', fd);
+		}
+		free(args);
 	}
-	if (!n_option)
-	{
-		ft_putchar_fd('\n', fd);
-	}
-	free(args);
 	return (0);
 }
 
@@ -60,7 +63,7 @@ char	*true_quote_removal(char *str)
 	return (str);
 }
 
-int	parse_launch_echo(char **command)
+int	parse_launch_echo(t_shell_data *shell, char **command)
 {
 	bool	has_n_option;
 	char	*echo_string;
@@ -85,7 +88,8 @@ int	parse_launch_echo(char **command)
 		echo_string = join_arof_ars(command, 1);
 	echo_string = true_quote_removal(echo_string);
 	ft_echo2(echo_string, STDOUT_FILENO, has_n_option);
-	return (0);
+	shell->last_exit_code = 0;
+	return (shell->last_exit_code);
 }
 
 // static bool	has_anything(char **command)

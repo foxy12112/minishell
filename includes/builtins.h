@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:21:55 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 08:24:02 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 10:58:44 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		parse_launch_cd(t_shell_data *shell, char **command);
 int		ft_echo(char *args, int fd, bool n_option);
 // int		ft_echo(char *args, int fd, int n_index);
 int		ft_echo(char *args, int fd, bool n_option);
-int		parse_launch_echo(char **command);
+int		parse_launch_echo(t_shell_data *shell, char **command);
 // env.c
 int		ft_env(t_shell_data *shell);
 int		parse_launch_env(t_shell_data *shell, char **command);

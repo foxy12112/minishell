@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/16 08:31:35 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 12:43:45 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void	display(t_shell_data *shell)
 		if (!unclosed_quotes(input))
 		{
 			free(input);
+			shell->last_exit_code = 1;
 			printf("unclosed quotes present\n");
 			continue ;
 		}
