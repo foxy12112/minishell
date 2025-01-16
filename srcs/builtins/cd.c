@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:18:21 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/15 02:41:31 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 06:16:00 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	fd_cd(t_shell_data *shell, char *path)
 	if (chdir(path) != 0)
 	{
 		return (ft_putstr_fd("minishell: cd: ", STDERR_FILENO),
-			ft_putstr_fd(path, STDERR_FILENO), perror(" "), 2);
+			ft_putstr_fd(path, STDERR_FILENO), perror(" "), 1);
 	}
 	new_pwd = getcwd(NULL, 0);
 	if (!new_pwd)
@@ -60,30 +60,24 @@ int	fd_cd(t_shell_data *shell, char *path)
 int	parse_launch_cd(t_shell_data *shell, char **command)
 {
 	int		args_count;
-	int		exit_code;
 	char	*path;
 
 	args_count = 0;
-	exit_code = 0;
 	while (command[args_count])
 		args_count++;
 	if (args_count < 2)
-	{
 		path = ft_strdup(getenv("HOME"));
-	}
 	else if (args_count > 2)
 	{
 		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
 		ft_putstr_fd("too many arguments\n", STDERR_FILENO);
-		return (1);
+		shell->last_exit_code = 1;
+		return (shell->last_exit_code);
 	}
 	else
-	{
 		path = ft_strdup(command[1]);
-	}
-
-	exit_code = fd_cd(shell, path);
-	if(path)
+	shell->last_exit_code = fd_cd(shell, path);
+	if (path)
 		free(path);
-	return (exit_code);
+	return (shell->last_exit_code);
 }

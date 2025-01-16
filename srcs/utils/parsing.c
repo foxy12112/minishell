@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/16 04:38:19 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 06:01:51 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,10 @@ void	display(t_shell_data *shell)
 			free(line);
 		}
 		if (input == NULL)
-		{
-			// printf("LEDZ TDO THIIIS\n");
-			ft_putstr_fd("minishell: exit: ", STDOUT_FILENO);
-			break ;
+		{			
+			ft_putstr_fd("\nexit", STDOUT_FILENO);
+			cleanup(shell);
+			exit(shell->last_exit_code);
 		}
 		if (*input == '\0')
 			continue ;
@@ -137,6 +137,5 @@ void	display(t_shell_data *shell)
 	}
 	if (input)
 		free(input);
-
 	restore_control_echo();
 }

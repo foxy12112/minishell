@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 02:20:43 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/15 14:26:11 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 06:58:50 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	print_variables_list(t_env_list *variables)
 	current = variables->next;
 	while (current != NULL)
 	{
-		printf("dexlare -x %s=\"%s\"\n", current->key, current->value);
+		printf("declare -x %s=\"%s\"\n", current->key, current->value);
 		current = current->next;
 	}
 	return (exit_code);

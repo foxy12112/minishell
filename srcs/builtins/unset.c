@@ -6,18 +6,18 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:23 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/16 03:28:57 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 06:43:58 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	delete_node_by_key(t_env_list **head, const char *key)
+int	delete_node_by_key(t_env_list **head, const char *key)
 {
 	t_env_list	*current;
 
 	if (!head || !*head || !key)
-		return ;
+		return (1);
 	current = *head;
 	while (current)
 	{
@@ -32,10 +32,11 @@ void	delete_node_by_key(t_env_list **head, const char *key)
 			free(current->key);
 			free(current->value);
 			free(current);
-			return ;
+			return (0);
 		}
 		current = current->next;
 	}
+	return (0);
 }
 
 bool	valid_key(const char *key)
@@ -69,17 +70,18 @@ static int	handle_invalid_env_key(char *key)
 
 int	ft_unset(t_shell_data *shell, char *key)
 {
+	int	exit_code;
+
 	if (!valid_key(key))
 	{
-		shell->last_exit_code = handle_invalid_env_key(key);
+		exit_code = handle_invalid_env_key(key);
 	}
 	else
 	{
-		delete_node_by_key(&shell->variables, key);
-		delete_node_by_key(&shell->env, key);
-		shell->last_exit_code = 0;
+		exit_code = delete_node_by_key(&shell->variables, key);
+		exit_code = delete_node_by_key(&shell->env, key);
 	}
-	return (shell->last_exit_code);
+	return (exit_code);
 }
 
 int	parse_launch_unset(t_shell_data *shell, char **command)
@@ -97,8 +99,8 @@ int	parse_launch_unset(t_shell_data *shell, char **command)
 	args_count = 1;
 	while (command[args_count])
 	{
-		ft_unset(shell, command[args_count]);
+		shell->last_exit_code = ft_unset(shell, command[args_count]);
 		args_count++;
 	}
-	return (0);
+	return (shell->last_exit_code);
 }

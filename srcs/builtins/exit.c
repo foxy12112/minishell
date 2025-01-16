@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 00:56:03 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 00:48:47 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 05:20:39 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ bool	is_digits_only(char *str)
 	int	i;
 
 	i = 0;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
 	while (str[i] != '\0')
 	{
 		if (str[i] < '0' || str[i] > '9')
@@ -65,7 +67,7 @@ int	ft_exit(t_shell_data *shell, char **command)
 		ft_putendl_fd("exit", STDERR_FILENO);
 		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
 		shell->last_exit_code = 255;
-		return (255);
+		exit(255);
 	}
 	else if (command[1] && !is_digits_only(command[1]))
 	{
@@ -75,12 +77,22 @@ int	ft_exit(t_shell_data *shell, char **command)
 		exit_code = 255;
 		exit(exit_code);
 	}
+	else if (command[1])
+	{
+		shell->last_exit_code = ft_atoi(command[1]);
+		shell->last_exit_code = shell->last_exit_code % 256;
+		exit_code = shell->last_exit_code;
+		ft_putstr_fd("exit\n", STDIN_FILENO);
+		clear_shell_data(shell);
+		exit(exit_code);
+	}
 	else
 	{
 		ft_putstr_fd("exit\n", STDIN_FILENO);
 		clear_shell_data(shell);
-		exit_code = 1;
-		exit(exit_code);
+		exit_code = 0;
+		shell->last_exit_code = 0;
+		exit(0);
 	}
 	return (EXIT_SUCCESS);
 }
