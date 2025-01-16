@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/15 15:44:03 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/16 13:46:40 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	display(t_shell_data *shell)
 	{
 		// shell->heredoc_launched = false;
 		if (isatty(fileno(stdin)))
-			input = readline("minishell:");
+			input = readline("minishell:"); //TODO DELETE
 		else
 		{
 			char *line;
