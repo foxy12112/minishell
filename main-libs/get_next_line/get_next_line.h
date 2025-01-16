@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 15:15:28 by ldick             #+#    #+#             */
-/*   Updated: 2024/04/29 12:58:31 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/16 21:30:45 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-/**
- * @brief reads from a a file
- * reads a text until a new line is encountered
- * @note reads one line at a time, using a while loop you can read throuh a text file line by line
- * 
- * @param[in] fd - the file descriptor from which to read from
- * @return read line
-*/
 char	*get_next_line(int fd);
 
 char	*gnl_strchr(char *s, int c);

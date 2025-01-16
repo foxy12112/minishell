@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/16 14:53:15 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/16 21:29:54 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,71 +17,48 @@ void	leaks(void)
 	system("leaks minishell");
 }
 
-void	print_redirects(t_redirects *redirect)
-{
-	printf("Printing Redirects:\n");
-	while (redirect)
-	{
-		printf("\tRedirect Type: %d\n", redirect->redirect_type);
-		printf("\tFilename: %s\n", redirect->filename);
-		printf("\tDelimiter: %s\n", redirect->delimiter);
-		printf("\n");
-		redirect = redirect->next;
-	}
-}
-
-void	print_arofars(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		printf("[%s]", str[i]);
-		i++;
-	}
-	printf("\n");
-}
-
-void	print_commands(t_var_cmd *cmd)
-{
-	while (cmd)
-	{
-		printf("Command:");
-		print_arofars(cmd->command);
-		printf("\n");
-		printf("Redirect Count: %d\n", cmd->redirect_count);
-		if (cmd->redirects)
-		{
-			print_redirects(cmd->redirects);
-		}
-		cmd = cmd->next;
-	}
-}
-
-void	print_pipe_list(t_var_pipe_list *pipe_list)
-{
-	while (pipe_list)
-	{
-		if (pipe_list->cmd)
-		{
-			print_commands(pipe_list->cmd);
-		}
-		else
-		{
-			printf("No commands in this pipe.\n");
-		}
-		printf("\n\n");
-		pipe_list = pipe_list->next;
-	}
-}
-
 static char	**init_exec_env(void)
 {
 	char	**env;
 
 	env = ft_split(getenv("PATH"), ':');
 	return (env);
+}
+
+void	display(t_shell_data *shell)
+{
+	char *input;
+
+	setup_signals();
+	while (1)
+	{
+		if (isatty(fileno(stdin)))
+			input = readline("minishell:");
+		else
+		{
+			char	*line;
+			line = get_next_line(fileno(stdin));
+			input = ft_strtrim(line, "\n");
+			free(line);
+		}
+		handle_exit(shell, input);
+		if (handle_empty_input(input))
+			continue ;
+		add_permanent_history(input);
+		add_history(input);
+		if (handle_unclosed_quotes(shell, input))
+			continue ;
+		parse_readline(shell, input);
+		if (handle_command_validation(shell))
+			continue ;
+		if (handle_parse_errors(shell))
+			continue ;
+		execute_script(shell);
+		cleanup(shell);
+	}
+	if (input)
+		free(input);
+	restore_control_echo();
 }
 
 int	main(int argc, char **argv, char **env)
@@ -91,8 +68,6 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argv;
 	(void)argc;
-	// (void)env;
-	// atexit(leaks);
 	shell = (t_shell_data *)malloc(sizeof(t_shell_data));
 	if (!shell)
 		return (1);
@@ -104,9 +79,5 @@ int	main(int argc, char **argv, char **env)
 	display(shell);
 	exit_code = shell->last_exit_code;
 	clear_shell_data(shell);
-	//system("leaks minishell");
 	return (exit_code);
 }
-
-// char **dara = ft_split_delimiters("$USER$TESTNOTFOUND$HOME$WTF$PWD asd '");
-// print_arofars(dara);

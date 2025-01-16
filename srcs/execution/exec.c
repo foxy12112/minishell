@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 08:31:31 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 21:05:28 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ char	*find_cmd(char **path, char *cmd)
 
 int	cell_launch(t_shell_data *shell, char **args)
 {
-	char **parsed_args;
-	pid_t pid;
-	int status;
-	char *command;
+	char	**parsed_args;
+	pid_t	pid;
+	int		status;
+	char	*command;
 
 	pid = fork();
 	if (pid < 0)

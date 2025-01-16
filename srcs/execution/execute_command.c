@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:53 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 08:26:52 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 21:05:07 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int	execute_single_cmd(t_shell_data *shell, t_var_cmd *cmd)
 		if (cmd->redirect_count > 0)
 		{
 			setup_redirects(shell, cmd, cmd->redirects);
-			launch_single_command(shell, cmd->command);
+			if (shell->last_exit_code == 0)
+				launch_single_command(shell, cmd->command);
 		}
 		else
 		{
@@ -74,7 +75,7 @@ int	execute_single_process_cmd(t_shell_data *shell)
 
 int	execute_script(t_shell_data *shell)
 {
-	char	*builtin_command_type;
+	char	*builtin_cmd;
 
 	if (shell->pipes_count > 0)
 	{
@@ -82,15 +83,15 @@ int	execute_script(t_shell_data *shell)
 	}
 	else
 	{
-		builtin_command_type = command_is_builtin(shell->pipe_list->cmd->command[0]);
-		if (builtin_command_type)
+		builtin_cmd = command_is_builtin(shell->pipe_list->cmd->command[0]);
+		if (builtin_cmd)
 		{
-			free(builtin_command_type);
+			free(builtin_cmd);
 			execute_single_cmd(shell, shell->pipe_list->cmd);
 		}
 		else
 		{
-			free(builtin_command_type);
+			free(builtin_cmd);
 			execute_single_process_cmd(shell);
 		}
 	}

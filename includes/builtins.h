@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:21:55 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 10:58:44 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 21:49:08 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int		parse_launch_echo(t_shell_data *shell, char **command);
 // env.c
 int		ft_env(t_shell_data *shell);
 int		parse_launch_env(t_shell_data *shell, char **command);
+// export_utils.c
+void	swap_nodes(t_env_list *a, t_env_list *b);
 // export.c
 int		ft_export(t_shell_data *shell, char **variables);
 int		parse_launch_export(t_shell_data *shell, char **command);
@@ -38,5 +40,4 @@ int		parse_launch_unset(t_shell_data *shell, char **command);
 bool	valid_key(const char *key);
 // exit.c
 int		ft_exit(t_shell_data *shell, char **command);
-void	clear_shell_data(t_shell_data *shell);
 int		args_length(char **command);

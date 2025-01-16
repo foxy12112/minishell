@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:26:29 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/14 05:01:51 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 16:35:02 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,26 +54,6 @@ char	*ft_trim_whitespaces(char *str)
 	return (ft_strdup(str + start));
 }
 
-char	*ft_strtoupper(char *str)
-{
-	int		i;
-	char	*new_str;
-
-	if (!str)
-		return (NULL);
-	new_str = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
-	if (!new_str)
-		return (NULL);
-	i = 0;
-	while (str[i] != '\0')
-	{
-		new_str[i] = ft_toupper(str[i]);
-		i++;
-	}
-	new_str[i] = '\0';
-	return (new_str);
-}
-
 char	*join_arof_ars(char **array, int start)
 {
 	char	*result;
@@ -104,27 +84,22 @@ char	*join_arof_ars(char **array, int start)
 
 char	*join_subarrays(char **array)
 {
-	int total_length;
-	char *result;
-	char **temp;
+	int		total_length;
+	char	*result;
+	char	**temp;
 
 	total_length = 1;
 	if (array == NULL)
 		return (NULL);
-
 	temp = array;
 	while (*temp)
 		total_length += ft_strlen(*temp++);
-
 	result = (char *)malloc(total_length);
 	if (result == NULL)
 		return (NULL);
-
 	*result = '\0';
-
 	temp = array;
 	while (*temp)
 		ft_strlcat(result, *temp++, total_length);
-
 	return (result);
 }

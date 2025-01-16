@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 10:02:13 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 08:12:06 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 21:03:41 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,15 @@ void	handle_single_expansion(t_shell_data *shell, char **args_ar,
 	else
 	{
 		expanded = get_variable_value(shell, args_ar[i]);
+		free(args_ar[i]);
+		args_ar[i] = NULL;
 		if (expanded)
 		{
-			free(args_ar[i]);
-			args_ar[i] = NULL;
 			args_ar[i] = ft_strdup(expanded);
 			free(expanded);
 		}
 		else
 		{
-			free(args_ar[i]);
-			args_ar[i] = NULL;
 			args_ar[i] = ft_strdup("");
 		}
 	}
@@ -48,13 +46,15 @@ void	expand_single_arg(t_shell_data *shell, char **args_ar)
 	int		i;
 	bool	in_single_quotes;
 	bool	in_double_quotes;
+
 	(void)shell;
 	in_single_quotes = false;
 	in_double_quotes = false;
 	i = 0;
 	while (args_ar[i])
 	{
-		select_final_qupte_type(args_ar[i], &in_single_quotes, &in_double_quotes);
+		select_final_qupte_type(args_ar[i], &in_single_quotes,
+			&in_double_quotes);
 		if (args_ar[i][0] == '$' && !in_single_quotes)
 		{
 			handle_single_expansion(shell, args_ar, in_double_quotes, i);
@@ -115,11 +115,11 @@ char	**remove_extra_quotes(char **array)
 
 char	**expand_command(t_shell_data *shell, char **commands_array)
 {
-	char **splitted_commands;
-	char **expanded_commands;
-	char **parsed_commands;
-	int arr_length;
-	int i;
+	char	**splitted_commands;
+	char	**expanded_commands;
+	char	**parsed_commands;
+	int		arr_length;
+	int		i;
 
 	i = 0;
 	arr_length = 0;
@@ -132,7 +132,6 @@ char	**expand_command(t_shell_data *shell, char **commands_array)
 	{
 		splitted_commands = ft_split_delimiters(commands_array[i]);
 		expand_single_arg(shell, splitted_commands);
-		// print_arofars(splitted_commands);
 		expanded_commands[i] = join_subarrays(splitted_commands);
 		free_string_array(splitted_commands);
 		i++;

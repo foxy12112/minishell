@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:09 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/14 00:09:36 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 21:27:32 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,6 @@ int	print_env_list(t_env_list *variables)
 	current = variables->next;
 	while (current != NULL)
 	{
-		// if (!current->key || !current->value)
-		// {
-		// 	printf("Invalid entry in the list.\n");
-		// 	return (1);
-		// }
 		if (printf("%s=%s\n", current->key, current->value) < 0)
 			return (1);
 		current = current->next;

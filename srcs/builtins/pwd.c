@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:20 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/15 14:47:19 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 21:06:11 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,6 @@
 
 int	ft_pwd(int fd)
 {
-	// int		i;
-	// char	cwd[PATH_MAX];
-	// i = 0;
-	// if (getcwd(cwd, sizeof(cwd)) != NULL)
-	// {
-	// 	while (cwd[i])
-	// 	{
-	// 		ft_putchar_fd(cwd[i], fd);
-	// 		i++;
-	// 	}
-	// }
-	// else
-	// 	perror("Pwd error");
-	// return (0);
-
 	char	cwd[PATH_MAX];
 	char	*directory;
 
@@ -47,20 +32,7 @@ int	ft_pwd(int fd)
 
 int	parse_launch_pwd(t_shell_data *shell, char **command)
 {
-	// int	args_count;
-
-	// args_count = 0;
-	// while (command[args_count])
-	// 	args_count++;
-	// if (args_count > 1)
-	// {
-	// 	perror("Too many arguments");
-	// 	shell->last_exit_code = 1;
-	// 	return (1);
-	// }
 	(void)command;
 	shell->last_exit_code = ft_pwd(1);
-	// redirect_to_terminal();
 	return (0);
 }
-

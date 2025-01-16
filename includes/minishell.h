@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/15 06:03:56 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 21:49:14 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <sys/types.h>
-# include <sys/wait.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
 
@@ -97,25 +97,26 @@ typedef struct s_shell_data
 	int						saved_stdin;
 }							t_shell_data;
 
-// typedef struct s_errdata
-// {
-// 	void	*alloc_data;
-// 	void	(*teardown_func)(void *);
-// }							t_errdata
-// Import Files
 # include "builtins.h"
 # include "execution.h"
 # include "parsing.h"
 # include "redirects.h"
 # include "utils.h"
 
-bool	is_delimiter1(char c);
+// main.c
+int							main(int argc, char **argv, char **env);
+void						display(t_shell_data *shell);
+
+bool						is_delimiter1(char c);
 
 int							utils(void);
 void						print_arofars(char **str);
-// parsing
-
-void						display(t_shell_data *shell);
+// loop_utils.c
+int							handle_parse_errors(t_shell_data *shell);
+int							handle_command_validation(t_shell_data *shell);
+int							handle_unclosed_quotes(t_shell_data *shell,
+								char *input);
+int							handle_empty_input(char *input);
 // int						setup_signals(void);
 void						init_history(void);
 void						add_permanent_history(char *str);
@@ -130,12 +131,9 @@ bool						unclosed_quotes(char *input);
 char						*get_variable_value(t_shell_data *shell, char *var);
 //
 char						*true_quote_removal(char *str);
-
-int							main(int argc, char **argv, char **env);
 // void						test_multi_redirect(t_shell_data *shell);
 int							prepare_heredoc(t_shell_data *shell,
 								t_var_cmd *cmd);
-void						cleanup(t_shell_data *shell);
 int							reset_heredoc_fd(t_shell_data *shell, int end[2],
 								t_var_cmd *cmd);
 void						print_redirects(t_redirects *redirect);

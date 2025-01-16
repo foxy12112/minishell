@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:25:20 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/14 07:59:29 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 21:49:03 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int		select_launch_builtin(t_shell_data *shell, char **command);
 // execute_redirects.c
 int		setup_redirects(t_shell_data *shell, t_var_cmd *cmd,
 			t_redirects *redirects);
+char	*ft_strtoupper(char *str);
 // execute_command.c
 int		execute_script(t_shell_data *shell);
 int		launch_single_command(t_shell_data *shell, char **command);

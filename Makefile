@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: macbook <macbook@student.42.fr>            +#+  +:+       +#+         #
+#    By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2025/01/16 10:51:54 by macbook          ###   ########.fr        #
+#    Updated: 2025/01/16 21:34:13 by auplisas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,10 +51,10 @@ PARSING			=	$(addprefix parsing/, $(_PARSING))
 _REDIRECTS		=	heredoc_utils.c redirect_in.c redirect_out.c redirect_out_append.c redirect_in_heredoc.c redirect_to_terminal.c
 REDIRECTS		=	$(addprefix redirects/, $(_REDIRECTS))
 
-_UTILS			=	ft_split_delimiters.c unclosed_quotes.c env_init.c free.c utils.c intialize.c variables.c parsing.c ft_split_byfirstequal.c ft_split_whitespaces.c ft_split_quotes.c signal.c
+_UTILS			=	free_linked_lists.c print_test_files.c history.c ft_split_delimiters.c ft_split_delimiters_utils.c unclosed_quotes.c env_init.c free.c utils.c intialize.c variables.c loop_utils.c ft_split_byfirstequal.c ft_split_whitespaces.c ft_split_quotes.c signal.c
 UTILS			=	$(addprefix utils/, $(_UTILS))
 
-_BUILTINS		=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
+_BUILTINS		=	cd.c echo.c env.c exit.c export.c export_utils.c pwd.c unset.c
 BUILTINS		=	$(addprefix builtins/, $(_BUILTINS))
 
 _SRCS			=	main.c $(BUILTINS) $(UTILS) $(REDIRECTS) $(PARSING) $(EXECUTION)

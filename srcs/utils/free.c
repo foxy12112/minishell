@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 05:08:24 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/16 00:46:55 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 21:19:02 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	free_env_list(t_env_list *head)
-{
-	t_env_list	*temp;
-
-	while (head != NULL)
-	{
-		temp = head->next;
-		if (head->key)
-			free(head->key);
-		if (head->value)
-			free(head->value);
-		free(head);
-		head = temp;
-	}
-}
 
 void	free_string_array(char **str)
 {
@@ -43,55 +27,6 @@ void	free_string_array(char **str)
 	free(str);
 }
 
-void	free_redirects(t_redirects *redirect)
-{
-	t_redirects	*temp;
-
-	while (redirect)
-	{
-		temp = redirect->next;
-		if (redirect->filename)
-			free(redirect->filename);
-		if (redirect->delimiter)
-			free(redirect->delimiter);
-		free(redirect);
-		redirect = temp;
-	}
-}
-
-void	free_commands(t_var_cmd *cmd)
-{
-	t_var_cmd	*temp;
-
-	while (cmd)
-	{
-		temp = cmd;
-		if (cmd->command)
-			free_string_array(cmd->command);
-		if (cmd->hd_file_name)
-			free(cmd->hd_file_name);
-		if (cmd->redirects)
-			free_redirects(cmd->redirects);
-		cmd = cmd->next;
-		free(temp);
-	}
-}
-
-void	free_var_pipe_list(t_var_pipe_list *head)
-{
-	t_var_pipe_list	*current;
-	t_var_pipe_list	*next;
-
-	current = head;
-	while (current != NULL)
-	{
-		next = current->next;
-		free_commands(current->cmd);
-		free(current);
-		current = next;
-	}
-}
-
 char	**free_all(char **parentarray, int arrayindex)
 {
 	int	j;
@@ -104,4 +39,42 @@ char	**free_all(char **parentarray, int arrayindex)
 	}
 	free(parentarray);
 	return (NULL);
+}
+
+void	cleanup(t_shell_data *shell)
+{
+	redirect_to_terminal();
+	free_var_pipe_list(shell->pipe_list);
+	shell->pipe_list = NULL;
+	shell->pipes_count = 0;
+	shell->heredoc_launched = false;
+	shell->pipe_list = NULL;
+}
+
+void	handle_exit(t_shell_data *shell, char *input)
+{
+	if (input == NULL)
+	{
+		ft_putstr_fd("exit\n", STDOUT_FILENO);
+		cleanup(shell);
+		exit(shell->last_exit_code);
+	}
+}
+
+void	clear_shell_data(t_shell_data *shell)
+{
+	if (shell->env)
+	{
+		free_env_list(shell->env);
+		shell->env = NULL;
+	}
+	if (shell->variables)
+	{
+		free_env_list(shell->variables);
+		shell->variables = NULL;
+	}
+	free_var_pipe_list(shell->pipe_list);
+	free_string_array(shell->exec_env);
+	restore_control_echo();
+	free(shell);
 }

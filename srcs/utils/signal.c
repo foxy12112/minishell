@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 15:50:23 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/14 20:47:48 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 16:37:47 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void	sigint_handle(void)
 {
 	printf("\n");
 	rl_on_new_line();
-	// rl_replace_line("", 0);
 	rl_redisplay();
 }
 
@@ -32,7 +31,6 @@ int	disable_control_echo(t_shell_data *shell)
 {
 	struct termios	terminal;
 
-
 	tcgetattr(STDIN_FILENO, &terminal);
 	tcgetattr(STDIN_FILENO, &shell->terminal_settings->original);
 	terminal.c_lflag &= ~ECHOCTL;
@@ -40,11 +38,10 @@ int	disable_control_echo(t_shell_data *shell)
 	return (EXIT_SUCCESS);
 }
 
-int	restore_control_echo()
+int	restore_control_echo(void)
 {
 	struct termios	terminal;
 
-	// printf("WE GOT TO HERE: restore ocntrol echo\n");
 	if (tcgetattr(STDIN_FILENO, &terminal) != 0)
 		return (EXIT_FAILURE);
 	terminal.c_lflag |= ECHOCTL;
@@ -52,6 +49,9 @@ int	restore_control_echo()
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
+
+// sigignore(SIGQUIT);
+// signal(SIGQUIT, SIG_IGN);
 
 void	setup_signals(void)
 {
@@ -62,8 +62,6 @@ void	setup_signals(void)
 	sa.sa_flags = 0;
 	sigemptyset(&sigset);
 	sigaddset(&sigset, SIGINT);
-	// sigignore(SIGQUIT);
-	// signal(SIGQUIT, SIG_IGN);
 	sigaddset(&sigset, SIGTERM);
 	sa.sa_mask = sigset;
 	if (sigaction(SIGINT, &sa, NULL) == -1)

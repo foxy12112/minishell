@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   redirects.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:36:43 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/14 07:50:20 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 21:48:52 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // redirects
-int		redirect_output(t_shell_data *shell, const char *filename);
+int		redirect_output(t_shell_data *shell, char *filename);
 void	redirect_input(t_shell_data *shell, const char *filename);
 int		redirect_output_append(t_shell_data *shell, const char *filename);
 // heredoc
@@ -22,3 +22,4 @@ int		redirect_heredoc_launch(t_shell_data *shell, char *file);
 int		redirect_to_terminal(void);
 void	remove_char(char *str, char c);
 char	*generate_heredoc_file(void);
+void	custom_handler(int signal);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_delimiters.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 04:39:27 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/15 10:16:15 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 20:52:51 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,16 @@ bool	is_delimiter(char c)
 	return (false);
 }
 
+// bool	check_special_delim(char const *src, int i)
+// {
+// 	if (src[i] == '\0' || src[i] == ' ' || src[i] == '\'' || src[i] == '"'
+// 		|| src[i] == '$')
+// 	{
+// 		return (true);
+// 	}
+// 	return (false);
+// }
+
 // int	countrows_delimiters(char const *src)
 // {
 // 	int	count;
@@ -30,21 +40,20 @@ bool	is_delimiter(char c)
 // 	i = 0;
 // 	while (src[i] != '\0')
 // 	{
-// 		if (is_delimiter(src[i]))
+// 		if (src[i] == ' ' || src[i] == '\'' || src[i++] == '"')
+// 			count++;
+// 		else if (src[i] == '$')
 // 		{
 // 			count++;
 // 			i++;
-// 		}
-// 		else if (src[i] == '$')
-// 		{
-//             i++;
-//             count++;
+// 			while (check_special_delim(src, i) == false)
+// 				i++;
 // 		}
 // 		else
 // 		{
-// 			while (src[i] != '\0' && !is_delimiter(src[i]) && src[i] != '$')
-// 				i++;
 // 			count++;
+// 			while (check_special_delim(src, i) == false)
+// 				i++;
 // 		}
 // 	}
 // 	return (count);
@@ -64,95 +73,41 @@ int	countrows_delimiters(char const *src)
 			count++;
 			i++;
 		}
-		else if (src[i] == '$')
-		{
-			count++;
-			i++;
-			while (src[i] != '\0' && src[i] != ' ' && src[i] != '\''
-				&& src[i] != '"' && src[i] != '$')
-			{
-				i++;
-			}
-		}
 		else
 		{
+			if (src[i] == '$')
+				i++;
 			count++;
 			while (src[i] != '\0' && src[i] != ' ' && src[i] != '\''
 				&& src[i] != '"' && src[i] != '$')
-			{
 				i++;
-			}
 		}
 	}
-	// printf("Count is: %d\n", count);
 	return (count);
-}
-
-char	**free_all_delimiters(char **parentarray, int arrayindex)
-{
-	int	j;
-
-	j = 0;
-	while (j < arrayindex)
-	{
-		free(parentarray[j]);
-		j++;
-	}
-	free(parentarray);
-	return (NULL);
-}
-
-char	*allocate_and_copy_delimiters(const char *s, int startindex, int count)
-{
-	char	*subarray;
-
-	subarray = (char *)malloc(sizeof(char) * (count + 1));
-	if (subarray == NULL)
-		return (NULL);
-	ft_memcpy(subarray, &s[startindex], count);
-	subarray[count] = '\0';
-	return (subarray);
 }
 
 char	**str_div_logic_delimiters(char **parentarray, const char *s,
 		int ar_index)
 {
 	int	i;
-	int	count;
-	int	startindex;
 
 	i = 0;
 	while (s[i] != '\0')
 	{
 		if (is_delimiter(s[i]))
 		{
-			parentarray[ar_index] = allocate_and_copy_delimiters(s, i, 1);
-			if (parentarray[ar_index++] == NULL)
-				return (free_all_delimiters(parentarray, ar_index));
-			i++;
+			if (process_delimiter(s, &i, parentarray, &ar_index) != NULL)
+				return (NULL);
 		}
 		else if (s[i] == '$')
 		{
-			startindex = i;
-			i++;
-			while (s[i] != '\0' && s[i] != '$' && !is_delimiter(s[i]))
-				i++;
-			count = i - startindex;
-			parentarray[ar_index] = allocate_and_copy_delimiters(s, startindex,
-					count);
-			if (parentarray[ar_index++] == NULL)
-				return (free_all_delimiters(parentarray, ar_index));
+			if (process_dollar(s, &i, parentarray, &ar_index) != NULL)
+				return (NULL);
 		}
 		else
 		{
-			startindex = i;
-			while (s[i] != '\0' && s[i] != '$' && !is_delimiter(s[i]))
-				i++;
-			count = i - startindex;
-			parentarray[ar_index] = allocate_and_copy_delimiters(s, startindex,
-					count);
-			if (parentarray[ar_index++] == NULL)
-				return (free_all_delimiters(parentarray, ar_index));
+			if (process_regular(s, &i, parentarray, &ar_index) != NULL)
+				return (NULL);
 		}
 	}
 	return (parentarray);
@@ -171,112 +126,9 @@ char	**ft_split_delimiters(const char *s)
 	parentarray = (char **)malloc(sizeof(char *) * (countrows_delimiters(s)
 				+ 1));
 	if (parentarray == NULL)
-	{
 		return (NULL);
-	}
 	if (str_div_logic_delimiters(parentarray, s, ar_index) == NULL)
-	{
 		return (NULL);
-	}
 	parentarray[countrows_delimiters(s)] = NULL;
 	return (parentarray);
 }
-
-// int countrows_delimiters(char const *src)
-// {
-//     int count = 0;
-//     int i = 0;
-
-//     while (src[i] != '\0')
-//     {
-//         if (is_delimiter(src[i]))
-//         {
-//             count++;
-//             i++;
-//         }
-//         else
-//         {
-//             while (src[i] != '\0' && !is_delimiter(src[i]))
-//                 i++;
-//             count++;
-//         }
-//     }
-//     return (count);
-// }
-
-// char **free_all_delimiters(char **parentarray, int arrayindex)
-// {
-//     int j = 0;
-//     while (j < arrayindex)
-//     {
-//         free(parentarray[j]);
-//         j++;
-//     }
-//     free(parentarray);
-//     return (NULL);
-// }
-
-// char *allocate_and_copy_delimiters(const char *s, int startindex, int count)
-// {
-//     char *subarray = (char *)malloc(sizeof(char) * (count + 1));
-//     if (subarray == NULL)
-//         return (NULL);
-//     ft_memcpy(subarray, &s[startindex], count);
-//     subarray[count] = '\0';
-//     return (subarray);
-// }
-
-// char **str_div_logic_delimiters(char **parentarray, const char *s,int ar_index)
-// {
-//     int i = 0;
-//     int count;
-//     int startindex;
-
-//     while (s[i] != '\0')
-//     {
-//         if (is_delimiter(s[i]))
-//         {
-//             parentarray[ar_index] = allocate_and_copy_delimiters(s, i, 1);
-//             if (parentarray[ar_index++] == NULL)
-//                 return (free_all_delimiters(parentarray, ar_index));
-//             i++;
-//         }
-//         else
-//         {
-//             startindex = i;
-//             while (s[i] != '\0' && !is_delimiter(s[i]))
-//                 i++;
-//             count = i - startindex;
-//             parentarray[ar_index] = allocate_and_copy_delimiters(s,startindex, count);
-//             if (parentarray[ar_index++] == NULL)
-//                 return (free_all_delimiters(parentarray, ar_index));
-//         }
-//     }
-//     return (parentarray);
-// }
-
-// char **ft_split_delimiters(const char *s)
-// {
-//     char **parentarray;
-//     int ar_index;
-
-//     if (s == NULL)
-//     {
-//         return (NULL);
-//     }
-
-//     ar_index = 0;
-//     parentarray = (char **)malloc(sizeof(char *) * (countrows_delimiters(s)+ 1));
-//     if (parentarray == NULL)
-//     {
-//         return (NULL);
-//     }
-
-//     if (str_div_logic_delimiters(parentarray, s, ar_index) == NULL)
-//     {
-//         return (NULL);
-//     }
-
-//     parentarray[countrows_delimiters(s)] = NULL;
-//     return (parentarray);
-// }

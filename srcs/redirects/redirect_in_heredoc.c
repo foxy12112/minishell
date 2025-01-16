@@ -3,35 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_in_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:03:07 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 13:43:27 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/16 20:57:54 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// int	reset_heredoc_fd(t_shell_data *shell, int pipe_fd[2], t_var_cmd *cmd)
-// {
-// 	int	fd_in;
-
-// 	if (shell->heredoc_launched)
-// 	{
-// 		close(pipe_fd[0]);
-// 		fd_in = open(cmd->hd_file_name, O_RDONLY);
-// 	}
-// 	else
-// 		fd_in = pipe_fd[0];
-// 	return (fd_in);
-// }
-
-static void	custom_handler(int signal)
-{
-	(void)signal;
-	printf("\n");
-	exit(130);
-}
 
 int	reset_heredoc_fd(t_shell_data *shell, int pipe_fd[2], t_var_cmd *cmd)
 {
@@ -132,7 +111,7 @@ int	prepare_heredoc(t_shell_data *shell, t_var_cmd *cmd)
 
 int	redirect_heredoc_launch(t_shell_data *shell, char *file)
 {
-	int fd;
+	int	fd;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)

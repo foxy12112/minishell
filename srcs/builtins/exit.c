@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 00:56:03 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 08:37:47 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 21:27:04 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	clear_shell_data(t_shell_data *shell)
-{
-	if (shell->env)
-	{
-		free_env_list(shell->env);
-		shell->env = NULL;
-	}
-	if (shell->variables)
-	{
-		free_env_list(shell->variables);
-		shell->variables = NULL;
-	}
-	free_var_pipe_list(shell->pipe_list);
-	free_string_array(shell->exec_env);
-	restore_control_echo();
-	free(shell);
-}
 
 int	args_length(char **command)
 {
@@ -56,6 +38,25 @@ bool	is_digits_only(char *str)
 	return (true);
 }
 
+void	handle_simple_exit(t_shell_data *shell)
+{
+	ft_putendl_fd("exit", STDERR_FILENO);
+	clear_shell_data(shell);
+	shell->last_exit_code = 0;
+	exit(0);
+}
+
+static void	handle_exit_with_code(t_shell_data *shell, char *arg)
+{
+	int	exit_code;
+
+	exit_code = ft_atoi(arg) % 256;
+	shell->last_exit_code = exit_code;
+	ft_putendl_fd("exit", STDERR_FILENO);
+	clear_shell_data(shell);
+	exit(exit_code);
+}
+
 int	ft_exit(t_shell_data *shell, char **command)
 {
 	int	args_count;
@@ -78,21 +79,8 @@ int	ft_exit(t_shell_data *shell, char **command)
 		exit(exit_code);
 	}
 	else if (command[1])
-	{
-		shell->last_exit_code = ft_atoi(command[1]);
-		shell->last_exit_code = shell->last_exit_code % 256;
-		exit_code = shell->last_exit_code;
-		ft_putendl_fd("exit", STDERR_FILENO);
-		clear_shell_data(shell);
-		exit(exit_code);
-	}
+		handle_exit_with_code(shell, command[1]);
 	else
-	{
-		ft_putendl_fd("exit", STDERR_FILENO);
-		clear_shell_data(shell);
-		exit_code = 0;
-		shell->last_exit_code = 0;
-		exit(0);
-	}
+		handle_simple_exit(shell);
 	return (EXIT_SUCCESS);
 }
