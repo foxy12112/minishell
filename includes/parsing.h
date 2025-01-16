@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:29:32 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/15 06:24:19 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 08:12:11 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	**expand_command(t_shell_data *shell, char **arr);
 char	*join_subarrays(char **array);
-void	ft_toggle_quotes(char *arr, bool *in_single_quotes, bool *in_double_quotes);
+void	select_final_qupte_type(char *arr, bool *in_single_quotes, bool *in_double_quotes);
 bool	is_delimiter(char c);
 void	expand_single_arg(t_shell_data *shell, char **args_ar);
 void	remove_quotes(char **args);

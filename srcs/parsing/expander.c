@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 10:02:13 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 01:19:43 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 08:12:06 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	expand_single_arg(t_shell_data *shell, char **args_ar)
 	i = 0;
 	while (args_ar[i])
 	{
-		ft_toggle_quotes(args_ar[i], &in_single_quotes, &in_double_quotes);
+		select_final_qupte_type(args_ar[i], &in_single_quotes, &in_double_quotes);
 		if (args_ar[i][0] == '$' && !in_single_quotes)
 		{
 			handle_single_expansion(shell, args_ar, in_double_quotes, i);

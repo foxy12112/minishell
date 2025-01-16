@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/16 06:01:51 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 08:06:03 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,13 @@ bool	check_command(t_shell_data *shell)
 
 	found = true;
 	command_noquotes = true_quote_removal_from_array(shell->pipe_list->cmd->command);
-	if(!command_noquotes)
+	if (!command_noquotes)
 		return (false);
 	command = find_cmd(shell->exec_env, command_noquotes[0]);
-	if (!command)
+	shell->last_exit_code = 0;
+	if (!command && shell->pipe_list->cmd->command[0])
 	{
+		shell->last_exit_code = 2;
 		ft_putstr_fd("command: ", STDERR_FILENO);
 		ft_putstr_fd(shell->pipe_list->cmd->command[0], STDERR_FILENO);
 		ft_putstr_fd(": not found\n", STDERR_FILENO);
@@ -101,13 +103,15 @@ void	display(t_shell_data *shell)
 			free(line);
 		}
 		if (input == NULL)
-		{			
-			ft_putstr_fd("\nexit", STDOUT_FILENO);
+		{
+			ft_putstr_fd("exit\n", STDOUT_FILENO);
 			cleanup(shell);
 			exit(shell->last_exit_code);
 		}
 		if (*input == '\0')
+		{
 			continue ;
+		}
 		add_permanent_history(input);
 		add_history(input);
 		if (!unclosed_quotes(input))
@@ -117,6 +121,7 @@ void	display(t_shell_data *shell)
 			continue ;
 		}
 		parse_readline(shell, input);
+		// print_pipe_list(shell->pipe_list);
 		builtin_command_type = command_is_builtin(shell->pipe_list->cmd->command[0]);
 		if (!builtin_command_type && !check_command(shell))
 		{
@@ -128,10 +133,10 @@ void	display(t_shell_data *shell)
 			free(builtin_command_type);
 		if (!check_for_parse_errors(shell->pipe_list))
 		{
+			shell->last_exit_code = 2;
 			cleanup(shell);
 			continue ;
 		}
-		// print_pipe_list(shell->pipe_list);
 		execute_script(shell);
 		cleanup(shell);
 	}
