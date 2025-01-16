@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/15 11:20:56 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 08:31:31 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	**true_quote_removal_from_array(char **array)
 	{
 		if (string_in_doublequotes(array[i])
 			|| string_in_singlequotes(array[i]))
-			new_array[i] = true_quote_removal(array[i]);
+			new_array[i] = ft_strdup(true_quote_removal(array[i]));
 		else
 			new_array[i] = ft_strdup(array[i]);
 		if (!new_array[i])
@@ -55,6 +55,7 @@ char	**true_quote_removal_from_array(char **array)
 
 char	*find_cmd(char **path, char *cmd)
 {
+	char	*cmd_new;
 	char	*tmp;
 	char	*ret;
 
@@ -63,6 +64,7 @@ char	*find_cmd(char **path, char *cmd)
 		tmp = ft_strjoin(*path, "/");
 		ret = ft_strjoin(tmp, cmd);
 		free(tmp);
+		tmp = NULL;
 		if (access(ret, 0) == 0)
 		{
 			return (ret);
@@ -71,7 +73,10 @@ char	*find_cmd(char **path, char *cmd)
 		path++;
 	}
 	if (access(cmd, 0) == 0)
-		return (cmd);
+	{
+		cmd_new = ft_strdup(cmd);
+		return (cmd_new);
+	}
 	return (NULL);
 }
 
@@ -87,39 +92,24 @@ int	cell_launch(t_shell_data *shell, char **args)
 
 	pid = fork();
 	if (pid < 0)
-	{
-		printf("failed\n");
-		return (1);
-	}
+		return (ft_putstr_fd("Failed to fork\n", STDERR_FILENO), 1);
 	status = 0;
 	parsed_args = true_quote_removal_from_array(args);
-	command = find_cmd(shell->exec_env, parsed_args[0]);
-	if (!command)
-	{
-		free_string_array(parsed_args);
-		free_string_array(args);
+	if (!parsed_args)
 		return (127);
-	}
+	command = find_cmd(shell->exec_env, parsed_args[0]);
+	shell->last_exit_code = EXIT_SUCCESS;
+	if (!command)
+		return (free_string_array(parsed_args), 127);
 	if (pid == 0)
-	{
-		if (execve(command, parsed_args, shell->enviroment) == -1)
-		{
-			free(command);
-			free_string_array(parsed_args);
-			free_string_array(args);
-			shell->last_exit_code = 69;
-			return (69);
-		}
-	}
+		execve(command, parsed_args, shell->enviroment);
 	waitpid(pid, &status, WUNTRACED);
-	// wait_for_process(pid);
-	// waitpid(pidm )
 	free(command);
-	free_string_array(args);
 	free_string_array(parsed_args);
 	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	else if (WIFSIGNALED(status))
-		return (128 + WTERMSIG(status));
-	return (EXIT_SUCCESS);
+		shell->last_exit_code = WEXITSTATUS(status);
+	return (shell->last_exit_code);
 }
+
+// else if (WIFSIGNALED(status))
+// 	shell->last_exit_code = 128 + WTERMSIG(status);

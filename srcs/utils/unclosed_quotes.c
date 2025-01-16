@@ -6,13 +6,13 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 12:05:10 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/15 12:22:46 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 08:12:01 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_toggle_quotes(char *arr, bool *in_single_quotes,
+void	select_final_qupte_type(char *arr, bool *in_single_quotes,
 		bool *in_double_quotes)
 {
 	if (arr == NULL || *arr == '\0')

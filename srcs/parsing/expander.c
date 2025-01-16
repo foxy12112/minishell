@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 10:02:13 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/15 12:28:59 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 08:12:06 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	handle_single_expansion(t_shell_data *shell, char **args_ar,
 {
 	char	*expanded;
 
-	expanded = get_variable_value(shell, args_ar[i]);
+	expanded = NULL;
 	if (args_ar[i][1] == '\0' && (in_double_quotes || args_ar[i + 1] == NULL))
 	{
 		free(args_ar[i]);
@@ -26,12 +26,20 @@ void	handle_single_expansion(t_shell_data *shell, char **args_ar,
 	}
 	else
 	{
-		free(args_ar[i]);
-		args_ar[i] = NULL;
+		expanded = get_variable_value(shell, args_ar[i]);
 		if (expanded)
+		{
+			free(args_ar[i]);
+			args_ar[i] = NULL;
 			args_ar[i] = ft_strdup(expanded);
+			free(expanded);
+		}
 		else
+		{
+			free(args_ar[i]);
+			args_ar[i] = NULL;
 			args_ar[i] = ft_strdup("");
+		}
 	}
 }
 
@@ -40,13 +48,13 @@ void	expand_single_arg(t_shell_data *shell, char **args_ar)
 	int		i;
 	bool	in_single_quotes;
 	bool	in_double_quotes;
-
+	(void)shell;
 	in_single_quotes = false;
 	in_double_quotes = false;
 	i = 0;
 	while (args_ar[i])
 	{
-		ft_toggle_quotes(args_ar[i], &in_single_quotes, &in_double_quotes);
+		select_final_qupte_type(args_ar[i], &in_single_quotes, &in_double_quotes);
 		if (args_ar[i][0] == '$' && !in_single_quotes)
 		{
 			handle_single_expansion(shell, args_ar, in_double_quotes, i);

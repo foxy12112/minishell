@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:08 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/14 08:16:30 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 10:58:48 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	select_launch_builtin(t_shell_data *shell, char **command)
 	if (!command_toupper)
 		return (1);
 	if (ft_strcmp(command_toupper, "ECHO") == 0)
-		return (free(command_toupper), parse_launch_echo(command));
+		return (free(command_toupper), parse_launch_echo(shell, command));
 	else if (ft_strcmp(command_toupper, "CD") == 0)
 		return (free(command_toupper), parse_launch_cd(shell, command));
 	else if (ft_strcmp(command_toupper, "ENV") == 0)

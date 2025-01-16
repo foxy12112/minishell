@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/16 13:46:40 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/16 14:53:21 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,20 @@ bool	check_command(t_shell_data *shell)
 
 	found = true;
 	command_noquotes = true_quote_removal_from_array(shell->pipe_list->cmd->command);
+	if (!command_noquotes)
+		return (false);
 	command = find_cmd(shell->exec_env, command_noquotes[0]);
-	if (!command)
+	shell->last_exit_code = 0;
+	if (!command && shell->pipe_list->cmd->command[0])
 	{
+		shell->last_exit_code = 2;
 		ft_putstr_fd("command: ", STDERR_FILENO);
 		ft_putstr_fd(shell->pipe_list->cmd->command[0], STDERR_FILENO);
 		ft_putstr_fd(": not found\n", STDERR_FILENO);
 		found = false;
 	}
 	free(command);
+	// print_pipe_list(shell->pipe_list);
 	free_string_array(command_noquotes);
 	return (found);
 }
@@ -89,7 +94,6 @@ void	display(t_shell_data *shell)
 	setup_signals();
 	while (1)
 	{
-		// shell->heredoc_launched = false;
 		if (isatty(fileno(stdin)))
 			input = readline("minishell:"); //TODO DELETE
 		else
@@ -99,23 +103,27 @@ void	display(t_shell_data *shell)
 			input = ft_strtrim(line, "\n");
 			free(line);
 		}
-		// input = ft_strdup("exit");
 		if (input == NULL)
 		{
-			ft_putstr_fd("minishell: exit: ", STDOUT_FILENO);
-			break ;
+			ft_putstr_fd("exit\n", STDOUT_FILENO);
+			cleanup(shell);
+			exit(shell->last_exit_code);
 		}
 		if (*input == '\0')
+		{
 			continue ;
+		}
 		add_permanent_history(input);
 		add_history(input);
 		if (!unclosed_quotes(input))
 		{
 			free(input);
+			shell->last_exit_code = 1;
 			printf("unclosed quotes present\n");
 			continue ;
 		}
 		parse_readline(shell, input);
+		// print_pipe_list(shell->pipe_list);
 		builtin_command_type = command_is_builtin(shell->pipe_list->cmd->command[0]);
 		if (!builtin_command_type && !check_command(shell))
 		{
@@ -127,15 +135,14 @@ void	display(t_shell_data *shell)
 			free(builtin_command_type);
 		if (!check_for_parse_errors(shell->pipe_list))
 		{
+			shell->last_exit_code = 2;
 			cleanup(shell);
 			continue ;
 		}
-		// print_pipe_list(shell->pipe_list);
 		execute_script(shell);
 		cleanup(shell);
 	}
 	if (input)
 		free(input);
-
 	restore_control_echo();
 }

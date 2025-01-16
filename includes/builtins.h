@@ -6,21 +6,22 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:21:55 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/15 14:35:23 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 10:58:44 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	print_pipe_list(t_var_pipe_list *pipe_list);
+void	print_commands(t_var_cmd *cmd);
 // cd.c
 int		fd_cd(t_shell_data *shell, char *path);
 int		parse_launch_cd(t_shell_data *shell, char **command);
 // echo.c
-int	ft_echo(char *args, int fd, bool n_option);
+int		ft_echo(char *args, int fd, bool n_option);
 // int		ft_echo(char *args, int fd, int n_index);
-int	ft_echo(char *args, int fd, bool n_option);
-int		parse_launch_echo(char **command);
+int		ft_echo(char *args, int fd, bool n_option);
+int		parse_launch_echo(t_shell_data *shell, char **command);
 // env.c
 int		ft_env(t_shell_data *shell);
 int		parse_launch_env(t_shell_data *shell, char **command);
@@ -38,3 +39,4 @@ bool	valid_key(const char *key);
 // exit.c
 int		ft_exit(t_shell_data *shell, char **command);
 void	clear_shell_data(t_shell_data *shell);
+int		args_length(char **command);
