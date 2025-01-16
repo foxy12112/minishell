@@ -6,7 +6,7 @@
 #    By: macbook <macbook@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2025/01/16 02:04:42 by macbook          ###   ########.fr        #
+#    Updated: 2025/01/16 03:52:42 by macbook          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ NC			:= \033[0m
 #											Flags												#
 #################################################################################################
 
-COMPILER	=	gcc
+COMPILER	=	cc
 INCLUDES	=	-I includes -I main-libs
 SUBMODULE	=	main-libs/Makefile
 LIB_FLAGS	=	-lreadline -ls -Lmain-libs

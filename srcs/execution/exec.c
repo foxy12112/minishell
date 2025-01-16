@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 02:46:59 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 03:14:13 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,7 @@ int	cell_launch(t_shell_data *shell, char **args)
 
 	pid = fork();
 	if (pid < 0)
-	{
-		printf("failed\n");
-		return (1);
-	}
+		return (ft_putstr_fd("Failed to fork\n", STDERR_FILENO), 1);
 	status = 0;
 	parsed_args = true_quote_removal_from_array(args);
 	if (!parsed_args)
@@ -103,33 +100,16 @@ int	cell_launch(t_shell_data *shell, char **args)
 	command = find_cmd(shell->exec_env, parsed_args[0]);
 	shell->last_exit_code = EXIT_SUCCESS;
 	if (!command)
-	{
-		free_string_array(parsed_args);
-		// free_string_array(args);
-		return (127);
-	}
+		return (free_string_array(parsed_args), 127);
 	if (pid == 0)
-	{
 		execve(command, parsed_args, shell->enviroment);
-		// if (execve(command, parsed_args, shell->enviroment) == -1)
-		// {
-		// 	// free(command);
-		// 	// free_string_array(parsed_args);
-		// 	// free_string_array(args);
-		// 	// shell->last_exit_code = 69;
-		// 	// return (69);
-		// }
-	}
 	waitpid(pid, &status, WUNTRACED);
-	// wait_for_process(pid);
-	// waitpid(pidm )
 	free(command);
 	free_string_array(parsed_args);
-	// free_string_array(args);
-	// free_string_array(parsed_args);
 	if (WIFEXITED(status))
-		shell->last_exit_code = WIFEXITED(status);
-	else if (WIFSIGNALED(status))
-		shell->last_exit_code = 128 + WTERMSIG(status);
+		shell->last_exit_code = WEXITSTATUS(status);
 	return (shell->last_exit_code);
 }
+
+// else if (WIFSIGNALED(status))
+// 	shell->last_exit_code = 128 + WTERMSIG(status);

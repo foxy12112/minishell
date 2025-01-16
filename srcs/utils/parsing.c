@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/16 02:47:10 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 04:38:19 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void	display(t_shell_data *shell)
 	setup_signals();
 	while (1)
 	{
-		// shell->heredoc_launched = false;
 		if (isatty(fileno(stdin)))
 			input = readline("minishell:");
 		else
@@ -101,9 +100,9 @@ void	display(t_shell_data *shell)
 			input = ft_strtrim(line, "\n");
 			free(line);
 		}
-		// input = ft_strdup("exit");
 		if (input == NULL)
 		{
+			// printf("LEDZ TDO THIIIS\n");
 			ft_putstr_fd("minishell: exit: ", STDOUT_FILENO);
 			break ;
 		}
