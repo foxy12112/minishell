@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_parse_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 05:46:42 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/14 05:54:36 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 15:35:41 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*get_filename_delimiter(t_redirect_type redirect_type, char *redirect)
 	int		i;
 	char	*filename;
 	char	*filename_parsed;
+	char	**filename_split;
 	int		redirect_length;
 
 	i = 0;
@@ -54,8 +55,32 @@ char	*get_filename_delimiter(t_redirect_type redirect_type, char *redirect)
 	filename = ft_substr(redirect, i, redirect_length - i);
 	filename_parsed = ft_trim_whitespaces(filename);
 	free(filename);
+	filename_split = ft_split_delimiters(filename_parsed);
+	free(filename_parsed);
+	remove_quotes(filename_split);
+	filename_parsed = join_subarrays(filename_split);
+	free_string_array(filename_split);
 	return (filename_parsed);
 }
+
+// char	*get_filename_delimiter(t_redirect_type redirect_type, char *redirect)
+// {
+// 	int		i;
+// 	char	*filename;
+// 	char	*filename_parsed;
+// 	int		redirect_length;
+
+// 	i = 0;
+// 	redirect_length = ft_strlen(redirect);
+// 	if (redirect_type == OP_REDIRECT_IN || redirect_type == OP_REDIRECT_OUT)
+// 		i = 1;
+// 	else if (redirect_type == OP_HEREDOC || redirect_type == OP_APPEND_OUT)
+// 		i = 2;
+// 	filename = ft_substr(redirect, i, redirect_length - i);
+// 	filename_parsed = ft_trim_whitespaces(filename);
+// 	free(filename);
+// 	return (filename_parsed);
+// }
 
 void	move_heredoc_to_head(t_redirects **head, t_redirects *current)
 {

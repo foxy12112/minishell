@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:17 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/15 15:43:19 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/16 15:04:46 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,8 +148,8 @@ int	ft_export(t_shell_data *shell, char **variables)
 	}
 	else
 	{
-		// exit_code = add_variable_ex(shell, variables);
-		exit_code = export_variables(shell, variables);
+		exit_code = add_variable_ex(shell, variables);
+		// exit_code = export_variables(shell, variables);
 		sort_env_list(shell->variables);
 	}
 	return (exit_code);
