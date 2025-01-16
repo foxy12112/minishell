@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/15 10:14:56 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 02:01:07 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argv;
 	(void)argc;
-	(void)env;
+	// (void)env;
 	// atexit(leaks);
 	shell = (t_shell_data *)malloc(sizeof(t_shell_data));
 	if (!shell)
@@ -104,7 +104,7 @@ int	main(int argc, char **argv, char **env)
 	display(shell);
 	exit_code = shell->last_exit_code;
 	clear_shell_data(shell);
-	system("leaks minishell");
+	//system("leaks minishell");
 	return (exit_code);
 }
 

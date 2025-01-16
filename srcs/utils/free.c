@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 05:08:24 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/15 05:10:15 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 00:46:55 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ void	free_env_list(t_env_list *head)
 	while (head != NULL)
 	{
 		temp = head->next;
-		free(head->key);
-		free(head->value);
+		if (head->key)
+			free(head->key);
+		if (head->value)
+			free(head->value);
 		free(head);
 		head = temp;
 	}
@@ -64,9 +66,9 @@ void	free_commands(t_var_cmd *cmd)
 	while (cmd)
 	{
 		temp = cmd;
-		if(cmd->command)
+		if (cmd->command)
 			free_string_array(cmd->command);
-		if(cmd->hd_file_name)
+		if (cmd->hd_file_name)
 			free(cmd->hd_file_name);
 		if (cmd->redirects)
 			free_redirects(cmd->redirects);

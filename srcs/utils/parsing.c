@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/15 11:17:25 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 02:47:10 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ bool	check_command(t_shell_data *shell)
 
 	found = true;
 	command_noquotes = true_quote_removal_from_array(shell->pipe_list->cmd->command);
+	if(!command_noquotes)
+		return (false);
 	command = find_cmd(shell->exec_env, command_noquotes[0]);
 	if (!command)
 	{

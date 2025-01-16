@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 00:56:03 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/15 14:10:33 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 00:48:47 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,17 @@
 
 void	clear_shell_data(t_shell_data *shell)
 {
+	if (shell->env)
+	{
+		free_env_list(shell->env);
+		shell->env = NULL;
+	}
+	if (shell->variables)
+	{
+		free_env_list(shell->variables);
+		shell->variables = NULL;
+	}
 	free_var_pipe_list(shell->pipe_list);
-	free_env_list(shell->env);
-	free_env_list(shell->variables);
 	free_string_array(shell->exec_env);
 	restore_control_echo();
 	free(shell);

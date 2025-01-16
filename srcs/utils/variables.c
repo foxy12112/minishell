@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 17:17:23 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/14 06:16:28 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 01:19:33 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	*retrieve_variable(t_shell_data *shell, char *key)
 {
 	t_env_list	*variables;
 	char		*key_parsed;
+	char		*var_value;
 
 	variables = shell->variables;
 	if (key[0] == '$')
@@ -26,7 +27,8 @@ char	*retrieve_variable(t_shell_data *shell, char *key)
 	{
 		if (ft_strcmp(variables->key, key_parsed) == 0)
 		{
-			return (variables->value);
+			var_value = ft_strdup(variables->value);
+			return (var_value);
 		}
 		variables = variables->next;
 	}
