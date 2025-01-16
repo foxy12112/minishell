@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/16 08:03:26 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 08:13:32 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	main(int argc, char **argv, char **env)
 	shell->enviroment = env;
 	init_history();
 	shell->exec_env = init_exec_env();
-	disable_control_echo(shell);
+	// disable_control_echo(shell);
 	display(shell);
 	exit_code = shell->last_exit_code;
 	clear_shell_data(shell);

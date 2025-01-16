@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/16 08:06:03 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 08:31:35 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ bool	check_command(t_shell_data *shell)
 		found = false;
 	}
 	free(command);
+	// print_pipe_list(shell->pipe_list);
 	free_string_array(command_noquotes);
 	return (found);
 }

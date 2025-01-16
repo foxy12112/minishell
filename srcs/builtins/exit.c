@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 00:56:03 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 05:20:39 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 08:37:47 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,13 @@ int	ft_exit(t_shell_data *shell, char **command)
 		shell->last_exit_code = ft_atoi(command[1]);
 		shell->last_exit_code = shell->last_exit_code % 256;
 		exit_code = shell->last_exit_code;
-		ft_putstr_fd("exit\n", STDIN_FILENO);
+		ft_putendl_fd("exit", STDERR_FILENO);
 		clear_shell_data(shell);
 		exit(exit_code);
 	}
 	else
 	{
-		ft_putstr_fd("exit\n", STDIN_FILENO);
+		ft_putendl_fd("exit", STDERR_FILENO);
 		clear_shell_data(shell);
 		exit_code = 0;
 		shell->last_exit_code = 0;

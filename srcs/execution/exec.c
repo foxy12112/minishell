@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 03:14:13 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 08:31:31 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	**true_quote_removal_from_array(char **array)
 	{
 		if (string_in_doublequotes(array[i])
 			|| string_in_singlequotes(array[i]))
-			new_array[i] = true_quote_removal(array[i]);
+			new_array[i] = ft_strdup(true_quote_removal(array[i]));
 		else
 			new_array[i] = ft_strdup(array[i]);
 		if (!new_array[i])

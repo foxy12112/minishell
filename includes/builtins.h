@@ -6,13 +6,14 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:21:55 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 07:48:18 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 08:24:02 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	print_pipe_list(t_var_pipe_list *pipe_list);
+void	print_commands(t_var_cmd *cmd);
 // cd.c
 int		fd_cd(t_shell_data *shell, char *path);
 int		parse_launch_cd(t_shell_data *shell, char **command);
