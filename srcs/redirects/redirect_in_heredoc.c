@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:03:07 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 13:43:27 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/16 18:51:59 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static void	custom_handler(int signal)
 {
 	(void)signal;
 	printf("\n");
-	exit(130);
 }
 
 int	reset_heredoc_fd(t_shell_data *shell, int pipe_fd[2], t_var_cmd *cmd)
@@ -68,11 +67,12 @@ int	create_heredoc(t_redirects *heredoc, t_shell_data *shell, char *file_name)
 
 	(void)shell;
 	signal(SIGINT, custom_handler);
+	sigignore (SIGTERM);
 	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	line = readline("> ");
 	while (1)
 	{
-		if (!line || ft_strcmp(line, heredoc->delimiter) == 0)
+		if (!line || ft_strcmp(line, heredoc->delimiter) == 0 || *line == '\0')
 		{
 			free(line);
 			break ;
@@ -101,6 +101,7 @@ int	parse_and_create_heredoc(t_shell_data *shell, t_redirects *heredoc,
 	exit_code = create_heredoc(heredoc, shell, file_name);
 	shell->heredoc_launched = true;
 	shell->last_exit_code = exit_code;
+	setup_signals();
 	return (exit_code);
 }
 

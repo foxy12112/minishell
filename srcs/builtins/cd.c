@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:18:21 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/16 06:16:00 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/16 16:24:43 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	fd_cd(t_shell_data *shell, char *path)
 	char	*new_pwd;
 
 	old_pwd = getcwd(NULL, 0);
+	if (path[0] == '~')
+		path = ft_strcat(getenv("HOME"), path + 1);
 	if (chdir(path) != 0)
 	{
 		return (ft_putstr_fd("minishell: cd: ", STDERR_FILENO),

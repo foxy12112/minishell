@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: macbook <macbook@student.42.fr>            +#+  +:+       +#+         #
+#    By: ldick <ldick@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 17:52:31 by ldick             #+#    #+#              #
-#    Updated: 2025/01/16 10:51:54 by macbook          ###   ########.fr        #
+#    Updated: 2025/01/16 18:49:37 by ldick            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ COMPILER	=	cc
 INCLUDES	=	-I includes -I main-libs
 SUBMODULE	=	main-libs/Makefile
 LIB_FLAGS	=	-lreadline -ls -Lmain-libs
-CFLAGS		=	-Wall -Werror -Wextra #-g -fsanitize=address
+CFLAGS		=	-Wall -Werror -Wextra -g -fsanitize=address
 EXTRA_FLAGS	=	
 ERROR_FILE	=	error.log
 

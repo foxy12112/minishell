@@ -1,10 +1,8 @@
 errors found
-	--nothign works after command not found
 
 fixing
-	--adding custom signal handler for heredoc
-
+	--ctrl-c doesnt work in heredoc yet
 fixed
 
-	--fixed export dubling, not yet fully tested, no errors yet
-	
+	--fixed cd ~ not working // relative path at all not working
+	--ctrl d works in heredoc
