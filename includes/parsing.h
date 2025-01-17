@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:29:32 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 21:48:58 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/17 11:13:08 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef PARSING_H
+# define PARSING_H
+# include "minishell.h"
 
 char			**expand_command(t_shell_data *shell, char **arr);
 char			*join_subarrays(char **array);
@@ -62,3 +64,5 @@ t_redirects		*create_redirect_node(char *redirect);
 char			*true_quote_removal(char *value);
 bool			string_in_singlequotes(char *value);
 bool			string_in_doublequotes(char *value);
+
+#endif

@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:43:34 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 21:48:48 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/17 11:05:36 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef UTILS_H
+# define UTILS_H
+# include "minishell.h"
 
 // history.c
 void		init_history(void);
@@ -47,3 +49,5 @@ char		*join_arof_ars(char **array, int start);
 // signals.c
 void		setup_signals(void);
 char		*ft_strncpy(char *dst, const char *src, size_t len);
+
+#endif

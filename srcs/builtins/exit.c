@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 00:56:03 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 21:27:04 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/17 09:53:52 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ bool	is_digits_only(char *str)
 
 void	handle_simple_exit(t_shell_data *shell)
 {
-	ft_putendl_fd("exit", STDERR_FILENO);
+	ft_putstr_fd("exit", STDERR_FILENO);
+	ft_putchar_fd('\n', STDERR_FILENO);
 	clear_shell_data(shell);
-	shell->last_exit_code = 0;
 	exit(0);
 }
 
@@ -65,7 +65,7 @@ int	ft_exit(t_shell_data *shell, char **command)
 	args_count = args_length(command);
 	if (args_count > 2)
 	{
-		ft_putendl_fd("exit", STDERR_FILENO);
+		ft_putstr_fd("exit\n", STDERR_FILENO);
 		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
 		shell->last_exit_code = 255;
 		exit(255);

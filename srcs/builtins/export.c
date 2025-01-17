@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:17 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/16 21:33:43 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/17 10:43:09 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,6 @@ static int	is_dup(t_env_list *head, char *key)
 	return (0);
 }
 
-static char	*remove_after_equal(char *str)
-{
-	int		i;
-	char	*tmp;
-
-	i = 0;
-	tmp = ft_strdup(str);
-	while (tmp[i])
-	{
-		if (tmp[i] == '=')
-			tmp[i] = '\0';
-		i++;
-	}
-	return (tmp);
-}
-
 static int	add_variable_ex(t_shell_data *shell, char **variables)
 {
 	int		i;
@@ -50,15 +34,15 @@ static int	add_variable_ex(t_shell_data *shell, char **variables)
 	i = 1;
 	while (variables[i])
 	{
-		if (is_dup(shell->variables, remove_after_equal(variables[i])))
-			ft_unset(shell, remove_after_equal(variables[i]));
-		if (!is_dup(shell->variables, remove_after_equal(variables[i])))
+		key_value = ft_split_by_first_equal(variables[i]);
+		if (is_dup(shell->variables, key_value[0]))
+			ft_unset(shell, key_value[0]);
+		if (!is_dup(shell->variables, key_value[0]))
 		{
-			key_value = ft_split_by_first_equal(variables[i]);
 			add_to_variables_list(&shell->env, key_value);
 			add_to_variables_list(&shell->variables, key_value);
-			free_string_array(key_value);
 		}
+		free_string_array(key_value);
 		i++;
 	}
 	return (0);

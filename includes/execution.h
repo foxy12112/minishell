@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:25:20 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 21:49:03 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/17 11:12:43 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef EXECUTION_H
+# define EXECUTION_H
+# include "minishell.h"
 
 // execute_builtins.c
 char	*command_is_builtin(char *command);
@@ -31,3 +33,5 @@ void	pipe_multiple_commands(t_shell_data *shell, t_var_pipe_list *pipe_list,
 pid_t	ft_fork(void);
 int		cell_launch(t_shell_data *shell, char **args);
 char	**true_quote_removal_from_array(char **array);
+
+#endif

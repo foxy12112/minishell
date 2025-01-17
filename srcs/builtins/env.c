@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:09 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/16 21:27:32 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/17 10:26:14 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,14 @@ int	print_env_list(t_env_list *variables)
 	return (0);
 }
 
+int	ft_env(t_shell_data *shell)
+{
+	int	exit_code;
+
+	exit_code = print_env_list(shell->env);
+	return (exit_code);
+}
+
 int	parse_launch_env(t_shell_data *shell, char **command)
 {
 	int	args_count;
@@ -47,12 +55,4 @@ int	parse_launch_env(t_shell_data *shell, char **command)
 	}
 	shell->last_exit_code = ft_env(shell);
 	return (shell->last_exit_code);
-}
-
-int	ft_env(t_shell_data *shell)
-{
-	int	exit_code;
-
-	exit_code = print_env_list(shell->env);
-	return (exit_code);
 }

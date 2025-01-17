@@ -6,11 +6,12 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:23 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/16 06:43:58 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/17 10:38:29 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "builtins.h"
 
 int	delete_node_by_key(t_env_list **head, const char *key)
 {

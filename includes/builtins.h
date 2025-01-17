@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:21:55 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 21:49:08 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/17 11:12:56 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef BUILTINS_H
+# define BUILTINS_H
+# include "minishell.h"
 
 void	print_pipe_list(t_var_pipe_list *pipe_list);
 void	print_commands(t_var_cmd *cmd);
@@ -18,8 +20,6 @@ void	print_commands(t_var_cmd *cmd);
 int		fd_cd(t_shell_data *shell, char *path);
 int		parse_launch_cd(t_shell_data *shell, char **command);
 // echo.c
-int		ft_echo(char *args, int fd, bool n_option);
-// int		ft_echo(char *args, int fd, int n_index);
 int		ft_echo(char *args, int fd, bool n_option);
 int		parse_launch_echo(t_shell_data *shell, char **command);
 // env.c
@@ -41,3 +41,5 @@ bool	valid_key(const char *key);
 // exit.c
 int		ft_exit(t_shell_data *shell, char **command);
 int		args_length(char **command);
+
+#endif
