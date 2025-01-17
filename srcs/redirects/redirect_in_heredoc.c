@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:03:07 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/17 12:01:56 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/17 14:50:47 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ int	redirect_heredoc_launch(t_shell_data *shell, char *file)
 	{
 		ft_putstr_fd("minishell: infile: No such file or directory\n",
 			STDERR_FILENO);
+		exit(EXIT_FAILURE);
 		return (EXIT_FAILURE);
 	}
 	if (fd > 0 && dup2(fd, STDIN_FILENO) < 0)

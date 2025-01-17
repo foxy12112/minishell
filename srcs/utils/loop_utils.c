@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/16 21:24:46 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/17 14:57:31 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,18 @@ bool	check_command(t_shell_data *shell)
 
 int	handle_empty_input(char *input)
 {
+	int i;
+
+	i = 0;
 	if (*input == '\0')
 		return (1);
-	return (0);
+	while (input[i])
+	{
+		if (!ft_is_whitespace(input[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int	handle_unclosed_quotes(t_shell_data *shell, char *input)
