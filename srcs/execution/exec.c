@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 21:05:28 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/17 21:25:34 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,30 +53,65 @@ char	**true_quote_removal_from_array(char **array)
 	return (new_array);
 }
 
-char	*find_cmd(char **path, char *cmd)
+char	*find_path(t_env_list *env)
+{
+	char	*path;
+
+	path = NULL;
+	while (env != NULL)
+	{
+		if (ft_strcmp(env->key, "PATH") == 0)
+		{
+			path = ft_strdup(env->value);
+		}
+		env = env->next;
+	}
+	return (path);
+}
+
+char	*find_cmd(t_env_list *env, char *cmd)
 {
 	char	*cmd_new;
 	char	*tmp;
 	char	*ret;
+	char	*path;
+	char	**splitted_path;
 
-	while (*path)
-	{
-		tmp = ft_strjoin(*path, "/");
-		ret = ft_strjoin(tmp, cmd);
-		free(tmp);
-		tmp = NULL;
-		if (access(ret, 0) == 0)
-		{
-			return (ret);
-		}
-		free(ret);
-		path++;
-	}
-	if (access(cmd, 0) == 0)
-	{
-		cmd_new = ft_strdup(cmd);
-		return (cmd_new);
-	}
+	path = find_path(env);
+	if(!path)
+		return (NULL);
+	printf("CRAZY FROG\n");
+	// splitted_path=ft_split(path, ':');
+	// print_arofars(splitted_path);
+	(void)cmd_new;
+	(void)tmp;
+	(void)ret;
+	(void)path;
+	(void)cmd;
+	(void)splitted_path;
+	// while (*splitted_path)
+	// {
+	// 	tmp = ft_strjoin(*splitted_path, "/");
+	// 	ret = ft_strjoin(tmp, cmd);
+	// 	free(tmp);
+	// 	tmp = NULL;
+	// 	if (access(ret, 0) == 0)
+	// 	{
+	// 		return (ret);
+	// 	}
+	// 	free(ret);
+	// 	splitted_path++;
+	// }
+	// free(path);
+	// if (access(cmd, 0) == 0)
+	// {
+	// 	cmd_new = ft_strdup(cmd);
+	// 	return (cmd_new);
+	// }
+	// else
+	// {
+	// 	printf("GELA TROLISHVILI\n");
+	// }
 	return (NULL);
 }
 
@@ -97,7 +132,7 @@ int	cell_launch(t_shell_data *shell, char **args)
 	parsed_args = true_quote_removal_from_array(args);
 	if (!parsed_args)
 		return (127);
-	command = find_cmd(shell->exec_env, parsed_args[0]);
+	command = find_cmd(shell->env, parsed_args[0]);
 	shell->last_exit_code = EXIT_SUCCESS;
 	if (!command)
 		return (free_string_array(parsed_args), 127);

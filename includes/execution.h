@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:25:20 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/17 11:12:43 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/17 21:04:01 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_strtoupper(char *str);
 int		execute_script(t_shell_data *shell);
 int		launch_single_command(t_shell_data *shell, char **command);
 int		execute_single_cmd(t_shell_data *shell, t_var_cmd *cmd);
-char	*find_cmd(char **path, char *cmd);
+char	*find_cmd(t_env_list *env, char *cmd);
 // execute_pipes.c
 void	pipe_multiple_commands(t_shell_data *shell, t_var_pipe_list *pipe_list,
 			int cmd_count);
