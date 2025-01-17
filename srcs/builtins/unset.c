@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:19:23 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/17 10:38:29 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/17 15:21:38 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ int	parse_launch_unset(t_shell_data *shell, char **command)
 		args_count++;
 	if (args_count < 2)
 	{
-		perror("not enough arguments");
 		return (1);
 	}
 	args_count = 1;
