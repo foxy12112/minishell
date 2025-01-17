@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/17 22:45:59 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/17 23:16:22 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ void	display(t_shell_data *shell)
 	setup_signals();
 	while (1)
 	{
-		if (isatty(fileno(stdin)))
-			input = readline("minishell:");
+		input = readline("minishell:");
 		handle_exit(shell, input);
 		if (handle_empty_input(input))
 			continue ;
