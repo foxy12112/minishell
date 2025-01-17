@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:03:07 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/17 17:32:51 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/17 22:20:33 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ int	create_heredoc(t_redirects *heredoc, t_shell_data *shell, char *file_name)
 	int		fd;
 	char	*line;
 
-	// signal(SIGINT, custom_handler);
-	// sigignore (SIGTERM);
 	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	line = readline("> ");
 	while (1)
@@ -67,7 +65,10 @@ int	create_heredoc(t_redirects *heredoc, t_shell_data *shell, char *file_name)
 			break ;
 		}
 		if (*line == '\0')
-			break;
+		{
+			shell->heredoc_c = true;
+			break ;
+		}
 		line = expand_heredoc_line(shell, line);
 		line = remove_heredoc_quotes(line);
 		write(fd, ft_strcat(line, "\n") , ft_strlen(line));
@@ -77,7 +78,6 @@ int	create_heredoc(t_redirects *heredoc, t_shell_data *shell, char *file_name)
 	if (!line)
 		return (0);
 	close(fd);
-	setup_signals();
 	return (EXIT_SUCCESS);
 }
 

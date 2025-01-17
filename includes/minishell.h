@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:36:55 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/17 11:12:07 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/17 21:12:17 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/ioctl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <termios.h>

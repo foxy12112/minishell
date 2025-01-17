@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:32:25 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/17 16:29:56 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/17 22:19:15 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,6 @@ void	display(t_shell_data *shell)
 	{
 		if (isatty(fileno(stdin)))
 			input = readline("minishell:");
-		// else
-		// {
-		// 	char	*line;
-		// 	line = get_next_line(fileno(stdin));
-		// 	input = ft_strtrim(line, "\n");
-		// 	free(line);
-		// }
 		handle_exit(shell, input);
 		if (handle_empty_input(input))
 			continue ;

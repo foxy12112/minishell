@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:21:53 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 21:05:07 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/17 22:23:17 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	execute_single_cmd(t_shell_data *shell, t_var_cmd *cmd)
 {
 	while (cmd)
 	{
+		if (shell->heredoc_c == true)
+			break ;
 		if (cmd->redirect_count > 0)
 		{
 			setup_redirects(shell, cmd, cmd->redirects);

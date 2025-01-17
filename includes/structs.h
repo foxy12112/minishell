@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 11:09:52 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/17 11:12:26 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/17 22:02:08 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_shell_data
 	int						fd;
 	int						last_exit_code;
 	int						saved_stdin;
+	bool					heredoc_c;
 }							t_shell_data;
 
 #endif

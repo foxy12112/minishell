@@ -6,7 +6,7 @@
 /*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 15:50:23 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/17 17:24:46 by ldick            ###   ########.fr       */
+/*   Updated: 2025/01/17 21:11:32 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 static void	sigint_handle(void)
 {
-	printf("\n");
+	// printf("\n");
+	// rl_on_new_line();
+	// // rl_replace_line("", 0);
+	// rl_redisplay();
+	ioctl(STDIN_FILENO, TIOCSTI, "\n");
+	rl_replace_line("", 0);
 	rl_on_new_line();
-	// rl_replace_line("", 0);
-	rl_redisplay();
 }
 
 static void	handler(int signal)
