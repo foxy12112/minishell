@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_in_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:03:07 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/16 20:57:54 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/17 11:29:48 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// int	reset_heredoc_fd(t_shell_data *shell, int pipe_fd[2], t_var_cmd *cmd)
+// {
+// 	int	fd_in;
+
+// 	if (shell->heredoc_launched)
+// 	{
+// 		close(pipe_fd[0]);
+// 		fd_in = open(cmd->hd_file_name, O_RDONLY);
+// 	}
+// 	else
+// 		fd_in = pipe_fd[0];
+// 	return (fd_in);
+// }
+
+static void	custom_handler(int signal)
+{
+	(void)signal;
+	printf("\n");
+}
 
 int	reset_heredoc_fd(t_shell_data *shell, int pipe_fd[2], t_var_cmd *cmd)
 {
@@ -47,11 +67,12 @@ int	create_heredoc(t_redirects *heredoc, t_shell_data *shell, char *file_name)
 
 	(void)shell;
 	signal(SIGINT, custom_handler);
+	sigignore (SIGTERM);
 	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	line = readline("> ");
 	while (1)
 	{
-		if (!line || ft_strcmp(line, heredoc->delimiter) == 0)
+		if (!line || ft_strcmp(line, heredoc->delimiter) == 0 || *line == '\0')
 		{
 			free(line);
 			break ;
@@ -80,6 +101,7 @@ int	parse_and_create_heredoc(t_shell_data *shell, t_redirects *heredoc,
 	exit_code = create_heredoc(heredoc, shell, file_name);
 	shell->heredoc_launched = true;
 	shell->last_exit_code = exit_code;
+	setup_signals();
 	return (exit_code);
 }
 

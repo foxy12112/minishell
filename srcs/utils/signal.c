@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 15:50:23 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/16 16:37:47 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/17 11:28:17 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void	setup_signals(void)
 	sa.sa_flags = 0;
 	sigemptyset(&sigset);
 	sigaddset(&sigset, SIGINT);
+	sigignore(SIGQUIT);
+	// signal(SIGQUIT, SIG_IGN);
 	sigaddset(&sigset, SIGTERM);
 	sa.sa_mask = sigset;
 	if (sigaction(SIGINT, &sa, NULL) == -1)
