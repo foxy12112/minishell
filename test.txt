@@ -1,0 +1,10 @@
+Makefile
+bin
+build
+error.log
+includes
+main-libs
+minishell
+srcs
+test.txt
+unused functions.txt
