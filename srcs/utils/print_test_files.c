@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_test_files.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 16:44:47 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/16 16:45:13 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/17 20:36:51 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	print_arofars(char **str)
 	i = 0;
 	while (str[i])
 	{
-		printf("[%s]", str[i]);
+		printf("[%s]\n", str[i]);
 		i++;
 	}
 	printf("\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_in.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 04:07:19 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/17 11:58:59 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/17 16:42:48 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	redirect_input(t_shell_data *shell, const char *filename)
 {
 	int	fd;
 
-	if (shell->heredoc_launched)
-		return ;
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
@@ -26,6 +24,8 @@ void	redirect_input(t_shell_data *shell, const char *filename)
 		shell->last_exit_code = 127;
 		exit(127);
 	}
+	if (shell->heredoc_launched)
+		return ;
 	if (dup2(fd, STDIN_FILENO) < 0)
 	{
 		perror("dup2 failed");

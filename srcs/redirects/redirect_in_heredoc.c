@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_in_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:03:07 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/17 14:50:47 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/17 22:20:33 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,23 @@ int	create_heredoc(t_redirects *heredoc, t_shell_data *shell, char *file_name)
 	int		fd;
 	char	*line;
 
-	signal(SIGINT, custom_handler);
-	sigignore (SIGTERM);
 	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	line = readline("> ");
 	while (1)
 	{
-		if (!line || ft_strcmp(line, heredoc->delimiter) == 0 || *line == '\0')
+		if (line == NULL || ft_strcmp(line, heredoc->delimiter) == 0)
 		{
 			free(line);
 			break ;
 		}
+		if (*line == '\0')
+		{
+			shell->heredoc_c = true;
+			break ;
+		}
 		line = expand_heredoc_line(shell, line);
 		line = remove_heredoc_quotes(line);
-		write(fd, line, ft_strlen(line));
-		write(fd, "\n", 1);
+		write(fd, ft_strcat(line, "\n") , ft_strlen(line));
 		free(line);
 		line = readline("> ");
 	}
@@ -87,10 +89,9 @@ int	parse_and_create_heredoc(t_shell_data *shell, t_redirects *heredoc,
 	exit_code = EXIT_SUCCESS;
 	remove_char(heredoc->delimiter, '\"');
 	remove_char(heredoc->delimiter, '\'');
-	exit_code = create_heredoc(heredoc, shell, file_name);
 	shell->heredoc_launched = true;
+	exit_code = create_heredoc(heredoc, shell, file_name);
 	shell->last_exit_code = exit_code;
-	setup_signals();
 	return (exit_code);
 }
 

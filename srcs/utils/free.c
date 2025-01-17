@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldick <ldick@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 05:08:24 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/17 11:55:29 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/17 22:19:31 by ldick            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	cleanup(t_shell_data *shell)
 	shell->pipes_count = 0;
 	shell->heredoc_launched = false;
 	shell->pipe_list = NULL;
+	shell->heredoc_c = false;
 }
 
 void	handle_exit(t_shell_data *shell, char *input)
