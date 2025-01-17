@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:03:07 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/17 22:49:46 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/17 22:56:21 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ int	create_heredoc(t_redirects *heredoc, t_shell_data *shell, char *file_name)
 		free(line);
 		line = readline("> ");
 	}
-	if (!line)
-		return (0);
 	close(fd);
 	return (EXIT_SUCCESS);
 }
