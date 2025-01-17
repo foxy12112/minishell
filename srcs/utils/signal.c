@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 15:50:23 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/17 11:28:17 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/17 12:02:21 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	restore_control_echo(void)
 	return (EXIT_SUCCESS);
 }
 
-// sigignore(SIGQUIT);
 // signal(SIGQUIT, SIG_IGN);
 
 void	setup_signals(void)
@@ -63,7 +62,6 @@ void	setup_signals(void)
 	sigemptyset(&sigset);
 	sigaddset(&sigset, SIGINT);
 	sigignore(SIGQUIT);
-	// signal(SIGQUIT, SIG_IGN);
 	sigaddset(&sigset, SIGTERM);
 	sa.sa_mask = sigset;
 	if (sigaction(SIGINT, &sa, NULL) == -1)

@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 02:03:07 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/17 11:29:48 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/17 12:01:56 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,6 @@
 // 	return (fd_in);
 // }
 
-static void	custom_handler(int signal)
-{
-	(void)signal;
-	printf("\n");
-}
-
 int	reset_heredoc_fd(t_shell_data *shell, int pipe_fd[2], t_var_cmd *cmd)
 {
 	int	fd_in;
@@ -49,14 +43,10 @@ int	reset_heredoc_fd(t_shell_data *shell, int pipe_fd[2], t_var_cmd *cmd)
 			}
 		}
 		else
-		{
 			return (-1);
-		}
 	}
 	else
-	{
 		fd_in = pipe_fd[0];
-	}
 	return (fd_in);
 }
 
@@ -65,7 +55,6 @@ int	create_heredoc(t_redirects *heredoc, t_shell_data *shell, char *file_name)
 	int		fd;
 	char	*line;
 
-	(void)shell;
 	signal(SIGINT, custom_handler);
 	sigignore (SIGTERM);
 	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);

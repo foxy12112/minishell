@@ -3,20 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:58:57 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/16 20:57:10 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/17 12:00:29 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+// void	custom_handler(int signal)
+// {
+// 	(void)signal;
+// 	printf("\n");
+// 	exit(130);
+// }
+
 void	custom_handler(int signal)
 {
 	(void)signal;
 	printf("\n");
-	exit(130);
 }
 
 char	*expand_heredoc_line(t_shell_data *shell, char *line)
