@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 01:20:11 by auplisas          #+#    #+#             */
-/*   Updated: 2025/01/17 18:59:08 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/17 21:40:42 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,7 @@ void	pipe_multiple_commands(t_shell_data *shell, t_var_pipe_list *pipe_list,
 	while (current != NULL)
 	{
 		if (current->next != NULL)
-		{
 			create_pipes(pipe_fd);
-		}
 		prepare_heredoc(shell, current->cmd);
 		create_child_processes(shell, pipe_fd, current, input_fd);
 		if (current->prev)

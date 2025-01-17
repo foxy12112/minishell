@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:54:47 by macbook           #+#    #+#             */
-/*   Updated: 2025/01/17 21:32:37 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/01/17 21:56:39 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,10 @@ char	**true_quote_removal_from_array(char **array)
 	return (new_array);
 }
 
-char	*find_path(t_env_list *env)
+char	**find_path(t_env_list *env)
 {
 	char	*path;
+	char	**splitted_path;
 
 	path = NULL;
 	while (env != NULL)
@@ -66,41 +67,40 @@ char	*find_path(t_env_list *env)
 		}
 		env = env->next;
 	}
-	return (path);
+	if (!path)
+		return (NULL);
+	splitted_path = ft_split(path, ':');
+	if (!splitted_path)
+		return (NULL);
+	free(path);
+	return (splitted_path);
 }
 
 char	*find_cmd(t_env_list *env, char *cmd)
 {
-	char	*cmd_new;
 	char	*tmp;
 	char	*ret;
-	char	*path;
 	char	**splitted_path;
+	char	**path_ptr;
 
-	path = find_path(env);
-	if(!path)
+	splitted_path = find_path(env);
+	path_ptr = splitted_path;
+	if (!path_ptr)
 		return (NULL);
-	splitted_path=ft_split(path, ':');
-	while (*splitted_path)
+	while (*path_ptr)
 	{
-		tmp = ft_strjoin(*splitted_path, "/");
+		tmp = ft_strjoin(*path_ptr, "/");
 		ret = ft_strjoin(tmp, cmd);
 		free(tmp);
 		tmp = NULL;
 		if (access(ret, 0) == 0)
-		{
-			return (ret);
-		}
+			return (free_string_array(splitted_path), ret);
 		free(ret);
-		splitted_path++;
+		path_ptr++;
 	}
-	free(path);
 	if (access(cmd, 0) == 0)
-	{
-		cmd_new = ft_strdup(cmd);
-		return (cmd_new);
-	}
-	return (NULL);
+		return (free_string_array(splitted_path), ft_strdup(cmd));
+	return (free_string_array(splitted_path), NULL);
 }
 
 // echo $"42"$

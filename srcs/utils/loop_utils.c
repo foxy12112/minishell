@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:53:04 by ldick             #+#    #+#             */
-/*   Updated: 2025/01/17 21:05:54 by macbook          ###   ########.fr       */
+/*   Updated: 2025/01/17 21:41:32 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ bool	check_command(t_shell_data *shell)
 
 int	handle_empty_input(char *input)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (*input == '\0')
